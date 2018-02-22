@@ -6,23 +6,38 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "LKParticleEffectEmitter.h"
-#import "LKParticleEffectObject.h"
+#include "LKParticleEffectEmitter.h"
+#include "LKParticleEffectObject.h"
+#ifndef LKParticleEffectSystem_h
+#define LKParticleEffectSystem_h
 
-@interface LKParticleEffectConfig : NSObject
+class LKParticleEffectConfig
+{
+public:
+    LKParticleEffectConfig();
+    unsigned int maxObjectCount;
+};
 
-@property (nonatomic) NSInteger maxObjectCount;
+class LKParticleEffectSystem
+{
+public:
+    LKParticleEffectSystem(LKParticleEffectConfig config);
+    void update(double timeDelta);
+    void render();
+    ~LKParticleEffectSystem();
+protected:
+    LKParticleEffectConfig config;
+    GLuint vbo;
+    GLuint vao;
+    GLuint ebo;
+    GLuint vertexShader;
+    GLuint fragmentShader;
+    GLuint program;
+    LKParticleEffectObject **effectObjects;
+    LKParticleEffectObjectData *effectObjectDatas;
+    GLshort *effectIndexes;
+    void setupObjects();
+    void updateElementBuffer();
+};
+#endif
 
-+ (instancetype)defaultConfig;
-
-@end
-
-@interface LKParticleEffectSystem : NSObject
-
-- (instancetype)initWithConfig:(LKParticleEffectConfig*)config;
-- (void)setup;
-- (void)update:(double)timeDelta;
-- (void)render;
-
-@end

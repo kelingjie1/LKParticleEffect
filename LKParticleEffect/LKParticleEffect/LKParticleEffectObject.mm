@@ -6,8 +6,5 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#import "LKParticleEffectObject.h"
+#include "LKParticleEffectObject.h"
 
-@implementation LKParticleEffectObject
-
-@end

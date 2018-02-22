@@ -8,15 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		7855E6FC20328D720035D240 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FB20328D720035D240 /* AppDelegate.m */; };
-		7855E6FF20328D720035D240 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FE20328D720035D240 /* ViewController.m */; };
+		7855E6FF20328D720035D240 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FE20328D720035D240 /* ViewController.mm */; };
 		7855E70220328D720035D240 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7855E70020328D720035D240 /* Main.storyboard */; };
 		7855E70420328D720035D240 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7855E70320328D720035D240 /* Assets.xcassets */; };
 		7855E70720328D720035D240 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7855E70520328D720035D240 /* LaunchScreen.storyboard */; };
 		7855E70A20328D720035D240 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855E70920328D720035D240 /* main.m */; };
-		7855E743203294A20035D240 /* LKParticleEffect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7855E733203291ED0035D240 /* LKParticleEffect.framework */; };
 		78809F1D2033141A00982F23 /* LKParticleEffect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7855E733203291ED0035D240 /* LKParticleEffect.framework */; };
 		78809F1E2033141A00982F23 /* LKParticleEffect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7855E733203291ED0035D240 /* LKParticleEffect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		78809F222033143700982F23 /* LKParticleEffectBundle.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 78809F1C2033141A00982F23 /* LKParticleEffectBundle.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		78FE1D17203F143100D9C7FD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FE1D16203F143000D9C7FD /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,26 +33,12 @@
 			remoteGlobalIDString = 7855E722203291E00035D240;
 			remoteInfo = LKParticleEffect;
 		};
-		78809F1B2033141A00982F23 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7855E72E203291ED0035D240 /* LKParticleEffect.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 78809EF720330F6400982F23;
-			remoteInfo = LKParticleEffectBundle;
-		};
 		78809F1F2033141A00982F23 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7855E72E203291ED0035D240 /* LKParticleEffect.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 7855E722203291E00035D240;
 			remoteInfo = LKParticleEffect;
-		};
-		78809F232033143700982F23 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7855E72E203291ED0035D240 /* LKParticleEffect.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 78809EF620330F6400982F23;
-			remoteInfo = LKParticleEffectBundle;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -75,7 +60,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				78809F222033143700982F23 /* LKParticleEffectBundle.bundle in Embed PlugIns */,
 			);
 			name = "Embed PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,13 +71,14 @@
 		7855E6FA20328D720035D240 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7855E6FB20328D720035D240 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7855E6FD20328D720035D240 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7855E6FE20328D720035D240 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7855E6FE20328D720035D240 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		7855E70120328D720035D240 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7855E70320328D720035D240 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7855E70620328D720035D240 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7855E70820328D720035D240 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7855E70920328D720035D240 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7855E72E203291ED0035D240 /* LKParticleEffect.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LKParticleEffect.xcodeproj; path = ../../LKParticleEffect/LKParticleEffect.xcodeproj; sourceTree = "<group>"; };
+		78FE1D16203F143000D9C7FD /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78FE1D17203F143100D9C7FD /* GLKit.framework in Frameworks */,
 				78809F1D2033141A00982F23 /* LKParticleEffect.framework in Frameworks */,
-				7855E743203294A20035D240 /* LKParticleEffect.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +117,7 @@
 				7855E6FA20328D720035D240 /* AppDelegate.h */,
 				7855E6FB20328D720035D240 /* AppDelegate.m */,
 				7855E6FD20328D720035D240 /* ViewController.h */,
-				7855E6FE20328D720035D240 /* ViewController.m */,
+				7855E6FE20328D720035D240 /* ViewController.mm */,
 				7855E70020328D720035D240 /* Main.storyboard */,
 				7855E70320328D720035D240 /* Assets.xcassets */,
 				7855E70520328D720035D240 /* LaunchScreen.storyboard */,
@@ -147,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				7855E733203291ED0035D240 /* LKParticleEffect.framework */,
-				78809F1C2033141A00982F23 /* LKParticleEffectBundle.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +139,7 @@
 		7855E742203294A20035D240 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78FE1D16203F143000D9C7FD /* GLKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,7 +162,6 @@
 			dependencies = (
 				7855E7412032949D0035D240 /* PBXTargetDependency */,
 				78809F202033141A00982F23 /* PBXTargetDependency */,
-				78809F242033143700982F23 /* PBXTargetDependency */,
 			);
 			name = LKParticleEffectExample;
 			productName = LKParticleEffectExample;
@@ -231,13 +215,6 @@
 			remoteRef = 7855E732203291ED0035D240 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		78809F1C2033141A00982F23 /* LKParticleEffectBundle.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = LKParticleEffectBundle.bundle;
-			remoteRef = 78809F1B2033141A00982F23 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -258,7 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7855E6FF20328D720035D240 /* ViewController.m in Sources */,
+				7855E6FF20328D720035D240 /* ViewController.mm in Sources */,
 				7855E70A20328D720035D240 /* main.m in Sources */,
 				7855E6FC20328D720035D240 /* AppDelegate.m in Sources */,
 			);
@@ -276,11 +253,6 @@
 			isa = PBXTargetDependency;
 			name = LKParticleEffect;
 			targetProxy = 78809F1F2033141A00982F23 /* PBXContainerItemProxy */;
-		};
-		78809F242033143700982F23 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LKParticleEffectBundle;
-			targetProxy = 78809F232033143700982F23 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -9,21 +9,24 @@
 /* Begin PBXBuildFile section */
 		7855E728203291E00035D240 /* LKParticleEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E726203291E00035D240 /* LKParticleEffect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E734203292030035D240 /* LKParticleEffectSystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7855E737203292030035D240 /* LKParticleEffectSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7855E735203292030035D240 /* LKParticleEffectSystem.mm */; };
+		7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E735203292030035D240 /* LKParticleEffectSystem.cpp */; };
 		7855E73A203292A90035D240 /* LKParticleEffectEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E738203292A90035D240 /* LKParticleEffectEmitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7855E73B203292A90035D240 /* LKParticleEffectEmitter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7855E739203292A90035D240 /* LKParticleEffectEmitter.mm */; };
+		7855E73B203292A90035D240 /* LKParticleEffectEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */; };
 		7855E73E203292C90035D240 /* LKParticleEffectObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E73C203292C90035D240 /* LKParticleEffectObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E73F203292C90035D240 /* LKParticleEffectObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7855E73D203292C90035D240 /* LKParticleEffectObject.mm */; };
 		78809F0D2033100700982F23 /* LKParticleEffectUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F0B2033100700982F23 /* LKParticleEffectUtil.h */; };
-		78809F0E2033100700982F23 /* LKParticleEffectUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78809F0C2033100700982F23 /* LKParticleEffectUtil.mm */; };
+		78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */; };
 		78809F262033149000982F23 /* vertexShader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 7855E74E203309940035D240 /* vertexShader.vs */; };
 		78809F272033149000982F23 /* fragmentShader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 7855E750203309AA0035D240 /* fragmentShader.fs */; };
-		78809F2A2033183B00982F23 /* LKParticleEffectSystem+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F282033183B00982F23 /* LKParticleEffectSystem+Private.h */; };
-		78809F2B2033183B00982F23 /* LKParticleEffectSystem+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 78809F292033183B00982F23 /* LKParticleEffectSystem+Private.m */; };
 		78809F3B2033DCC200982F23 /* mathexpr.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F372033DCC200982F23 /* mathexpr.h */; };
 		78809F3C2033DCC200982F23 /* LKParticleValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F382033DCC200982F23 /* LKParticleValue.h */; };
-		78809F3D2033DCC200982F23 /* LKParticleValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78809F392033DCC200982F23 /* LKParticleValue.mm */; };
+		78809F3D2033DCC200982F23 /* LKParticleValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F392033DCC200982F23 /* LKParticleValue.cpp */; };
 		78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F3A2033DCC200982F23 /* mathexpr.cpp */; };
+		78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */; };
+		78FE1D0E203EFE5E00D9C7FD /* LKParticleEffectShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */; };
+		78FE1D11203F08BF00D9C7FD /* LKParticleEffectLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FE1D0F203F08BF00D9C7FD /* LKParticleEffectLogger.cpp */; };
+		78FE1D12203F08BF00D9C7FD /* LKParticleEffectLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FE1D10203F08BF00D9C7FD /* LKParticleEffectLogger.h */; };
+		78FE1D15203F112C00D9C7FD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FE1D14203F112C00D9C7FD /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,22 +34,24 @@
 		7855E726203291E00035D240 /* LKParticleEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffect.h; sourceTree = "<group>"; };
 		7855E727203291E00035D240 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7855E734203292030035D240 /* LKParticleEffectSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectSystem.h; sourceTree = "<group>"; };
-		7855E735203292030035D240 /* LKParticleEffectSystem.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectSystem.mm; sourceTree = "<group>"; };
+		7855E735203292030035D240 /* LKParticleEffectSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectSystem.cpp; sourceTree = "<group>"; };
 		7855E738203292A90035D240 /* LKParticleEffectEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectEmitter.h; sourceTree = "<group>"; };
-		7855E739203292A90035D240 /* LKParticleEffectEmitter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectEmitter.mm; sourceTree = "<group>"; };
+		7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectEmitter.cpp; sourceTree = "<group>"; };
 		7855E73C203292C90035D240 /* LKParticleEffectObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectObject.h; sourceTree = "<group>"; };
 		7855E73D203292C90035D240 /* LKParticleEffectObject.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectObject.mm; sourceTree = "<group>"; };
 		7855E74E203309940035D240 /* vertexShader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexShader.vs; sourceTree = "<group>"; };
 		7855E750203309AA0035D240 /* fragmentShader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fragmentShader.fs; sourceTree = "<group>"; };
 		78809F0B2033100700982F23 /* LKParticleEffectUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectUtil.h; sourceTree = "<group>"; };
-		78809F0C2033100700982F23 /* LKParticleEffectUtil.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectUtil.mm; sourceTree = "<group>"; };
-		78809F282033183B00982F23 /* LKParticleEffectSystem+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LKParticleEffectSystem+Private.h"; sourceTree = "<group>"; };
-		78809F292033183B00982F23 /* LKParticleEffectSystem+Private.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LKParticleEffectSystem+Private.m"; sourceTree = "<group>"; };
-		78809F2E2033190B00982F23 /* LKParticleEffectPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectPrivate.h; sourceTree = "<group>"; };
+		78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectUtil.cpp; sourceTree = "<group>"; };
 		78809F372033DCC200982F23 /* mathexpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathexpr.h; sourceTree = "<group>"; };
 		78809F382033DCC200982F23 /* LKParticleValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKParticleValue.h; sourceTree = "<group>"; };
-		78809F392033DCC200982F23 /* LKParticleValue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleValue.mm; sourceTree = "<group>"; };
+		78809F392033DCC200982F23 /* LKParticleValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleValue.cpp; sourceTree = "<group>"; };
 		78809F3A2033DCC200982F23 /* mathexpr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mathexpr.cpp; sourceTree = "<group>"; };
+		78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectShader.cpp; sourceTree = "<group>"; };
+		78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectShader.h; sourceTree = "<group>"; };
+		78FE1D0F203F08BF00D9C7FD /* LKParticleEffectLogger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectLogger.cpp; sourceTree = "<group>"; };
+		78FE1D10203F08BF00D9C7FD /* LKParticleEffectLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectLogger.h; sourceTree = "<group>"; };
+		78FE1D14203F112C00D9C7FD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78FE1D15203F112C00D9C7FD /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +71,7 @@
 			children = (
 				7855E725203291E00035D240 /* LKParticleEffect */,
 				7855E724203291E00035D240 /* Products */,
+				78FE1D13203F112C00D9C7FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,33 +87,26 @@
 			isa = PBXGroup;
 			children = (
 				78809F2D2033185F00982F23 /* Resources */,
-				78809F2C2033184E00982F23 /* Private */,
 				7855E726203291E00035D240 /* LKParticleEffect.h */,
 				7855E727203291E00035D240 /* Info.plist */,
 				7855E734203292030035D240 /* LKParticleEffectSystem.h */,
-				7855E735203292030035D240 /* LKParticleEffectSystem.mm */,
+				7855E735203292030035D240 /* LKParticleEffectSystem.cpp */,
 				7855E738203292A90035D240 /* LKParticleEffectEmitter.h */,
-				7855E739203292A90035D240 /* LKParticleEffectEmitter.mm */,
+				7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */,
 				7855E73C203292C90035D240 /* LKParticleEffectObject.h */,
 				7855E73D203292C90035D240 /* LKParticleEffectObject.mm */,
 				78809F0B2033100700982F23 /* LKParticleEffectUtil.h */,
-				78809F0C2033100700982F23 /* LKParticleEffectUtil.mm */,
+				78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */,
 				78809F382033DCC200982F23 /* LKParticleValue.h */,
-				78809F392033DCC200982F23 /* LKParticleValue.mm */,
+				78809F392033DCC200982F23 /* LKParticleValue.cpp */,
 				78809F3A2033DCC200982F23 /* mathexpr.cpp */,
 				78809F372033DCC200982F23 /* mathexpr.h */,
+				78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */,
+				78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */,
+				78FE1D10203F08BF00D9C7FD /* LKParticleEffectLogger.h */,
+				78FE1D0F203F08BF00D9C7FD /* LKParticleEffectLogger.cpp */,
 			);
 			path = LKParticleEffect;
-			sourceTree = "<group>";
-		};
-		78809F2C2033184E00982F23 /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				78809F282033183B00982F23 /* LKParticleEffectSystem+Private.h */,
-				78809F292033183B00982F23 /* LKParticleEffectSystem+Private.m */,
-				78809F2E2033190B00982F23 /* LKParticleEffectPrivate.h */,
-			);
-			path = Private;
 			sourceTree = "<group>";
 		};
 		78809F2D2033185F00982F23 /* Resources */ = {
@@ -118,6 +118,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		78FE1D13203F112C00D9C7FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78FE1D14203F112C00D9C7FD /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -125,12 +133,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78FE1D0E203EFE5E00D9C7FD /* LKParticleEffectShader.h in Headers */,
 				7855E728203291E00035D240 /* LKParticleEffect.h in Headers */,
 				78809F3B2033DCC200982F23 /* mathexpr.h in Headers */,
 				78809F0D2033100700982F23 /* LKParticleEffectUtil.h in Headers */,
+				78FE1D12203F08BF00D9C7FD /* LKParticleEffectLogger.h in Headers */,
 				7855E73E203292C90035D240 /* LKParticleEffectObject.h in Headers */,
 				7855E73A203292A90035D240 /* LKParticleEffectEmitter.h in Headers */,
-				78809F2A2033183B00982F23 /* LKParticleEffectSystem+Private.h in Headers */,
 				7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */,
 				78809F3C2033DCC200982F23 /* LKParticleValue.h in Headers */,
 			);
@@ -206,13 +215,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78809F3D2033DCC200982F23 /* LKParticleValue.mm in Sources */,
-				7855E73B203292A90035D240 /* LKParticleEffectEmitter.mm in Sources */,
+				78809F3D2033DCC200982F23 /* LKParticleValue.cpp in Sources */,
+				7855E73B203292A90035D240 /* LKParticleEffectEmitter.cpp in Sources */,
+				78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */,
+				78FE1D11203F08BF00D9C7FD /* LKParticleEffectLogger.cpp in Sources */,
 				7855E73F203292C90035D240 /* LKParticleEffectObject.mm in Sources */,
-				7855E737203292030035D240 /* LKParticleEffectSystem.mm in Sources */,
-				78809F2B2033183B00982F23 /* LKParticleEffectSystem+Private.m in Sources */,
+				7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */,
 				78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */,
-				78809F0E2033100700982F23 /* LKParticleEffectUtil.mm in Sources */,
+				78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

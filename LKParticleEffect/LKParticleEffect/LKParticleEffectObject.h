@@ -6,21 +6,25 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <OpenGLES/ES3/gl.h>
-#import <OpenGLES/ES3/glext.h>
-
-typedef struct
+#include <OpenGLES/ES3/gl.h>
+#include <OpenGLES/ES3/glext.h>
+#ifndef LKParticleEffectObject_h
+#define LKParticleEffectObject_h
+struct LKParticleEffectObjectData
 {
     GLuint identifier;
     GLfloat positionX;
     GLfloat positionY;
     GLfloat positionZ;
-} LKParticleEffectObjectData;
+};
 
-@interface LKParticleEffectObject : NSObject
+class LKParticleEffectObject
+{
+public:
+    LKParticleEffectObjectData *data;
+    GLfloat distance;
+};
 
-@property (nonatomic) LKParticleEffectObjectData *data;
+#endif
 
-@end
 

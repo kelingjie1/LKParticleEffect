@@ -5,16 +5,28 @@
 //  Created by lingtonke on 2017/3/3.
 //  Copyright © 2017年 lingtonke. All rights reserved.
 //
+#include <string>
+#include "mathexpr.h"
+#include <map>
+#include <string>
+#include <vector>
 
-#import <Foundation/Foundation.h>
+#ifndef LKParticleEffectValue_h
+#define LKParticleEffectValue_h
 
-@interface LKParticleValue : NSObject
+class LKParticleEffectValue
+{
+public:
+    void setExpression(std::string expression);
+    void setNumber(double number);
+    void setVar(double *var,std::string name);
+    double value();
+    ~LKParticleEffectValue();
+protected:
+    std::map<std::string,int> varMap;
+    std::vector<RVar*> vars;
+    ROperation *op;
+    double num;
+};
 
-@property (nonatomic) NSObject *object;
-
-
--(instancetype)initWithObject:(NSObject*)object;
--(double)value;
--(void)setVar:(double*)var name:(NSString*)name;
--(instancetype)clone;
-@end
+#endif
