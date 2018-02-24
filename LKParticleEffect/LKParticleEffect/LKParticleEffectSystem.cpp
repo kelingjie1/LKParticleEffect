@@ -9,12 +9,16 @@
 #include "LKParticleEffectSystem.h"
 #include <OpenGLES/ES3/gl.h>
 #include <OpenGLES/ES3/glext.h>
-#include "LKParticleEffectUtil.h"
 #include "LKParticleEffectShader.h"
 #include "LKParticleEffectLogger.h"
 #include <list>
+#if IOS
+#include "LKParticleEffectIOSBridge.h"
+#else
 
-using namespace std;
+#endif
+
+using namespace LKKit;
 
 LKParticleEffectConfig::LKParticleEffectConfig()
 {
@@ -71,7 +75,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
         glDeleteProgram(program);
     }
     
-    effectObjects = new LKParticleEffectObject*[config.maxObjectCount];
+    spriteObjects = new LKParticleEffectSpriteObject*[config.maxObjectCount];
     
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -79,7 +83,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(LKParticleEffectSpriteObjectData)*config.maxObjectCount, NULL, GL_STREAM_DRAW);
     
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -90,38 +94,43 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     GLuint offset = 0;
-    glVertexAttribPointer(0, 1, GL_INT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
+    glVertexAttribPointer(0, 1, GL_INT, false, sizeof(LKParticleEffectSpriteObjectData), (const void*)offset);
     offset = offset+sizeof(GLint);
-    glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
+    glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(LKParticleEffectSpriteObjectData), (const void*)offset);
     glBindVertexArray(NULL);
+}
+
+void LKParticleEffectSystem::loadResources(string path)
+{
+    LKJSONObject jsonObject = LKParticleEffectIOSBridge::JSONObjectFromPath(path);
 }
 
 void LKParticleEffectSystem::setupObjects()
 {
     glBindVertexArray(vao);
-    effectObjectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
+    spriteObjectDatas = (LKParticleEffectSpriteObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectSpriteObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
     
     effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT);
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        LKParticleEffectObject *object = new LKParticleEffectObject;
-        effectObjects[i] = object;
-        object->data = &effectObjectDatas[i];
-        effectObjectDatas[i].identifier = i;
+        LKParticleEffectSpriteObject *object = new LKParticleEffectSpriteObject;
+        spriteObjects[i] = object;
+        object->data = &spriteObjectDatas[i];
+        spriteObjectDatas[i].identifier = i;
     }
     
-    effectObjectDatas[0].positionX = 0.3;
-    effectObjectDatas[0].positionY = 0.3;
-    effectObjectDatas[0].positionZ = 0;
+    spriteObjectDatas[0].positionX = 0.3;
+    spriteObjectDatas[0].positionY = 0.3;
+    spriteObjectDatas[0].positionZ = 0;
     
-    effectObjectDatas[1].positionX = 0.3;
-    effectObjectDatas[1].positionY = 0;
-    effectObjectDatas[1].positionZ = 0;
+    spriteObjectDatas[1].positionX = 0.3;
+    spriteObjectDatas[1].positionY = 0;
+    spriteObjectDatas[1].positionZ = 0;
     
-    effectObjectDatas[2].positionX = 0;
-    effectObjectDatas[2].positionY = 0.3;
-    effectObjectDatas[2].positionZ = 0;
+    spriteObjectDatas[2].positionX = 0;
+    spriteObjectDatas[2].positionY = 0.3;
+    spriteObjectDatas[2].positionZ = 0;
     
     effectIndexes[0] = 0;
     effectIndexes[1] = 1;
@@ -130,7 +139,7 @@ void LKParticleEffectSystem::setupObjects()
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        effectObjects[i]->data = NULL;
+        spriteObjects[i]->data = NULL;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
@@ -140,19 +149,19 @@ void LKParticleEffectSystem::setupObjects()
 void LKParticleEffectSystem::update(double timeDelta)
 {
     glBindVertexArray(vao);
-    effectObjectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
+    spriteObjectDatas = (LKParticleEffectSpriteObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectSpriteObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
     
     effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT);
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        effectObjects[i]->data = &effectObjectDatas[i];
+        spriteObjects[i]->data = &spriteObjectDatas[i];
     }
     
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        effectObjects[i]->data = NULL;
+        spriteObjects[i]->data = NULL;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
@@ -165,7 +174,7 @@ void LKParticleEffectSystem::updateElementBuffer()
     
 }
 
-LKParticleEffectObject *getUnusedObject()
+LKParticleEffectSpriteObject *getUnusedObject()
 {
     return NULL;
 }
@@ -182,10 +191,10 @@ void LKParticleEffectSystem::render()
 
 LKParticleEffectSystem::~LKParticleEffectSystem()
 {
-    if (effectObjects)
+    if (spriteObjects)
     {
-        delete [] effectObjects;
-        effectObjects = NULL;
+        delete [] spriteObjects;
+        spriteObjects = NULL;
     }
     if (program)
     {

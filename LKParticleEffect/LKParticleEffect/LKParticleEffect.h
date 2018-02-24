@@ -18,6 +18,7 @@ FOUNDATION_EXPORT const unsigned char LKParticleEffectVersionString[];
 
 #import <LKParticleEffect/LKParticleEffectSystem.h>
 #import <LKParticleEffect/LKParticleEffectEmitter.h>
-#import <LKParticleEffect/LKParticleEffectObject.h>
+#import <LKParticleEffect/LKParticleEffectSpriteObject.h>
+#import <LKParticleEffect/LKParticleEffectIOSBridge.h>
 
 

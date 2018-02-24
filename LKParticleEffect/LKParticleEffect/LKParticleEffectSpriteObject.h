@@ -1,5 +1,5 @@
 //
-//  LKParticleEffectObject.h
+//  LKParticleEffectSpriteObject.h
 //  LKParticleEffect
 //
 //  Created by 柯灵杰 on 2018/2/13.
@@ -8,9 +8,9 @@
 
 #include <OpenGLES/ES3/gl.h>
 #include <OpenGLES/ES3/glext.h>
-#ifndef LKParticleEffectObject_h
-#define LKParticleEffectObject_h
-struct LKParticleEffectObjectData
+#ifndef LKParticleEffectSpriteObject_h
+#define LKParticleEffectSpriteObject_h
+struct LKParticleEffectSpriteObjectData
 {
     GLuint identifier;
     GLfloat positionX;
@@ -18,10 +18,10 @@ struct LKParticleEffectObjectData
     GLfloat positionZ;
 };
 
-class LKParticleEffectObject
+class LKParticleEffectSpriteObject
 {
 public:
-    LKParticleEffectObjectData *data;
+    LKParticleEffectSpriteObjectData *data;
     GLfloat distance;
 };
 

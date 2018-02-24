@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07E0F5AF204150EC00D97980 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 07E0F5AE204150EC00D97980 /* effects */; };
 		7855E6FC20328D720035D240 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FB20328D720035D240 /* AppDelegate.m */; };
 		7855E6FF20328D720035D240 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FE20328D720035D240 /* ViewController.mm */; };
 		7855E70220328D720035D240 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7855E70020328D720035D240 /* Main.storyboard */; };
@@ -14,7 +15,6 @@
 		7855E70720328D720035D240 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7855E70520328D720035D240 /* LaunchScreen.storyboard */; };
 		7855E70A20328D720035D240 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855E70920328D720035D240 /* main.m */; };
 		78809F1D2033141A00982F23 /* LKParticleEffect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7855E733203291ED0035D240 /* LKParticleEffect.framework */; };
-		78809F1E2033141A00982F23 /* LKParticleEffect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7855E733203291ED0035D240 /* LKParticleEffect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		78FE1D17203F143100D9C7FD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FE1D16203F143000D9C7FD /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +49,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				78809F1E2033141A00982F23 /* LKParticleEffect.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07E0F5AE204150EC00D97980 /* effects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = effects; sourceTree = "<group>"; };
 		7855E6F720328D720035D240 /* LKParticleEffectExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LKParticleEffectExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7855E6FA20328D720035D240 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7855E6FB20328D720035D240 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -94,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07E0F5A9204150DF00D97980 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				07E0F5AE204150EC00D97980 /* effects */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7855E6EE20328D720035D240 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +131,7 @@
 				7855E70520328D720035D240 /* LaunchScreen.storyboard */,
 				7855E70820328D720035D240 /* Info.plist */,
 				7855E70920328D720035D240 /* main.m */,
+				07E0F5A9204150DF00D97980 /* Resources */,
 				7855E72E203291ED0035D240 /* LKParticleEffect.xcodeproj */,
 			);
 			path = LKParticleEffectExample;
@@ -179,7 +188,7 @@
 				TargetAttributes = {
 					7855E6F620328D720035D240 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -225,6 +234,7 @@
 				7855E70720328D720035D240 /* LaunchScreen.storyboard in Resources */,
 				7855E70420328D720035D240 /* Assets.xcassets in Resources */,
 				7855E70220328D720035D240 /* Main.storyboard in Resources */,
+				07E0F5AF204150EC00D97980 /* effects in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,11 +394,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = KPS8A2FLM4;
 				INFOPLIST_FILE = LKParticleEffectExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.KLJ.LKParticleEffectExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5e24a50c-b55c-4d62-8a3e-77bb95855964";
+				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Provisioning";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -397,11 +410,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LKParticleEffectExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.KLJ.LKParticleEffectExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

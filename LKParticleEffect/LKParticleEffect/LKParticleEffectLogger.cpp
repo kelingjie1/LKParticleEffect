@@ -8,6 +8,7 @@
 
 #include "LKParticleEffectLogger.h"
 
+using namespace LKKit;
 LKParticleEffectLogger *LKParticleEffectLogger::instance()
 {
     static LKParticleEffectLogger *instance;
@@ -18,7 +19,7 @@ LKParticleEffectLogger *LKParticleEffectLogger::instance()
     return instance;
 }
 
-void LKParticleEffectLogger::log(LKParticleEffectLogLevel level,std::string str)
+void LKParticleEffectLogger::log(LKParticleEffectLogLevel level,string str)
 {
     if (listener)
     {

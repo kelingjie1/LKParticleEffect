@@ -15,22 +15,29 @@
 #define LKLogError(str) LKLog(LKParticleEffectLogLevelError,str);
 
 #include <string>
-enum LKParticleEffectLogLevel
-{
-    LKParticleEffectLogLevelInfo,
-    LKParticleEffectLogLevelWarning,
-    LKParticleEffectLogLevelError,
-};
 
-typedef void LKParticleEffectLoggerListener(LKParticleEffectLogLevel level,const char* str);
-class LKParticleEffectLogger
+namespace LKKit
 {
-public:
-    static LKParticleEffectLogger *instance();
-    void log(LKParticleEffectLogLevel level,std::string str);
-    LKParticleEffectLoggerListener *listener;
-protected:
-    LKParticleEffectLogger(){};
-};
+    using namespace std;
+    enum LKParticleEffectLogLevel
+    {
+        LKParticleEffectLogLevelInfo,
+        LKParticleEffectLogLevelWarning,
+        LKParticleEffectLogLevelError,
+    };
+    
+    typedef void LKParticleEffectLoggerListener(LKParticleEffectLogLevel level,const char* str);
+    class LKParticleEffectLogger
+    {
+    public:
+        static LKParticleEffectLogger *instance();
+        void log(LKParticleEffectLogLevel level,string str);
+        LKParticleEffectLoggerListener *listener;
+    protected:
+        LKParticleEffectLogger(){};
+    };
+
+}
+
 
 #endif /* LKParticleEffectLogger_hpp */

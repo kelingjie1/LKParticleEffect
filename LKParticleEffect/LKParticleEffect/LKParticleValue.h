@@ -5,28 +5,32 @@
 //  Created by lingtonke on 2017/3/3.
 //  Copyright © 2017年 lingtonke. All rights reserved.
 //
+#ifndef LKParticleEffectValue_h
+#define LKParticleEffectValue_h
+
 #include <string>
 #include "mathexpr.h"
 #include <map>
 #include <string>
 #include <vector>
-
-#ifndef LKParticleEffectValue_h
-#define LKParticleEffectValue_h
-
-class LKParticleEffectValue
+namespace LKKit
 {
-public:
-    void setExpression(std::string expression);
-    void setNumber(double number);
-    void setVar(double *var,std::string name);
-    double value();
-    ~LKParticleEffectValue();
-protected:
-    std::map<std::string,int> varMap;
-    std::vector<RVar*> vars;
-    ROperation *op;
-    double num;
-};
+    using namespace std;
+    class LKParticleEffectValue
+    {
+    public:
+        void setExpression(string expression);
+        void setNumber(double number);
+        void setVar(double *var,string name);
+        double value();
+        ~LKParticleEffectValue();
+    protected:
+        map<string,int> varMap;
+        vector<RVar*> vars;
+        ROperation *op;
+        double num;
+    };
+}
+
 
 #endif

@@ -9,9 +9,9 @@
 #include "LKParticleValue.h"
 
 
-using namespace std;
+using namespace LKKit;
 
-void LKParticleEffectValue::setExpression(std::string expression)
+void LKParticleEffectValue::setExpression(string expression)
 {
     if (op)
     {

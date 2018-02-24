@@ -12,6 +12,8 @@
 #import <OpenGLES/ES3/glext.h>
 #import <LKParticleEffect/LKParticleEffect.h>
 
+using namespace LKKit;
+
 @interface ViewController ()
 
 @property (nonatomic) EAGLContext *context;
@@ -32,6 +34,8 @@
     self.glview.context = self.context;
     [EAGLContext setCurrentContext:self.context];
     self.system = new LKParticleEffectSystem(LKParticleEffectConfig());
+    NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
+    self.system->loadResources([path cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
 - (void)dealloc

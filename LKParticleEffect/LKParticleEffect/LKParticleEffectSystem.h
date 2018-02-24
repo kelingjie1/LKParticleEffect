@@ -6,38 +6,49 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#include "LKParticleEffectEmitter.h"
-#include "LKParticleEffectObject.h"
 #ifndef LKParticleEffectSystem_h
 #define LKParticleEffectSystem_h
 
-class LKParticleEffectConfig
-{
-public:
-    LKParticleEffectConfig();
-    unsigned int maxObjectCount;
-};
+#include <string>
+#include "LKParticleEffectEmitter.h"
+#include "LKParticleEffectSpriteObject.h"
+#include "LKParticleEffectTexture.h"
+#include "LKJSONObject.h"
 
-class LKParticleEffectSystem
+namespace LKKit
 {
-public:
-    LKParticleEffectSystem(LKParticleEffectConfig config);
-    void update(double timeDelta);
-    void render();
-    ~LKParticleEffectSystem();
-protected:
-    LKParticleEffectConfig config;
-    GLuint vbo;
-    GLuint vao;
-    GLuint ebo;
-    GLuint vertexShader;
-    GLuint fragmentShader;
-    GLuint program;
-    LKParticleEffectObject **effectObjects;
-    LKParticleEffectObjectData *effectObjectDatas;
-    GLshort *effectIndexes;
-    void setupObjects();
-    void updateElementBuffer();
-};
+    using namespace std;
+    class LKParticleEffectConfig
+    {
+    public:
+        LKParticleEffectConfig();
+        unsigned int maxObjectCount;
+    };
+    
+    class LKParticleEffectSystem
+    {
+    public:
+        LKParticleEffectSystem(LKParticleEffectConfig config);
+        void loadResources(string path);
+        void update(double timeDelta);
+        void render();
+        ~LKParticleEffectSystem();
+    protected:
+        LKParticleEffectConfig config;
+        GLuint vbo;
+        GLuint vao;
+        GLuint ebo;
+        GLuint vertexShader;
+        GLuint fragmentShader;
+        GLuint program;
+        map<string,LKParticleEffectTexture> textureMap;
+        LKParticleEffectSpriteObject **spriteObjects;
+        LKParticleEffectSpriteObjectData *spriteObjectDatas;
+        GLshort *effectIndexes;
+        void setupObjects();
+        void updateElementBuffer();
+    };
+}
+
 #endif
 

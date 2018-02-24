@@ -11,14 +11,19 @@
 
 #include <string>
 
-class LKParticleEffectShader
+namespace LKKit
 {
-public:
-    static LKParticleEffectShader *instance();
-    std::string vertexShaderStr;
-    std::string fragmentShaderStr;
-protected:
-    LKParticleEffectShader();
-};
+    using namespace std;
+    class LKParticleEffectShader
+    {
+    public:
+        static LKParticleEffectShader *instance();
+        string vertexShaderStr;
+        string fragmentShaderStr;
+    protected:
+        LKParticleEffectShader();
+    };
+}
+
 
 #endif /* LKParticleEffectShader_h */

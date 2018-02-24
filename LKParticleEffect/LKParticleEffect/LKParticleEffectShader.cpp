@@ -7,7 +7,7 @@
 //
 
 #include "LKParticleEffectShader.h"
-using namespace std;
+using namespace LKKit;
 #define MULTI_LINE_STRING(a) #a
 
 LKParticleEffectShader *LKParticleEffectShader::instance()
