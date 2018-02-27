@@ -22,12 +22,17 @@ using namespace LKKit;
 
 @end
 
+void loggerListener(LKParticleEffectLogLevel level,const char* str)
+{
+    NSLog(@"%s",str);
+}
+
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    LKParticleEffectLogger::instance()->listener = loggerListener;
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
     self.glview = (GLKView*)self.view;
@@ -35,7 +40,7 @@ using namespace LKKit;
     [EAGLContext setCurrentContext:self.context];
     self.system = new LKParticleEffectSystem(LKParticleEffectConfig());
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
-    self.system->loadResources([path cStringUsingEncoding:NSUTF8StringEncoding]);
+    self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
 - (void)dealloc
@@ -45,7 +50,7 @@ using namespace LKKit;
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0, 0, 1, 1);
+    glClearColor(1, 1, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     self.system->render();
 }

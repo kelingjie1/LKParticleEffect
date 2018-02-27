@@ -24,12 +24,14 @@ namespace LKKit
     public:
         string name;
         GLuint texture;
-        int width;
-        int height;
+        GLsizei width;
+        GLsizei height;
+        GLsizei frameWidth;
+        GLsizei frameHeight;
         int internalFormat;
         bool premultalpha;
         
-        void loadKTXFile(string path);
+        void loadFromPath(string path,string name);
         void loadKTXData(uint8_t *data,int length);
         void loadBitmapData(uint8_t *data,int length);
     };

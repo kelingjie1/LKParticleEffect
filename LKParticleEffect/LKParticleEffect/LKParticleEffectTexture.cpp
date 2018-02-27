@@ -12,6 +12,11 @@
 #include <algorithm>
 #include <math.h>
 #include <fstream>
+#if IOS
+#include "LKParticleEffectIOSBridge.h"
+#else
+
+#endif
 
 
 using namespace LKKit;
@@ -51,13 +56,6 @@ uint32_t LKSwapInt32(uint32_t arg) {
 }
 
 unsigned char buffer[1024*1024*5];
-void LKParticleEffectTexture::loadKTXFile(string path)
-{
-    fstream f(path,ios::in|ios::binary);
-    f.read((char*)buffer, 1024*1024*5);
-    int length = (int)f.gcount();
-    loadKTXData(buffer, length);
-}
 
 void LKParticleEffectTexture::loadKTXData(uint8_t *data,int length)
 {
@@ -119,3 +117,43 @@ void LKParticleEffectTexture::loadKTXData(uint8_t *data,int length)
     glBindTexture(GL_TEXTURE_2D, 0);
     
 }
+
+void LKParticleEffectTexture::loadBitmapData(uint8_t *data, int length)
+{
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    auto size = LKParticleEffectIOSBridge::glTexImage2DFromData(data, length);
+    width = size.first;
+    height = size.second;
+    GLenum glerror = glGetError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void LKParticleEffectTexture::loadFromPath(string path, string name)
+{
+    fstream f;
+    string suffixList[3] = {".ktx",".jpg",".png"};
+    for (int i=0; i<3; i++)
+    {
+        f.open(path+"/"+name+suffixList[i],ios::in|ios::binary);
+        if (f.is_open())
+        {
+            f.read((char*)buffer, 1024*1024*5);
+            int length = (int)f.gcount();
+            if (i==0)
+            {
+                loadKTXData(buffer, length);
+            }
+            else
+            {
+                loadBitmapData(buffer, length);
+            }
+        }
+    }
+    
+    
+}
+
+

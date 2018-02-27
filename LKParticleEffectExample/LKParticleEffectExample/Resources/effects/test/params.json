@@ -4,12 +4,15 @@
     "resources":
     {
         "textures":
-        {
-            "name":"flower1",
-            "frameCount":75,
-            "frameWidth":150,
-            "frameHeight":150,
-        },
+        [
+            {
+                "name":"flower1",
+                "frameCount":75,
+                "frameWidth":150,
+                "frameHeight":150,
+            },
+            
+        ],
     },
     "objects":
     {
@@ -49,10 +52,42 @@
     [
         {
             "name":"stage1",
+            "events":
+            [
+                {
+                    "type":"delay",
+                    "time":3,
+                    "action":
+                    {
+                        "type":"change_stage",
+                        "target":"stage2"
+                    }
+                },
+                {
+                    "type":"detect",
+                    "pose":"show_hand",
+                    "action":
+                    {
+                        "type":"change_stage",
+                        "target":"stage2"
+                    }
+                },
+                {
+                    "type":"undetect",
+                    "pose":"show_hand",
+                    "action":
+                    {
+                        "type":"reset"
+                    }
+                }
+
+            ],
             "objects":
             {
      
             }
         },
-    ]
+    ],
+
+    
 }

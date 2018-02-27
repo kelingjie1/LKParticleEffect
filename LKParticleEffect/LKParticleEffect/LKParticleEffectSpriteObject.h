@@ -16,6 +16,16 @@ struct LKParticleEffectSpriteObjectData
     GLfloat positionX;
     GLfloat positionY;
     GLfloat positionZ;
+    GLfloat width;
+    GLfloat height;
+    GLfloat colorR;
+    GLfloat colorG;
+    GLfloat colorB;
+    GLfloat colorA;
+    GLfloat textureU;
+    GLfloat textureV;
+    GLfloat textureIndex;
+    GLfloat rotation;
 };
 
 class LKParticleEffectSpriteObject

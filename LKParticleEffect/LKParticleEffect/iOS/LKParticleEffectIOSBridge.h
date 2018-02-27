@@ -16,6 +16,7 @@ namespace LKKit
     {
     public:
         static LKJSONObject JSONObjectFromPath(string path);
+        static pair<GLsizei, GLsizei> glTexImage2DFromData(uint8_t *data, int length);
     };
 }
 

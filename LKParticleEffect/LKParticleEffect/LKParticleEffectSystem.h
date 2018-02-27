@@ -14,6 +14,7 @@
 #include "LKParticleEffectSpriteObject.h"
 #include "LKParticleEffectTexture.h"
 #include "LKJSONObject.h"
+#include "LKParticleEffectCamera.h"
 
 namespace LKKit
 {
@@ -23,13 +24,21 @@ namespace LKKit
     public:
         LKParticleEffectConfig();
         unsigned int maxObjectCount;
+        unsigned int viewWidth;
+        unsigned int viewHeight;
     };
     
     class LKParticleEffectSystem
     {
     public:
+        LKParticleEffectCamera camera;
+        vector<float> projectMatrix;
+        GLuint texturesLocation;
+        GLuint frameSizesLocation;
+        GLuint vpMatrixLocation;
+        
         LKParticleEffectSystem(LKParticleEffectConfig config);
-        void loadResources(string path);
+        void load(string path);
         void update(double timeDelta);
         void render();
         ~LKParticleEffectSystem();
