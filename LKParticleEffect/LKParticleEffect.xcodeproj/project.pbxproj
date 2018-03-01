@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		073E1665204801AB007B1BAF /* glcontext.h in Headers */ = {isa = PBXBuildFile; fileRef = 073E1664204801AA007B1BAF /* glcontext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		073E1667204801CA007B1BAF /* PlatformBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 073E1666204801C9007B1BAF /* PlatformBridge.h */; };
 		073E166920480209007B1BAF /* PlatformBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 073E166820480208007B1BAF /* PlatformBridge.cpp */; };
+		073E166A20481606007B1BAF /* glcontext.h in Headers */ = {isa = PBXBuildFile; fileRef = 073E1664204801AA007B1BAF /* glcontext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		073E16962048182C007B1BAF /* Headers in Resources */ = {isa = PBXBuildFile; fileRef = 073E16952048182C007B1BAF /* Headers */; };
 		07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */; };
 		07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */; };
@@ -23,39 +23,6 @@
 		07E0F5E52043F86800D97980 /* LKParticleEffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F6202047EBAE00D97980 /* LKParticleEffectInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F61E2047EBAE00D97980 /* LKParticleEffectInput.cpp */; };
 		07E0F6212047EBAE00D97980 /* LKParticleEffectInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F61F2047EBAE00D97980 /* LKParticleEffectInput.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		07E0F6492047F31000D97980 /* allocators.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6232047F30F00D97980 /* allocators.h */; };
-		07E0F64A2047F31000D97980 /* document.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6242047F30F00D97980 /* document.h */; };
-		07E0F64B2047F31000D97980 /* encodedstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6252047F30F00D97980 /* encodedstream.h */; };
-		07E0F64C2047F31000D97980 /* encodings.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6262047F30F00D97980 /* encodings.h */; };
-		07E0F64D2047F31000D97980 /* en.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6282047F30F00D97980 /* en.h */; };
-		07E0F64E2047F31000D97980 /* error.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6292047F30F00D97980 /* error.h */; };
-		07E0F64F2047F31000D97980 /* filereadstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62A2047F30F00D97980 /* filereadstream.h */; };
-		07E0F6502047F31000D97980 /* filewritestream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62B2047F30F00D97980 /* filewritestream.h */; };
-		07E0F6512047F31000D97980 /* fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62C2047F30F00D97980 /* fwd.h */; };
-		07E0F6522047F31000D97980 /* biginteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62E2047F30F00D97980 /* biginteger.h */; };
-		07E0F6532047F31000D97980 /* diyfp.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62F2047F30F00D97980 /* diyfp.h */; };
-		07E0F6542047F31000D97980 /* dtoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6302047F30F00D97980 /* dtoa.h */; };
-		07E0F6552047F31000D97980 /* ieee754.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6312047F30F00D97980 /* ieee754.h */; };
-		07E0F6562047F31000D97980 /* itoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6322047F30F00D97980 /* itoa.h */; };
-		07E0F6572047F31000D97980 /* meta.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6332047F30F00D97980 /* meta.h */; };
-		07E0F6582047F31000D97980 /* pow10.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6342047F30F00D97980 /* pow10.h */; };
-		07E0F6592047F31000D97980 /* regex.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6352047F30F00D97980 /* regex.h */; };
-		07E0F65A2047F31000D97980 /* stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6362047F30F00D97980 /* stack.h */; };
-		07E0F65B2047F31000D97980 /* strfunc.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6372047F30F00D97980 /* strfunc.h */; };
-		07E0F65C2047F31000D97980 /* strtod.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6382047F30F00D97980 /* strtod.h */; };
-		07E0F65D2047F31000D97980 /* swap.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6392047F30F00D97980 /* swap.h */; };
-		07E0F65E2047F31000D97980 /* istreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F63A2047F30F00D97980 /* istreamwrapper.h */; };
-		07E0F65F2047F31000D97980 /* memorybuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F63B2047F30F00D97980 /* memorybuffer.h */; };
-		07E0F6602047F31000D97980 /* memorystream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F63C2047F30F00D97980 /* memorystream.h */; };
-		07E0F6632047F31000D97980 /* ostreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6402047F30F00D97980 /* ostreamwrapper.h */; };
-		07E0F6642047F31000D97980 /* pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6412047F30F00D97980 /* pointer.h */; };
-		07E0F6652047F31000D97980 /* prettywriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6422047F30F00D97980 /* prettywriter.h */; };
-		07E0F6662047F31000D97980 /* rapidjson.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6432047F30F00D97980 /* rapidjson.h */; };
-		07E0F6672047F31000D97980 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6442047F30F00D97980 /* reader.h */; };
-		07E0F6682047F31000D97980 /* schema.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6452047F30F00D97980 /* schema.h */; };
-		07E0F6692047F31000D97980 /* stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6462047F30F00D97980 /* stream.h */; };
-		07E0F66A2047F31000D97980 /* stringbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6472047F30F00D97980 /* stringbuffer.h */; };
-		07E0F66B2047F31000D97980 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6482047F30F00D97980 /* writer.h */; };
 		7855E728203291E00035D240 /* LKParticleEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E726203291E00035D240 /* LKParticleEffect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E734203292030035D240 /* LKParticleEffectSystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E735203292030035D240 /* LKParticleEffectSystem.cpp */; };
@@ -70,7 +37,6 @@
 		78809F3D2033DCC200982F23 /* LKParticleEffectValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F392033DCC200982F23 /* LKParticleEffectValue.cpp */; };
 		78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F3A2033DCC200982F23 /* mathexpr.cpp */; };
 		78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */; };
-		78FE1D0E203EFE5E00D9C7FD /* LKParticleEffectShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */; };
 		78FE1D11203F08BF00D9C7FD /* LKParticleEffectLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FE1D0F203F08BF00D9C7FD /* LKParticleEffectLogger.cpp */; };
 		78FE1D12203F08BF00D9C7FD /* LKParticleEffectLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FE1D10203F08BF00D9C7FD /* LKParticleEffectLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78FE1D15203F112C00D9C7FD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FE1D14203F112C00D9C7FD /* OpenGLES.framework */; };
@@ -80,6 +46,7 @@
 		073E1664204801AA007B1BAF /* glcontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glcontext.h; sourceTree = "<group>"; };
 		073E1666204801C9007B1BAF /* PlatformBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformBridge.h; sourceTree = "<group>"; };
 		073E166820480208007B1BAF /* PlatformBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlatformBridge.cpp; sourceTree = "<group>"; };
+		073E16952048182C007B1BAF /* Headers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Headers; path = LKParticleEffect/Headers; sourceTree = "<group>"; };
 		07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectIOSBridge.h; sourceTree = "<group>"; };
 		07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectIOSBridge.mm; sourceTree = "<group>"; };
 		07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectTexture.cpp; sourceTree = "<group>"; };
@@ -166,6 +133,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		073E166F2048180D007B1BAF /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				07E0F6222047F30F00D97980 /* rapidjson */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
 		07E0F5B420415DAB00D97980 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +209,7 @@
 		7855E719203291E00035D240 = {
 			isa = PBXGroup;
 			children = (
+				073E16952048182C007B1BAF /* Headers */,
 				7855E725203291E00035D240 /* LKParticleEffect */,
 				7855E724203291E00035D240 /* Products */,
 				78FE1D13203F112C00D9C7FD /* Frameworks */,
@@ -278,7 +254,7 @@
 				78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */,
 				07E0F61F2047EBAE00D97980 /* LKParticleEffectInput.h */,
 				07E0F61E2047EBAE00D97980 /* LKParticleEffectInput.cpp */,
-				07E0F6222047F30F00D97980 /* rapidjson */,
+				073E166F2048180D007B1BAF /* Headers */,
 				07E0F5B420415DAB00D97980 /* iOS */,
 			);
 			path = LKParticleEffect;
@@ -305,54 +281,19 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07E0F6572047F31000D97980 /* meta.h in Headers */,
-				07E0F6542047F31000D97980 /* dtoa.h in Headers */,
-				07E0F6562047F31000D97980 /* itoa.h in Headers */,
-				78FE1D0E203EFE5E00D9C7FD /* LKParticleEffectShader.h in Headers */,
-				07E0F65F2047F31000D97980 /* memorybuffer.h in Headers */,
 				7855E728203291E00035D240 /* LKParticleEffect.h in Headers */,
 				78FE1D12203F08BF00D9C7FD /* LKParticleEffectLogger.h in Headers */,
-				07E0F6662047F31000D97980 /* rapidjson.h in Headers */,
-				07E0F6582047F31000D97980 /* pow10.h in Headers */,
-				07E0F66B2047F31000D97980 /* writer.h in Headers */,
-				07E0F6642047F31000D97980 /* pointer.h in Headers */,
-				07E0F64D2047F31000D97980 /* en.h in Headers */,
-				073E1665204801AB007B1BAF /* glcontext.h in Headers */,
 				78809F3C2033DCC200982F23 /* LKParticleEffectValue.h in Headers */,
-				07E0F6502047F31000D97980 /* filewritestream.h in Headers */,
 				07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */,
 				78809F0D2033100700982F23 /* LKParticleEffectUtil.h in Headers */,
-				07E0F64B2047F31000D97980 /* encodedstream.h in Headers */,
-				07E0F6522047F31000D97980 /* biginteger.h in Headers */,
 				07E0F5C020416D7900D97980 /* LKParticleEffectTexture.h in Headers */,
 				07E0F6212047EBAE00D97980 /* LKParticleEffectInput.h in Headers */,
 				07E0F5E52043F86800D97980 /* LKParticleEffectCamera.h in Headers */,
-				07E0F6592047F31000D97980 /* regex.h in Headers */,
-				07E0F6652047F31000D97980 /* prettywriter.h in Headers */,
-				073E1667204801CA007B1BAF /* PlatformBridge.h in Headers */,
-				07E0F65A2047F31000D97980 /* stack.h in Headers */,
 				7855E73E203292C90035D240 /* LKParticleEffectObject.h in Headers */,
-				07E0F6492047F31000D97980 /* allocators.h in Headers */,
-				07E0F6552047F31000D97980 /* ieee754.h in Headers */,
-				07E0F64F2047F31000D97980 /* filereadstream.h in Headers */,
-				07E0F65E2047F31000D97980 /* istreamwrapper.h in Headers */,
 				78809F3B2033DCC200982F23 /* mathexpr.h in Headers */,
-				07E0F65D2047F31000D97980 /* swap.h in Headers */,
 				7855E73A203292A90035D240 /* LKParticleEffectEmitter.h in Headers */,
-				07E0F6692047F31000D97980 /* stream.h in Headers */,
-				07E0F6532047F31000D97980 /* diyfp.h in Headers */,
 				7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */,
-				07E0F66A2047F31000D97980 /* stringbuffer.h in Headers */,
-				07E0F65C2047F31000D97980 /* strtod.h in Headers */,
-				07E0F6632047F31000D97980 /* ostreamwrapper.h in Headers */,
-				07E0F6672047F31000D97980 /* reader.h in Headers */,
-				07E0F65B2047F31000D97980 /* strfunc.h in Headers */,
-				07E0F64A2047F31000D97980 /* document.h in Headers */,
-				07E0F64C2047F31000D97980 /* encodings.h in Headers */,
-				07E0F64E2047F31000D97980 /* error.h in Headers */,
-				07E0F6682047F31000D97980 /* schema.h in Headers */,
-				07E0F6512047F31000D97980 /* fwd.h in Headers */,
-				07E0F6602047F31000D97980 /* memorystream.h in Headers */,
+				073E166A20481606007B1BAF /* glcontext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				073E16962048182C007B1BAF /* Headers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +511,7 @@
 					"IOS=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LKParticleEffect/Headers/\"";
 				INFOPLIST_FILE = LKParticleEffect/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -592,6 +535,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREPROCESSOR_DEFINITIONS = "IOS=1";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LKParticleEffect/Headers/\"";
 				INFOPLIST_FILE = LKParticleEffect/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

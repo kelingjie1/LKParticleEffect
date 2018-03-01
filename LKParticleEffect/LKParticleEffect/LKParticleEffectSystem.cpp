@@ -18,6 +18,7 @@
 #include <fstream>
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
+#include "rapidjson/pointer.h"
 
 using namespace LKKit;
 using namespace rapidjson;
@@ -127,7 +128,6 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 
 void LKParticleEffectSystem::load(string path)
 {
-    Document document;
     fstream f(path+"/params.json");
     if (!f.is_open())
     {
@@ -159,7 +159,9 @@ void LKParticleEffectSystem::load(string path)
     const Value &objects = define["objects"];
     for (SizeType i = 0; i<objects.Size(); i++)
     {
-        //spriteMap[it->valueMap["name"].valueString] = *it;
+        stringstream ss;
+        ss<<"/define/objects/"<<i;
+        objectMap[objects[i].GetString()] = Pointer(ss.str().c_str());
     }
 }
 

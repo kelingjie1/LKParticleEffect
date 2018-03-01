@@ -30,6 +30,40 @@ namespace LKKit
         GLfloat textureIndex;
         GLfloat rotation;
     };
+    
+    struct LKParticleEffectObjectProperty
+    {
+        double rand0;
+        double rand1;
+        double rand2;
+        double rand3;
+        double rand4;
+        double rand5;
+        double rand6;
+        double rand7;
+        double rand8;
+        double rand9;
+        
+        double last_colorR;
+        double last_colorG;
+        double last_colorB;
+        double last_colorA;
+        double last_frameIndex;
+        double last_width;
+        double last_height;
+    };
+    struct LKParticleEffectGlobalProperty
+    {
+        double totalTime;
+        double stageTime;
+        double cameraX;
+        double cameraY;
+        double cameraZ;
+        double cameraDirX;
+        double cameraDirY;
+        double cameraDirZ;
+    };
+    
     struct LKParticleEffectSpriteProperty
     {
         LKParticleEffectValue colorR;

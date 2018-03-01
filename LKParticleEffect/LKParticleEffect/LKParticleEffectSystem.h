@@ -14,10 +14,13 @@
 #include "LKParticleEffectObject.h"
 #include "LKParticleEffectTexture.h"
 #include "LKParticleEffectCamera.h"
+#include "rapidjson/document.h"
+#include "rapidjson/pointer.h"
 
 namespace LKKit
 {
     using namespace std;
+    using namespace rapidjson;
     class LKParticleEffectConfig
     {
     public:
@@ -49,9 +52,9 @@ namespace LKKit
         GLuint vertexShader;
         GLuint fragmentShader;
         GLuint program;
+        Document document;
         map<string,LKParticleEffectTexture> textureMap;
-        //map<string,LKJSONObject> spriteMap;
-        //map<string,LKJSONObject> emitterMap;
+        map<string,Pointer> objectMap;
         
         vector<LKParticleEffectEmitter> emitters;
         LKParticleEffectObject **spriteObjects;
