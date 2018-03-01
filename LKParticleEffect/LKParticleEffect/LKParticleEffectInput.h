@@ -11,7 +11,6 @@
 
 namespace LKKit
 {
-    using namespace std;
     class LKParticleEffectInput
     {
     public:

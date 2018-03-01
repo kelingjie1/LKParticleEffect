@@ -21,19 +21,25 @@ include $(CLEAR_VARS)
 # *** Remember: Change -O0 into -O2 in add-applications.mk ***
 
 LOCAL_MODULE    := LKParticleSystem
-LOCAL_SRC_FILES := LKJSONObject.cpp \
-                   LKParticleEffectEmitter.cpp \
-                   LKParticleEffectLogger.cpp \
-                   LKParticleEffectShader.cpp \
-                   LKParticleEffectSpriteObject.cpp \
-                   LKParticleEffectSystem.cpp \
-                   LKParticleEffectTexture.cpp \
-                   LKParticleEffectUtil.cpp \
-                   LKParticleValue.cpp \
-                   mathexpr.cpp \
-                   PlatformBridge.cpp \
-                   android/AndroidBridge.cpp \
-                   LKParticleEffectCamera.cpp \
+
+MY_CPP_LIST := $(wildcard $(LOCAL_PATH)/*.cpp)
+MY_CPP_LIST += $(wildcard $(LOCAL_PATH)/android/*.cpp)
+
+LOCAL_SRC_FILES := $(MY_CPP_LIST:$(LOCAL_PATH)/%=%)
+
+#LOCAL_SRC_FILES := LKJSONObject.cpp \
+#                   LKParticleEffectEmitter.cpp \
+#                   LKParticleEffectLogger.cpp \
+#                   LKParticleEffectShader.cpp \
+#                   LKParticleEffectSpriteObject.cpp \
+#                   LKParticleEffectSystem.cpp \
+#                   LKParticleEffectTexture.cpp \
+#                   LKParticleEffectUtil.cpp \
+#                   LKParticleValue.cpp \
+#                   mathexpr.cpp \
+#                   PlatformBridge.cpp \
+#                   android/AndroidBridge.cpp \
+#                   LKParticleEffectCamera.cpp \
 
 # for native audio
 LOCAL_SHARED_LIBRARIES += -lgcc 
