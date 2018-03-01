@@ -5,7 +5,7 @@
 #if IOS
 #include "LKParticleEffectIOSBridge.h"
 #else
-#include <android/AndroidBridge.h>
+#include "android/AndroidBridge.h"
 #endif
 
 #include "PlatformBridge.h"

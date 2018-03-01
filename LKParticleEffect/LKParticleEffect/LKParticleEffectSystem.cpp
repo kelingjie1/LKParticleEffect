@@ -7,7 +7,7 @@
 //
 
 #include "LKParticleEffectSystem.h"
-#include <glcontext.h>
+#include "glcontext.h"
 #include "LKParticleEffectShader.h"
 #include "LKParticleEffectLogger.h"
 

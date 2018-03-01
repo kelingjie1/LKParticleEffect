@@ -8,12 +8,12 @@
 
 #include <cstdint>
 #include <GLES3/gl3.h>
-#include <LKJSONObject.h>
+#include <utility>
 
+using namespace std;
 namespace LKKit {
     class AndroidBridge {
     public:
-        static LKJSONObject JSONObjectFromPath(string path);
         static pair<GLsizei, GLsizei> glTexImage2DFromData(uint8_t *data, int length);
     };
 }
