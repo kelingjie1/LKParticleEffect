@@ -8,12 +8,10 @@
 
 #include <cstdint>
 #include <glcontext.h>
-#include <LKJSONObject.h>
 
 namespace LKKit {
     class PlatformBridge {
     public:
-        static LKJSONObject JSONObjectFromPath(string path);
         static pair<GLsizei, GLsizei> glTexImage2DFromData(uint8_t *data, int length);
     };
 }

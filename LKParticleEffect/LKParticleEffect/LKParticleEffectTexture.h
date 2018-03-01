@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#include <glcontext.h>
+#include "glcontext.h"
 
 #include <string>
 

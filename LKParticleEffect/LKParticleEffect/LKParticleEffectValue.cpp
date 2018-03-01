@@ -6,7 +6,7 @@
 //  Copyright © 2017年 lingtonke. All rights reserved.
 //
 
-#include "LKParticleValue.h"
+#include "LKParticleEffectValue.h"
 
 
 using namespace LKKit;

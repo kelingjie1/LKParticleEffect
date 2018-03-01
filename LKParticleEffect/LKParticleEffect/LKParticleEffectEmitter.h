@@ -7,9 +7,17 @@
 //
 #ifndef LKParticleEffectEmitter_h
 #define LKParticleEffectEmitter_h
-class LKParticleEffectEmitter
+#include <string>
+#include "LKParticleEffectValue.h"
+namespace LKKit
 {
-public:
-    int index;
-};
+    using namespace std;
+    class LKParticleEffectEmitter
+    {
+    public:
+        string name;
+        LKParticleEffectValue *emitRate;
+    };
+}
+
 #endif

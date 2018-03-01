@@ -14,39 +14,74 @@
             
         ],
     },
-    "objects":
+    "define":
     {
         "camera":
         {
             
         },
-        "sprites":
+        "objects":
         [
+            {
+                "name":"flower2",
+                "type":"default",
+                "sprites":
+                {
+                    "colorR":1,
+                    "colorG":1,
+                    "colorB":1,
+                    "colorA":1,
+                    "texture":"flower1",
+                    "frameIndex":"t%30",
+                    "width":100,
+                    "height":100,
+                },
+                "rotation":0,
+                "positionX":"(rand0%5+5)*t",
+                "positionY":"(rand1%5+5)*t",
+                "positionZ":"(rand2%5+5)*t",
+            },
             {
                 "name":"flower1",
                 "type":"default",
-                "colorR":1,
-                "colorG":1,
-                "colorB":1,
-                "colorA":1,
-                "texture":"flower1",
-                "frameIndex":"t%30",
-                "width":100,
-                "height":100,
+                "sprites":
+                {
+                    "colorR":1,
+                    "colorG":1,
+                    "colorB":1,
+                    "colorA":1,
+                    "texture":"flower1",
+                    "frameIndex":"t%30",
+                    "width":100,
+                    "height":100,
+                },
                 "rotation":0,
-            }
-        ],
-        "emitters":
-        [
-            {
-                "name":"snowEmitter",
-                "objects":
+                "positionX":"rand0%1000-500",
+                "positionY":"1000-t*10",
+                "positionZ":"rand1%1000-500",
+                "emitRate":10,
+                "emit_objects":
                 [
-                    "snow",
+                    "flower2",
                 ],
-                "mode":"default"
+         
             },
-        ]
+            {
+                "name":"flower1",
+                "type":"default",
+                "rotation":0,
+                "positionX":0,
+                "positionY":0,
+                "positionZ":0,
+                "emitRate":20,
+                "emit_objects":
+                [
+                    "flower1",
+                ],
+         
+            },
+
+        ],
     },
     "stages":
     [
@@ -82,6 +117,10 @@
                 }
 
             ],
+            "define":
+            {
+                
+            },
             "objects":
             {
      

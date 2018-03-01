@@ -5,7 +5,7 @@
 #ifndef NEWPARTICLE_GLCONTEXT_H
 #define NEWPARTICLE_GLCONTEXT_H
 
-#if IOS
+#if __APPLE__
 #include <OpenGLES/ES3/gl.h>
 #include <OpenGLES/ES3/glext.h>
 #else

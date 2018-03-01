@@ -8,7 +8,7 @@
 
 #ifndef LKParticleEffectCamera_h
 #define LKParticleEffectCamera_h
-#include <glcontext.h>
+#include "glcontext.h"
 #include <vector>
 
 namespace LKKit

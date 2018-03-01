@@ -19,10 +19,3 @@ pair<GLsizei, GLsizei> LKKit::PlatformBridge::glTexImage2DFromData(uint8_t *data
 #endif
 }
 
-LKKit::LKJSONObject LKKit::PlatformBridge::JSONObjectFromPath(string path) {
-#if IOS
-    return LKParticleEffectIOSBridge::JSONObjectFromPath(data, length);
-#else
-    return AndroidBridge::JSONObjectFromPath(path);
-#endif
-}
