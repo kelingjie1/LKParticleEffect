@@ -7,8 +7,10 @@
 
 
 #include <cstdint>
-#include <glcontext.h>
+#include <utility>
+#include "glcontext.h"
 
+using namespace std;
 namespace LKKit {
     class PlatformBridge {
     public:

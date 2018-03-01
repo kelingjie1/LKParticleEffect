@@ -13,6 +13,3 @@ pair<GLsizei, GLsizei> LKKit::AndroidBridge::glTexImage2DFromData(uint8_t *data,
     return pair<GLsizei, GLsizei>(width, height);
 }
 
-LKKit::LKJSONObject LKKit::AndroidBridge::JSONObjectFromPath(string path) {
-    return LKKit::LKJSONObject();
-}

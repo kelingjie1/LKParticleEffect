@@ -8,7 +8,7 @@
 
 #include "LKParticleEffectUtil.h"
 #include <math.h>
-#include <glcontext.h>
+#include "glcontext.h"
 
 using namespace LKKit;
 

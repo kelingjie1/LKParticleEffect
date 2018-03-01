@@ -14,8 +14,6 @@
 #include <math.h>
 #include <fstream>
 
-#include <PlatformBridge.h>
-
 
 using namespace LKKit;
 using namespace std;
