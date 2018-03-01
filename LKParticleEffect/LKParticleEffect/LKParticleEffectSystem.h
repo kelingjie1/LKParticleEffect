@@ -13,7 +13,6 @@
 #include "LKParticleEffectEmitter.h"
 #include "LKParticleEffectSpriteObject.h"
 #include "LKParticleEffectTexture.h"
-#include "LKJSONObject.h"
 #include "LKParticleEffectCamera.h"
 
 namespace LKKit
@@ -51,6 +50,10 @@ namespace LKKit
         GLuint fragmentShader;
         GLuint program;
         map<string,LKParticleEffectTexture> textureMap;
+        //map<string,LKJSONObject> spriteMap;
+        //map<string,LKJSONObject> emitterMap;
+        
+        vector<LKParticleEffectEmitter> emitters;
         LKParticleEffectSpriteObject **spriteObjects;
         LKParticleEffectSpriteObjectData *spriteObjectDatas;
         GLshort *effectIndexes;

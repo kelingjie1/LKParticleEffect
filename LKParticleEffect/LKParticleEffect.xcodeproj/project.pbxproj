@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07E0F5B22041591A00D97980 /* LKJSONObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5B02041591A00D97980 /* LKJSONObject.cpp */; };
-		07E0F5B32041591A00D97980 /* LKJSONObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5B12041591A00D97980 /* LKJSONObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */; };
 		07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */; };
@@ -20,6 +18,41 @@
 		07E0F5E12043AEA800D97980 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E0F5E02043AEA800D97980 /* CoreGraphics.framework */; };
 		07E0F5E42043F86800D97980 /* LKParticleEffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5E22043F86800D97980 /* LKParticleEffectCamera.cpp */; };
 		07E0F5E52043F86800D97980 /* LKParticleEffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07E0F6202047EBAE00D97980 /* LKParticleEffectInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F61E2047EBAE00D97980 /* LKParticleEffectInput.cpp */; };
+		07E0F6212047EBAE00D97980 /* LKParticleEffectInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F61F2047EBAE00D97980 /* LKParticleEffectInput.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07E0F6492047F31000D97980 /* allocators.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6232047F30F00D97980 /* allocators.h */; };
+		07E0F64A2047F31000D97980 /* document.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6242047F30F00D97980 /* document.h */; };
+		07E0F64B2047F31000D97980 /* encodedstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6252047F30F00D97980 /* encodedstream.h */; };
+		07E0F64C2047F31000D97980 /* encodings.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6262047F30F00D97980 /* encodings.h */; };
+		07E0F64D2047F31000D97980 /* en.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6282047F30F00D97980 /* en.h */; };
+		07E0F64E2047F31000D97980 /* error.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6292047F30F00D97980 /* error.h */; };
+		07E0F64F2047F31000D97980 /* filereadstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62A2047F30F00D97980 /* filereadstream.h */; };
+		07E0F6502047F31000D97980 /* filewritestream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62B2047F30F00D97980 /* filewritestream.h */; };
+		07E0F6512047F31000D97980 /* fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62C2047F30F00D97980 /* fwd.h */; };
+		07E0F6522047F31000D97980 /* biginteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62E2047F30F00D97980 /* biginteger.h */; };
+		07E0F6532047F31000D97980 /* diyfp.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F62F2047F30F00D97980 /* diyfp.h */; };
+		07E0F6542047F31000D97980 /* dtoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6302047F30F00D97980 /* dtoa.h */; };
+		07E0F6552047F31000D97980 /* ieee754.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6312047F30F00D97980 /* ieee754.h */; };
+		07E0F6562047F31000D97980 /* itoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6322047F30F00D97980 /* itoa.h */; };
+		07E0F6572047F31000D97980 /* meta.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6332047F30F00D97980 /* meta.h */; };
+		07E0F6582047F31000D97980 /* pow10.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6342047F30F00D97980 /* pow10.h */; };
+		07E0F6592047F31000D97980 /* regex.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6352047F30F00D97980 /* regex.h */; };
+		07E0F65A2047F31000D97980 /* stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6362047F30F00D97980 /* stack.h */; };
+		07E0F65B2047F31000D97980 /* strfunc.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6372047F30F00D97980 /* strfunc.h */; };
+		07E0F65C2047F31000D97980 /* strtod.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6382047F30F00D97980 /* strtod.h */; };
+		07E0F65D2047F31000D97980 /* swap.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6392047F30F00D97980 /* swap.h */; };
+		07E0F65E2047F31000D97980 /* istreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F63A2047F30F00D97980 /* istreamwrapper.h */; };
+		07E0F65F2047F31000D97980 /* memorybuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F63B2047F30F00D97980 /* memorybuffer.h */; };
+		07E0F6602047F31000D97980 /* memorystream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F63C2047F30F00D97980 /* memorystream.h */; };
+		07E0F6632047F31000D97980 /* ostreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6402047F30F00D97980 /* ostreamwrapper.h */; };
+		07E0F6642047F31000D97980 /* pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6412047F30F00D97980 /* pointer.h */; };
+		07E0F6652047F31000D97980 /* prettywriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6422047F30F00D97980 /* prettywriter.h */; };
+		07E0F6662047F31000D97980 /* rapidjson.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6432047F30F00D97980 /* rapidjson.h */; };
+		07E0F6672047F31000D97980 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6442047F30F00D97980 /* reader.h */; };
+		07E0F6682047F31000D97980 /* schema.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6452047F30F00D97980 /* schema.h */; };
+		07E0F6692047F31000D97980 /* stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6462047F30F00D97980 /* stream.h */; };
+		07E0F66A2047F31000D97980 /* stringbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6472047F30F00D97980 /* stringbuffer.h */; };
+		07E0F66B2047F31000D97980 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F6482047F30F00D97980 /* writer.h */; };
 		7855E728203291E00035D240 /* LKParticleEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E726203291E00035D240 /* LKParticleEffect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E734203292030035D240 /* LKParticleEffectSystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E735203292030035D240 /* LKParticleEffectSystem.cpp */; };
@@ -29,9 +62,9 @@
 		7855E73F203292C90035D240 /* LKParticleEffectSpriteObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E73D203292C90035D240 /* LKParticleEffectSpriteObject.cpp */; };
 		78809F0D2033100700982F23 /* LKParticleEffectUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F0B2033100700982F23 /* LKParticleEffectUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */; };
-		78809F3B2033DCC200982F23 /* mathexpr.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F372033DCC200982F23 /* mathexpr.h */; };
-		78809F3C2033DCC200982F23 /* LKParticleValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F382033DCC200982F23 /* LKParticleValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		78809F3D2033DCC200982F23 /* LKParticleValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F392033DCC200982F23 /* LKParticleValue.cpp */; };
+		78809F3B2033DCC200982F23 /* mathexpr.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F372033DCC200982F23 /* mathexpr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		78809F3C2033DCC200982F23 /* LKParticleEffectValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F382033DCC200982F23 /* LKParticleEffectValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		78809F3D2033DCC200982F23 /* LKParticleEffectValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F392033DCC200982F23 /* LKParticleEffectValue.cpp */; };
 		78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F3A2033DCC200982F23 /* mathexpr.cpp */; };
 		78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */; };
 		78FE1D0E203EFE5E00D9C7FD /* LKParticleEffectShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */; };
@@ -41,8 +74,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		07E0F5B02041591A00D97980 /* LKJSONObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKJSONObject.cpp; sourceTree = "<group>"; };
-		07E0F5B12041591A00D97980 /* LKJSONObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKJSONObject.h; sourceTree = "<group>"; };
 		07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectIOSBridge.h; sourceTree = "<group>"; };
 		07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectIOSBridge.mm; sourceTree = "<group>"; };
 		07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectTexture.cpp; sourceTree = "<group>"; };
@@ -55,6 +86,41 @@
 		07E0F5E02043AEA800D97980 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		07E0F5E22043F86800D97980 /* LKParticleEffectCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectCamera.cpp; sourceTree = "<group>"; };
 		07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectCamera.h; sourceTree = "<group>"; };
+		07E0F61E2047EBAE00D97980 /* LKParticleEffectInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectInput.cpp; sourceTree = "<group>"; };
+		07E0F61F2047EBAE00D97980 /* LKParticleEffectInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectInput.h; sourceTree = "<group>"; };
+		07E0F6232047F30F00D97980 /* allocators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocators.h; sourceTree = "<group>"; };
+		07E0F6242047F30F00D97980 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		07E0F6252047F30F00D97980 /* encodedstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encodedstream.h; sourceTree = "<group>"; };
+		07E0F6262047F30F00D97980 /* encodings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encodings.h; sourceTree = "<group>"; };
+		07E0F6282047F30F00D97980 /* en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = en.h; sourceTree = "<group>"; };
+		07E0F6292047F30F00D97980 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		07E0F62A2047F30F00D97980 /* filereadstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filereadstream.h; sourceTree = "<group>"; };
+		07E0F62B2047F30F00D97980 /* filewritestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filewritestream.h; sourceTree = "<group>"; };
+		07E0F62C2047F30F00D97980 /* fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwd.h; sourceTree = "<group>"; };
+		07E0F62E2047F30F00D97980 /* biginteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = biginteger.h; sourceTree = "<group>"; };
+		07E0F62F2047F30F00D97980 /* diyfp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diyfp.h; sourceTree = "<group>"; };
+		07E0F6302047F30F00D97980 /* dtoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtoa.h; sourceTree = "<group>"; };
+		07E0F6312047F30F00D97980 /* ieee754.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ieee754.h; sourceTree = "<group>"; };
+		07E0F6322047F30F00D97980 /* itoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itoa.h; sourceTree = "<group>"; };
+		07E0F6332047F30F00D97980 /* meta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meta.h; sourceTree = "<group>"; };
+		07E0F6342047F30F00D97980 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		07E0F6352047F30F00D97980 /* regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regex.h; sourceTree = "<group>"; };
+		07E0F6362047F30F00D97980 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		07E0F6372047F30F00D97980 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		07E0F6382047F30F00D97980 /* strtod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strtod.h; sourceTree = "<group>"; };
+		07E0F6392047F30F00D97980 /* swap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swap.h; sourceTree = "<group>"; };
+		07E0F63A2047F30F00D97980 /* istreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = istreamwrapper.h; sourceTree = "<group>"; };
+		07E0F63B2047F30F00D97980 /* memorybuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorybuffer.h; sourceTree = "<group>"; };
+		07E0F63C2047F30F00D97980 /* memorystream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorystream.h; sourceTree = "<group>"; };
+		07E0F6402047F30F00D97980 /* ostreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostreamwrapper.h; sourceTree = "<group>"; };
+		07E0F6412047F30F00D97980 /* pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointer.h; sourceTree = "<group>"; };
+		07E0F6422047F30F00D97980 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		07E0F6432047F30F00D97980 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		07E0F6442047F30F00D97980 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		07E0F6452047F30F00D97980 /* schema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = schema.h; sourceTree = "<group>"; };
+		07E0F6462047F30F00D97980 /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
+		07E0F6472047F30F00D97980 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		07E0F6482047F30F00D97980 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		7855E723203291E00035D240 /* LKParticleEffect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LKParticleEffect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7855E726203291E00035D240 /* LKParticleEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffect.h; sourceTree = "<group>"; };
 		7855E727203291E00035D240 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -67,8 +133,8 @@
 		78809F0B2033100700982F23 /* LKParticleEffectUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectUtil.h; sourceTree = "<group>"; };
 		78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectUtil.cpp; sourceTree = "<group>"; };
 		78809F372033DCC200982F23 /* mathexpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathexpr.h; sourceTree = "<group>"; };
-		78809F382033DCC200982F23 /* LKParticleValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKParticleValue.h; sourceTree = "<group>"; };
-		78809F392033DCC200982F23 /* LKParticleValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleValue.cpp; sourceTree = "<group>"; };
+		78809F382033DCC200982F23 /* LKParticleEffectValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectValue.h; sourceTree = "<group>"; };
+		78809F392033DCC200982F23 /* LKParticleEffectValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectValue.cpp; sourceTree = "<group>"; };
 		78809F3A2033DCC200982F23 /* mathexpr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mathexpr.cpp; sourceTree = "<group>"; };
 		78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectShader.cpp; sourceTree = "<group>"; };
 		78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectShader.h; sourceTree = "<group>"; };
@@ -103,6 +169,62 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		07E0F6222047F30F00D97980 /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				07E0F6232047F30F00D97980 /* allocators.h */,
+				07E0F6242047F30F00D97980 /* document.h */,
+				07E0F6252047F30F00D97980 /* encodedstream.h */,
+				07E0F6262047F30F00D97980 /* encodings.h */,
+				07E0F6272047F30F00D97980 /* error */,
+				07E0F62A2047F30F00D97980 /* filereadstream.h */,
+				07E0F62B2047F30F00D97980 /* filewritestream.h */,
+				07E0F62C2047F30F00D97980 /* fwd.h */,
+				07E0F62D2047F30F00D97980 /* internal */,
+				07E0F63A2047F30F00D97980 /* istreamwrapper.h */,
+				07E0F63B2047F30F00D97980 /* memorybuffer.h */,
+				07E0F63C2047F30F00D97980 /* memorystream.h */,
+				07E0F6402047F30F00D97980 /* ostreamwrapper.h */,
+				07E0F6412047F30F00D97980 /* pointer.h */,
+				07E0F6422047F30F00D97980 /* prettywriter.h */,
+				07E0F6432047F30F00D97980 /* rapidjson.h */,
+				07E0F6442047F30F00D97980 /* reader.h */,
+				07E0F6452047F30F00D97980 /* schema.h */,
+				07E0F6462047F30F00D97980 /* stream.h */,
+				07E0F6472047F30F00D97980 /* stringbuffer.h */,
+				07E0F6482047F30F00D97980 /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		07E0F6272047F30F00D97980 /* error */ = {
+			isa = PBXGroup;
+			children = (
+				07E0F6282047F30F00D97980 /* en.h */,
+				07E0F6292047F30F00D97980 /* error.h */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
+		07E0F62D2047F30F00D97980 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				07E0F62E2047F30F00D97980 /* biginteger.h */,
+				07E0F62F2047F30F00D97980 /* diyfp.h */,
+				07E0F6302047F30F00D97980 /* dtoa.h */,
+				07E0F6312047F30F00D97980 /* ieee754.h */,
+				07E0F6322047F30F00D97980 /* itoa.h */,
+				07E0F6332047F30F00D97980 /* meta.h */,
+				07E0F6342047F30F00D97980 /* pow10.h */,
+				07E0F6352047F30F00D97980 /* regex.h */,
+				07E0F6362047F30F00D97980 /* stack.h */,
+				07E0F6372047F30F00D97980 /* strfunc.h */,
+				07E0F6382047F30F00D97980 /* strtod.h */,
+				07E0F6392047F30F00D97980 /* swap.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
 		7855E719203291E00035D240 = {
 			isa = PBXGroup;
 			children = (
@@ -131,22 +253,23 @@
 				7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */,
 				7855E73C203292C90035D240 /* LKParticleEffectSpriteObject.h */,
 				7855E73D203292C90035D240 /* LKParticleEffectSpriteObject.cpp */,
-				78809F382033DCC200982F23 /* LKParticleValue.h */,
-				78809F392033DCC200982F23 /* LKParticleValue.cpp */,
+				78809F382033DCC200982F23 /* LKParticleEffectValue.h */,
+				78809F392033DCC200982F23 /* LKParticleEffectValue.cpp */,
 				78809F3A2033DCC200982F23 /* mathexpr.cpp */,
 				78809F372033DCC200982F23 /* mathexpr.h */,
 				78FE1D0C203EFE5E00D9C7FD /* LKParticleEffectShader.h */,
 				78FE1D0B203EFE5E00D9C7FD /* LKParticleEffectShader.cpp */,
 				78FE1D10203F08BF00D9C7FD /* LKParticleEffectLogger.h */,
 				78FE1D0F203F08BF00D9C7FD /* LKParticleEffectLogger.cpp */,
-				07E0F5B12041591A00D97980 /* LKJSONObject.h */,
-				07E0F5B02041591A00D97980 /* LKJSONObject.cpp */,
 				07E0F5BE20416D7800D97980 /* LKParticleEffectTexture.h */,
 				07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */,
 				07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */,
 				07E0F5E22043F86800D97980 /* LKParticleEffectCamera.cpp */,
 				78809F0B2033100700982F23 /* LKParticleEffectUtil.h */,
 				78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */,
+				07E0F61F2047EBAE00D97980 /* LKParticleEffectInput.h */,
+				07E0F61E2047EBAE00D97980 /* LKParticleEffectInput.cpp */,
+				07E0F6222047F30F00D97980 /* rapidjson */,
 				07E0F5B420415DAB00D97980 /* iOS */,
 			);
 			path = LKParticleEffect;
@@ -173,19 +296,52 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E0F6572047F31000D97980 /* meta.h in Headers */,
+				07E0F6542047F31000D97980 /* dtoa.h in Headers */,
+				07E0F6562047F31000D97980 /* itoa.h in Headers */,
 				78FE1D0E203EFE5E00D9C7FD /* LKParticleEffectShader.h in Headers */,
+				07E0F65F2047F31000D97980 /* memorybuffer.h in Headers */,
 				7855E728203291E00035D240 /* LKParticleEffect.h in Headers */,
-				78809F3B2033DCC200982F23 /* mathexpr.h in Headers */,
 				78FE1D12203F08BF00D9C7FD /* LKParticleEffectLogger.h in Headers */,
-				07E0F5B32041591A00D97980 /* LKJSONObject.h in Headers */,
-				78809F3C2033DCC200982F23 /* LKParticleValue.h in Headers */,
+				07E0F6662047F31000D97980 /* rapidjson.h in Headers */,
+				07E0F6582047F31000D97980 /* pow10.h in Headers */,
+				07E0F66B2047F31000D97980 /* writer.h in Headers */,
+				07E0F6642047F31000D97980 /* pointer.h in Headers */,
+				07E0F64D2047F31000D97980 /* en.h in Headers */,
+				78809F3C2033DCC200982F23 /* LKParticleEffectValue.h in Headers */,
+				07E0F6502047F31000D97980 /* filewritestream.h in Headers */,
 				07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */,
 				78809F0D2033100700982F23 /* LKParticleEffectUtil.h in Headers */,
+				07E0F64B2047F31000D97980 /* encodedstream.h in Headers */,
+				07E0F6522047F31000D97980 /* biginteger.h in Headers */,
 				07E0F5C020416D7900D97980 /* LKParticleEffectTexture.h in Headers */,
+				07E0F6212047EBAE00D97980 /* LKParticleEffectInput.h in Headers */,
 				07E0F5E52043F86800D97980 /* LKParticleEffectCamera.h in Headers */,
+				07E0F6592047F31000D97980 /* regex.h in Headers */,
+				07E0F6652047F31000D97980 /* prettywriter.h in Headers */,
+				07E0F65A2047F31000D97980 /* stack.h in Headers */,
 				7855E73E203292C90035D240 /* LKParticleEffectSpriteObject.h in Headers */,
+				07E0F6492047F31000D97980 /* allocators.h in Headers */,
+				07E0F6552047F31000D97980 /* ieee754.h in Headers */,
+				07E0F64F2047F31000D97980 /* filereadstream.h in Headers */,
+				07E0F65E2047F31000D97980 /* istreamwrapper.h in Headers */,
+				78809F3B2033DCC200982F23 /* mathexpr.h in Headers */,
+				07E0F65D2047F31000D97980 /* swap.h in Headers */,
 				7855E73A203292A90035D240 /* LKParticleEffectEmitter.h in Headers */,
+				07E0F6692047F31000D97980 /* stream.h in Headers */,
+				07E0F6532047F31000D97980 /* diyfp.h in Headers */,
 				7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */,
+				07E0F66A2047F31000D97980 /* stringbuffer.h in Headers */,
+				07E0F65C2047F31000D97980 /* strtod.h in Headers */,
+				07E0F6632047F31000D97980 /* ostreamwrapper.h in Headers */,
+				07E0F6672047F31000D97980 /* reader.h in Headers */,
+				07E0F65B2047F31000D97980 /* strfunc.h in Headers */,
+				07E0F64A2047F31000D97980 /* document.h in Headers */,
+				07E0F64C2047F31000D97980 /* encodings.h in Headers */,
+				07E0F64E2047F31000D97980 /* error.h in Headers */,
+				07E0F6682047F31000D97980 /* schema.h in Headers */,
+				07E0F6512047F31000D97980 /* fwd.h in Headers */,
+				07E0F6602047F31000D97980 /* memorystream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,7 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78809F3D2033DCC200982F23 /* LKParticleValue.cpp in Sources */,
+				78809F3D2033DCC200982F23 /* LKParticleEffectValue.cpp in Sources */,
 				7855E73B203292A90035D240 /* LKParticleEffectEmitter.cpp in Sources */,
 				78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */,
 				07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */,
@@ -268,7 +424,7 @@
 				7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */,
 				78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */,
 				78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */,
-				07E0F5B22041591A00D97980 /* LKJSONObject.cpp in Sources */,
+				07E0F6202047EBAE00D97980 /* LKParticleEffectInput.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,10 @@
 #include "LKParticleEffectUtil.h"
 #include <list>
 #include <sstream>
+#include <fstream>
+#include "rapidjson.h"
+#include "rapidjson/document.h"
+#include "rapidjson/istreamwrapper.h"
 #if IOS
 #include "LKParticleEffectIOSBridge.h"
 #else
@@ -22,6 +26,7 @@
 #endif
 
 using namespace LKKit;
+using namespace rapidjson;
 
 LKParticleEffectConfig::LKParticleEffectConfig()
 {
@@ -128,19 +133,45 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 
 void LKParticleEffectSystem::load(string path)
 {
-    LKJSONObject jsonObject = LKParticleEffectIOSBridge::JSONObjectFromPath(path);
-    LKJSONObject resources = jsonObject.valueMap["resources"];
-    LKJSONObject textures = resources.valueMap["textures"];
-    for (auto it = textures.valueVector.begin(); it!=textures.valueVector.end(); it++)
+    Document document;
+    fstream f(path+"/params.json");
+    if (!f.is_open())
     {
+        LKLogError("open json failed");
+    }
+    IStreamWrapper isw(f);
+    document.ParseStream(isw);
+    
+    if (!document.IsObject())
+    {
+        LKLogError("document is not Object");
+    }
+    
+    const Value &resources = document["resources"];
+    const Value &textures = resources["textures"];
+    for (SizeType i = 0; i<textures.Size(); i++)
+    {
+        const Value &tex = textures[i];
         LKParticleEffectTexture texture;
-        texture.name = it->valueMap["name"].valueString;
+        texture.name = tex["name"].GetString();
         texture.loadFromPath(path, texture.name);
-        texture.frameWidth = it->valueMap["frameWidth"].valueNumber;
-        texture.frameHeight = it->valueMap["frameHeight"].valueNumber;
+        texture.frameWidth = tex["frameWidth"].GetDouble();
+        texture.frameHeight = tex["frameHeight"].GetDouble();
         textureMap[texture.name] = texture;
     }
-    LKJSONObject objects = jsonObject.valueMap["objects"];
+    
+    const Value &define = document["define"];
+    const Value &camera = define["camera"];
+    const Value &objects = define["objects"];
+    for (SizeType i = 0; i<objects.Size(); i++)
+    {
+        //spriteMap[it->valueMap["name"].valueString] = *it;
+    }
+    const Value &emitters = define["emitters"];
+    for (SizeType i = 0; i<emitters.Size(); i++)
+    {
+        //emitterMap[it->valueMap["name"].valueString] = *it;
+    }
 }
 
 void LKParticleEffectSystem::setupObjects()

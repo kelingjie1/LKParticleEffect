@@ -9,10 +9,11 @@
 #define LKParticleEffectValue_h
 
 #include <string>
-#include "mathexpr.h"
 #include <map>
 #include <string>
 #include <vector>
+#include "mathexpr.h"
+
 namespace LKKit
 {
     using namespace std;
