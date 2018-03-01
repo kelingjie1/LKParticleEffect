@@ -6,8 +6,8 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#include <OpenGLES/ES3/gl.h>
-#include <OpenGLES/ES3/glext.h>
+#include <glcontext.h>
+
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
 struct LKParticleEffectSpriteObjectData

@@ -7,19 +7,16 @@
 //
 
 #include "LKParticleEffectSystem.h"
-#include <OpenGLES/ES3/gl.h>
-#include <OpenGLES/ES3/glext.h>
+#include <glcontext.h>
 #include "LKParticleEffectShader.h"
 #include "LKParticleEffectLogger.h"
 
 #include "LKParticleEffectUtil.h"
+#include "PlatformBridge.h"
 #include <list>
 #include <sstream>
-#if IOS
-#include "LKParticleEffectIOSBridge.h"
-#else
 
-#endif
+#include <glcontext.h>
 
 using namespace LKKit;
 
@@ -128,7 +125,8 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 
 void LKParticleEffectSystem::load(string path)
 {
-    LKJSONObject jsonObject = LKParticleEffectIOSBridge::JSONObjectFromPath(path);
+    LKJSONObject jsonObject = PlatformBridge::JSONObjectFromPath(path);
+
     LKJSONObject resources = jsonObject.valueMap["resources"];
     LKJSONObject textures = resources.valueMap["textures"];
     for (auto it = textures.valueVector.begin(); it!=textures.valueVector.end(); it++)

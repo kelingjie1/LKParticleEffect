@@ -8,8 +8,7 @@
 
 #ifndef LKParticleEffectCamera_h
 #define LKParticleEffectCamera_h
-#include <OpenGLES/ES3/gl.h>
-#include <OpenGLES/ES3/glext.h>
+#include <glcontext.h>
 #include <vector>
 
 namespace LKKit

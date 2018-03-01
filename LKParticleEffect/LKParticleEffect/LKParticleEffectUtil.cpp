@@ -7,9 +7,8 @@
 //
 
 #include "LKParticleEffectUtil.h"
-#include <OpenGLES/ES3/gl.h>
-#include <OpenGLES/ES3/glext.h>
 #include <math.h>
+#include <glcontext.h>
 
 using namespace LKKit;
 

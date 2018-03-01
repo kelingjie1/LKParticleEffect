@@ -11,8 +11,9 @@
 
 #include <stdio.h>
 #include <inttypes.h>
-#include <OpenGLES/ES3/gl.h>
-#include <OpenGLES/ES3/glext.h>
+
+#include <glcontext.h>
+
 #include <string>
 
 namespace LKKit

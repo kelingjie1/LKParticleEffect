@@ -7,16 +7,14 @@
 //
 
 #include "LKParticleEffectTexture.h"
+#include "PlatformBridge.h"
 
 #include <vector>
 #include <algorithm>
 #include <math.h>
 #include <fstream>
-#if IOS
-#include "LKParticleEffectIOSBridge.h"
-#else
 
-#endif
+#include <PlatformBridge.h>
 
 
 using namespace LKKit;
@@ -66,23 +64,7 @@ void LKParticleEffectTexture::loadKTXData(uint8_t *data,int length)
     width = endianSwap ? LKSwapInt32(header->width) : header->width;
     height = endianSwap ? LKSwapInt32(header->height) : header->height;
     internalFormat = endianSwap ? LKSwapInt32(header->glInternalFormat) : header->glInternalFormat;
-    
-    if (internalFormat == GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG||
-        internalFormat == GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG||
-        internalFormat == GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG||
-        internalFormat == GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG||
-        internalFormat == GL_COMPRESSED_SRGB_PVRTC_2BPPV1_EXT||
-        internalFormat == GL_COMPRESSED_SRGB_PVRTC_4BPPV1_EXT||
-        internalFormat == GL_COMPRESSED_SRGB_ALPHA_PVRTC_2BPPV1_EXT||
-        internalFormat == GL_COMPRESSED_SRGB_ALPHA_PVRTC_4BPPV1_EXT)
-    {
-        premultalpha = true;
-    }
-    else
-    {
-        premultalpha = false;
-    }
-    
+
     uint32_t mipCount = endianSwap ? LKSwapInt32(header->mipmapCount) : header->mipmapCount;
     uint32_t keyValueDataLength = endianSwap ? LKSwapInt32(header->keyValueDataLength) : header->keyValueDataLength;
     
@@ -122,7 +104,9 @@ void LKParticleEffectTexture::loadBitmapData(uint8_t *data, int length)
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    auto size = LKParticleEffectIOSBridge::glTexImage2DFromData(data, length);
+
+    pair<GLsizei, GLsizei> size = PlatformBridge::glTexImage2DFromData(data, length);
+
     width = size.first;
     height = size.second;
     GLenum glerror = glGetError();
