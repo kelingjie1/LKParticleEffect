@@ -11,7 +11,7 @@
 
 #include <string>
 #include "LKParticleEffectEmitter.h"
-#include "LKParticleEffectSpriteObject.h"
+#include "LKParticleEffectObject.h"
 #include "LKParticleEffectTexture.h"
 #include "LKParticleEffectCamera.h"
 
@@ -54,8 +54,8 @@ namespace LKKit
         //map<string,LKJSONObject> emitterMap;
         
         vector<LKParticleEffectEmitter> emitters;
-        LKParticleEffectSpriteObject **spriteObjects;
-        LKParticleEffectSpriteObjectData *spriteObjectDatas;
+        LKParticleEffectObject **spriteObjects;
+        LKParticleEffectObjectData *spriteObjectDatas;
         GLshort *effectIndexes;
         void setupObjects();
         void updateElementBuffer();
