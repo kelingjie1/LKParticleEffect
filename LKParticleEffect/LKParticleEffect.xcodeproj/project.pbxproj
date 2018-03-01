@@ -61,8 +61,8 @@
 		7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E735203292030035D240 /* LKParticleEffectSystem.cpp */; };
 		7855E73A203292A90035D240 /* LKParticleEffectEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E738203292A90035D240 /* LKParticleEffectEmitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E73B203292A90035D240 /* LKParticleEffectEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */; };
-		7855E73E203292C90035D240 /* LKParticleEffectSpriteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E73C203292C90035D240 /* LKParticleEffectSpriteObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7855E73F203292C90035D240 /* LKParticleEffectSpriteObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E73D203292C90035D240 /* LKParticleEffectSpriteObject.cpp */; };
+		7855E73E203292C90035D240 /* LKParticleEffectObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E73C203292C90035D240 /* LKParticleEffectObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7855E73F203292C90035D240 /* LKParticleEffectObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7855E73D203292C90035D240 /* LKParticleEffectObject.cpp */; };
 		78809F0D2033100700982F23 /* LKParticleEffectUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F0B2033100700982F23 /* LKParticleEffectUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */; };
 		78809F3B2033DCC200982F23 /* mathexpr.h in Headers */ = {isa = PBXBuildFile; fileRef = 78809F372033DCC200982F23 /* mathexpr.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -134,8 +134,8 @@
 		7855E735203292030035D240 /* LKParticleEffectSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectSystem.cpp; sourceTree = "<group>"; };
 		7855E738203292A90035D240 /* LKParticleEffectEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectEmitter.h; sourceTree = "<group>"; };
 		7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectEmitter.cpp; sourceTree = "<group>"; };
-		7855E73C203292C90035D240 /* LKParticleEffectSpriteObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectSpriteObject.h; sourceTree = "<group>"; };
-		7855E73D203292C90035D240 /* LKParticleEffectSpriteObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectSpriteObject.cpp; sourceTree = "<group>"; };
+		7855E73C203292C90035D240 /* LKParticleEffectObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectObject.h; sourceTree = "<group>"; };
+		7855E73D203292C90035D240 /* LKParticleEffectObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectObject.cpp; sourceTree = "<group>"; };
 		78809F0B2033100700982F23 /* LKParticleEffectUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectUtil.h; sourceTree = "<group>"; };
 		78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectUtil.cpp; sourceTree = "<group>"; };
 		78809F372033DCC200982F23 /* mathexpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathexpr.h; sourceTree = "<group>"; };
@@ -260,8 +260,8 @@
 				7855E735203292030035D240 /* LKParticleEffectSystem.cpp */,
 				7855E738203292A90035D240 /* LKParticleEffectEmitter.h */,
 				7855E739203292A90035D240 /* LKParticleEffectEmitter.cpp */,
-				7855E73C203292C90035D240 /* LKParticleEffectSpriteObject.h */,
-				7855E73D203292C90035D240 /* LKParticleEffectSpriteObject.cpp */,
+				7855E73C203292C90035D240 /* LKParticleEffectObject.h */,
+				7855E73D203292C90035D240 /* LKParticleEffectObject.cpp */,
 				78809F382033DCC200982F23 /* LKParticleEffectValue.h */,
 				78809F392033DCC200982F23 /* LKParticleEffectValue.cpp */,
 				78809F3A2033DCC200982F23 /* mathexpr.cpp */,
@@ -331,7 +331,7 @@
 				07E0F6652047F31000D97980 /* prettywriter.h in Headers */,
 				073E1667204801CA007B1BAF /* PlatformBridge.h in Headers */,
 				07E0F65A2047F31000D97980 /* stack.h in Headers */,
-				7855E73E203292C90035D240 /* LKParticleEffectSpriteObject.h in Headers */,
+				7855E73E203292C90035D240 /* LKParticleEffectObject.h in Headers */,
 				07E0F6492047F31000D97980 /* allocators.h in Headers */,
 				07E0F6552047F31000D97980 /* ieee754.h in Headers */,
 				07E0F64F2047F31000D97980 /* filereadstream.h in Headers */,
@@ -432,7 +432,7 @@
 				07E0F5E42043F86800D97980 /* LKParticleEffectCamera.cpp in Sources */,
 				07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */,
 				78FE1D11203F08BF00D9C7FD /* LKParticleEffectLogger.cpp in Sources */,
-				7855E73F203292C90035D240 /* LKParticleEffectSpriteObject.cpp in Sources */,
+				7855E73F203292C90035D240 /* LKParticleEffectObject.cpp in Sources */,
 				7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */,
 				78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */,
 				78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */,

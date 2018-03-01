@@ -10,7 +10,7 @@
 
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
-struct LKParticleEffectSpriteObjectData
+struct LKParticleEffectObjectData
 {
     GLuint identifier;
     GLfloat positionX;
@@ -28,10 +28,10 @@ struct LKParticleEffectSpriteObjectData
     GLfloat rotation;
 };
 
-class LKParticleEffectSpriteObject
+class LKParticleEffectObject
 {
 public:
-    LKParticleEffectSpriteObjectData *data;
+    LKParticleEffectObjectData *data;
     GLfloat distance;
 };
 

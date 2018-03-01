@@ -6,5 +6,5 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#include "LKParticleEffectSpriteObject.h"
+#include "LKParticleEffectObject.h"
 
