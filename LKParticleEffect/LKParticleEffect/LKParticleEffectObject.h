@@ -7,33 +7,57 @@
 //
 
 #include "glcontext.h"
+#include "LKParticleEffectValue.h"
 
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
-struct LKParticleEffectObjectData
+namespace LKKit
 {
-    GLuint identifier;
-    GLfloat positionX;
-    GLfloat positionY;
-    GLfloat positionZ;
-    GLfloat width;
-    GLfloat height;
-    GLfloat colorR;
-    GLfloat colorG;
-    GLfloat colorB;
-    GLfloat colorA;
-    GLfloat textureU;
-    GLfloat textureV;
-    GLfloat textureIndex;
-    GLfloat rotation;
-};
+    struct LKParticleEffectObjectData
+    {
+        GLuint identifier;
+        GLfloat positionX;
+        GLfloat positionY;
+        GLfloat positionZ;
+        GLfloat width;
+        GLfloat height;
+        GLfloat colorR;
+        GLfloat colorG;
+        GLfloat colorB;
+        GLfloat colorA;
+        GLfloat textureU;
+        GLfloat textureV;
+        GLfloat textureIndex;
+        GLfloat rotation;
+    };
+    struct LKParticleEffectSpriteProperty
+    {
+        LKParticleEffectValue colorR;
+        LKParticleEffectValue colorG;
+        LKParticleEffectValue colorB;
+        LKParticleEffectValue colorA;
+        string texture;
+        LKParticleEffectValue frameIndex;
+        LKParticleEffectValue width;
+        LKParticleEffectValue height;
+    };
+    
+    class LKParticleEffectObject
+    {
+    public:
+        LKParticleEffectObjectData *data;
+        
+        string name;
+        string type;
+        LKParticleEffectSpriteProperty *sprites;
+        LKParticleEffectValue rotation;
+        LKParticleEffectValue positionX;
+        LKParticleEffectValue positionY;
+        LKParticleEffectValue positionZ;
+        GLfloat distance;
+    };
+}
 
-class LKParticleEffectObject
-{
-public:
-    LKParticleEffectObjectData *data;
-    GLfloat distance;
-};
 
 #endif
 

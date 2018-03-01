@@ -16,7 +16,6 @@
 #include <list>
 #include <sstream>
 #include <fstream>
-#include "rapidjson.h"
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 
