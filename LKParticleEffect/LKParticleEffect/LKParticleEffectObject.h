@@ -8,11 +8,13 @@
 
 #include "glcontext.h"
 #include "LKParticleEffectValue.h"
+#include "rapidjson/document.h"
 
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
 namespace LKKit
 {
+    using namespace rapidjson;
     struct LKParticleEffectObjectData
     {
         GLuint identifier;
@@ -79,17 +81,22 @@ namespace LKKit
     class LKParticleEffectObject
     {
     public:
+        static LKParticleEffectGlobalProperty globalProperty;
+        LKParticleEffectObjectProperty objectProperty;
         GLshort identifier;
         LKParticleEffectObjectData *data;
         
         string name;
         string type;
-        LKParticleEffectSpriteProperty *sprites;
+        LKParticleEffectSpriteProperty *sprite;
         LKParticleEffectValue rotation;
         LKParticleEffectValue positionX;
         LKParticleEffectValue positionY;
         LKParticleEffectValue positionZ;
         GLfloat distance;
+        LKParticleEffectObject(Value &value);
+        LKParticleEffectObject();
+        ~LKParticleEffectObject();
     };
 }
 

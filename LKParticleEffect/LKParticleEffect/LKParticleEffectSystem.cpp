@@ -162,9 +162,8 @@ void LKParticleEffectSystem::load(string path)
     const Value &objects = define["objects"];
     for (SizeType i = 0; i<objects.Size(); i++)
     {
-        stringstream ss;
-        ss<<"/define/objects/"<<i;
-        objectMap[objects[i]["name"].GetString()] = Pointer(ss.str().c_str());
+        LKParticleEffectObject *object = new LKParticleEffectObject(object[i]);
+        objectMap[object->name] = object;
     }
 }
 
@@ -304,6 +303,11 @@ void LKParticleEffectSystem::render()
 
 LKParticleEffectSystem::~LKParticleEffectSystem()
 {
+    for (auto it=objectMap.begin(); it!=objectMap.end(); it++)
+    {
+        delete it->second;
+    }
+    objectMap.clear();
     for (auto it=textureMap.begin(); it!=textureMap.end(); it++)
     {
         delete it->second;

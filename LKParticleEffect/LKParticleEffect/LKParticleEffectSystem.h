@@ -57,7 +57,7 @@ namespace LKKit
         GLuint program;
         Document document;
         map<string,LKParticleEffectTexture*> textureMap;
-        map<string,Pointer> objectMap;
+        map<string,LKParticleEffectObject*> objectMap;
         
         set<LKParticleEffectObject*> unusedObjects;
         set<LKParticleEffectObject*> usedObjects;

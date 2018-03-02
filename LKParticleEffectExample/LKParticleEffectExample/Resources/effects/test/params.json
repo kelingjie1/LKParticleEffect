@@ -27,7 +27,7 @@
             {
                 "name":"flower2",
                 "type":"default",
-                "sprites":
+                "sprite":
                 {
                     "colorR":1,
                     "colorG":1,
@@ -46,7 +46,7 @@
             {
                 "name":"flower1",
                 "type":"default",
-                "sprites":
+                "sprite":
                 {
                     "colorR":1,
                     "colorG":1,
