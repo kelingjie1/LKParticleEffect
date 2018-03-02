@@ -24,7 +24,7 @@ extern "C"
 JNIEXPORT void
 
 JNICALL
-Java_com_tencent_willisdai_particlesystem_MainActivity_load(
+Java_com_tencent_willisdai_particlesystem_ParticleSystemProxy_loadNative(
         JNIEnv *env,
         jobject /* this */) {
 //    LKKit::AndroidBridge::env = env;
@@ -44,7 +44,7 @@ extern "C"
 JNIEXPORT void
 
 JNICALL
-Java_com_tencent_willisdai_particlesystem_MainActivity_render(
+Java_com_tencent_willisdai_particlesystem_ParticleSystemProxy_renderNative(
         JNIEnv *env,
         jobject /* this */) {
 //    LKKit::AndroidBridge::env = env;

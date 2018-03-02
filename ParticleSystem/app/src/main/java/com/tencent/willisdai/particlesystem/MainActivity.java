@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
+import android.support.v4.media.session.ParcelableVolumeInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -41,13 +42,11 @@ public class MainActivity extends AppCompatActivity implements GLSurfaceView.Ren
      * which is packaged with this application.
      */
     public native String stringFromJNI();
-    public native void load();
-    public native void render();
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         stringFromJNI();
-        load();
+        ParticleSystemProxy.load();
     }
 
     @Override
@@ -60,6 +59,6 @@ public class MainActivity extends AppCompatActivity implements GLSurfaceView.Ren
     @Override
     public void onDrawFrame(GL10 gl) {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT);
-        render();
+        ParticleSystemProxy.render();
     }
 }
