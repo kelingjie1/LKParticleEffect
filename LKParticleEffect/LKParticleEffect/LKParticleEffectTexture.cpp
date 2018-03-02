@@ -14,8 +14,6 @@
 #include <math.h>
 #include <fstream>
 
-#include "PlatformBridge.h"
-
 
 using namespace LKKit;
 using namespace std;
@@ -100,12 +98,12 @@ void LKParticleEffectTexture::loadKTXData(uint8_t *data,int length)
     
 }
 
-void LKParticleEffectTexture::loadBitmapData(uint8_t *data, int length)
+void LKParticleEffectTexture::loadBitmapData(string path, uint8_t *data, int length)
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    pair<GLsizei, GLsizei> size = PlatformBridge::glTexImage2DFromData(data, length);
+    pair<GLsizei, GLsizei> size = PlatformBridge::glTexImage2DFromData(path, data, length);
 
     width = size.first;
     height = size.second;
@@ -119,9 +117,13 @@ void LKParticleEffectTexture::loadFromPath(string path, string name)
 {
     fstream f;
     string suffixList[3] = {".ktx",".jpg",".png"};
+    string filePath;
+
     for (int i=0; i<3; i++)
     {
-        f.open(path+"/"+name+suffixList[i],ios::in|ios::binary);
+        filePath = path + "/" + name + suffixList[i];
+
+        f.open(filePath, ios::in|ios::binary);
         if (f.is_open())
         {
             f.read((char*)buffer, 1024*1024*5);
@@ -132,7 +134,7 @@ void LKParticleEffectTexture::loadFromPath(string path, string name)
             }
             else
             {
-                loadBitmapData(buffer, length);
+                loadBitmapData(path, buffer, length);
             }
         }
     }

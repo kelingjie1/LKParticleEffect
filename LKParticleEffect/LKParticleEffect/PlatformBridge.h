@@ -8,13 +8,14 @@
 
 #include <cstdint>
 #include <utility>
+#include <string>
 #include "glcontext.h"
 
 using namespace std;
 namespace LKKit {
     class PlatformBridge {
     public:
-        static pair<GLsizei, GLsizei> glTexImage2DFromData(uint8_t *data, int length);
+        static pair<GLsizei, GLsizei> glTexImage2DFromData(string path, uint8_t *data, int length);
     };
 }
 

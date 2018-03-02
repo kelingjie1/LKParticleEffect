@@ -9,12 +9,15 @@
 #include <cstdint>
 #include <GLES3/gl3.h>
 #include <utility>
+#include <jni.h>
+#include <string>
 
 using namespace std;
 namespace LKKit {
     class AndroidBridge {
     public:
-        static pair<GLsizei, GLsizei> glTexImage2DFromData(uint8_t *data, int length);
+        static JNIEnv *env;
+        static pair<GLsizei, GLsizei> glTexImage2DFromData(string path, uint8_t *data, int length);
     };
 }
 

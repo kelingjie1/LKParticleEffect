@@ -11,11 +11,11 @@
 #include "PlatformBridge.h"
 
 using namespace std;
-pair<GLsizei, GLsizei> LKKit::PlatformBridge::glTexImage2DFromData(uint8_t *data, int length) {
+pair<GLsizei, GLsizei> LKKit::PlatformBridge::glTexImage2DFromData(string path, uint8_t *data, int length) {
 #if IOS
     return LKParticleEffectIOSBridge::glTexImage2DFromData(data, length);
 #else
-    return AndroidBridge::glTexImage2DFromData(data, length);
+    return AndroidBridge::glTexImage2DFromData(path, data, length);
 #endif
 }
 

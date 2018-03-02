@@ -34,7 +34,7 @@ namespace LKKit
         
         void loadFromPath(string path,string name);
         void loadKTXData(uint8_t *data,int length);
-        void loadBitmapData(uint8_t *data,int length);
+        void loadBitmapData(string path, uint8_t *data,int length);
     };
 }
 
