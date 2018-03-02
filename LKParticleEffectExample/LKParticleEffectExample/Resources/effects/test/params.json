@@ -18,7 +18,9 @@
     {
         "camera":
         {
-            
+            "positionX":0,
+            "positionY":"t",
+            "positionZ":0
         },
         "objects":
         [

@@ -86,7 +86,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
                                                          config.viewWidth/(float)config.viewHeight,
                                                          5, 20000);
     
-    spriteObjects = new LKParticleEffectObject*[config.maxObjectCount];
+    spriteObjects = new LKParticleEffectObject[config.maxObjectCount];
     
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -142,26 +142,29 @@ void LKParticleEffectSystem::load(string path)
     }
     
     const Value &resources = document["resources"];
+    //--------textures--------
     const Value &textures = resources["textures"];
     for (SizeType i = 0; i<textures.Size(); i++)
     {
         const Value &tex = textures[i];
-        LKParticleEffectTexture texture;
-        texture.name = tex["name"].GetString();
-        texture.loadFromPath(path, texture.name);
-        texture.frameWidth = tex["frameWidth"].GetDouble();
-        texture.frameHeight = tex["frameHeight"].GetDouble();
-        textureMap[texture.name] = texture;
+        LKParticleEffectTexture *texture = new LKParticleEffectTexture();
+        texture->name = tex["name"].GetString();
+        texture->loadFromPath(path, texture->name);
+        texture->frameWidth = tex["frameWidth"].GetDouble();
+        texture->frameHeight = tex["frameHeight"].GetDouble();
+        textureMap[texture->name] = texture;
     }
     
     const Value &define = document["define"];
+    //--------camera--------
     const Value &camera = define["camera"];
+    //--------objects--------
     const Value &objects = define["objects"];
     for (SizeType i = 0; i<objects.Size(); i++)
     {
         stringstream ss;
         ss<<"/define/objects/"<<i;
-        objectMap[objects[i].GetString()] = Pointer(ss.str().c_str());
+        objectMap[objects[i]["name"].GetString()] = Pointer(ss.str().c_str());
     }
 }
 
@@ -174,22 +177,23 @@ void LKParticleEffectSystem::setupObjects()
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        LKParticleEffectObject *object = new LKParticleEffectObject;
-        spriteObjects[i] = object;
+        LKParticleEffectObject *object = &spriteObjects[i];
         object->data = &spriteObjectDatas[i];
         spriteObjectDatas[i].identifier = i;
         spriteObjectDatas[i].colorR = 1;
         spriteObjectDatas[i].colorG = 1;
         spriteObjectDatas[i].colorB = 1;
         spriteObjectDatas[i].colorA = 1;
-        
+        unusedObjects.insert(object);
     }
     
-    spriteObjectDatas[0].positionX = 0.3;
-    spriteObjectDatas[0].positionY = 0.3;
-    spriteObjectDatas[0].positionZ = 0;
-    spriteObjectDatas[0].width = 200;
-    spriteObjectDatas[0].height = 200;
+    auto obj0 = getUnusedObject();
+    
+    obj0->data->positionX = 0.3;
+    obj0->data->positionY = 0.3;
+    obj0->data->positionZ = 0;
+    obj0->data->width = 200;
+    obj0->data->height = 200;
     
     spriteObjectDatas[1].positionX = -0.3;
     spriteObjectDatas[1].positionY = 0;
@@ -206,11 +210,16 @@ void LKParticleEffectSystem::setupObjects()
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        spriteObjects[i]->data = NULL;
+        spriteObjects[i].data = NULL;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     glUnmapBuffer(GL_ARRAY_BUFFER);
+}
+
+bool compare(LKParticleEffectObject* a,LKParticleEffectObject* b)
+{
+    return a->distance<b->distance;
 }
 
 void LKParticleEffectSystem::update(double timeDelta)
@@ -222,13 +231,22 @@ void LKParticleEffectSystem::update(double timeDelta)
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        spriteObjects[i]->data = &spriteObjectDatas[i];
+        spriteObjects[i].data = &spriteObjectDatas[i];
     }
     
-    
+    vector<LKParticleEffectObject*> objectsList;
+    for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
+    {
+        objectsList.push_back(*it);
+    }
+    sort(objectsList.begin(), objectsList.end(), compare);
+    for (int i=0; i<objectsList.size(); i++)
+    {
+        effectIndexes[i] = objectsList[i]->identifier;
+    }
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        spriteObjects[i]->data = NULL;
+        spriteObjects[i].data = NULL;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
@@ -236,14 +254,20 @@ void LKParticleEffectSystem::update(double timeDelta)
     glBindVertexArray(NULL);
 }
 
-void LKParticleEffectSystem::updateElementBuffer()
+LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject()
 {
-    
-}
-
-LKParticleEffectObject *getUnusedObject()
-{
+    if (unusedObjects.size()>0)
+    {
+        LKParticleEffectObject *object = *unusedObjects.begin();
+        usedObjects.insert(object);
+        return object;
+    }
     return NULL;
+}
+void LKParticleEffectSystem::removeObject(LKParticleEffectObject *object)
+{
+    usedObjects.erase(object);
+    unusedObjects.insert(object);
 }
 
 void LKParticleEffectSystem::render()
@@ -260,9 +284,9 @@ void LKParticleEffectSystem::render()
     for (auto it = textureMap.begin(); it!=textureMap.end(); it++)
     {
         glActiveTexture(GL_TEXTURE0+i);
-        glBindTexture(GL_TEXTURE_2D, it->second.texture);
-        frameSizes[i*2] = it->second.frameWidth/(GLfloat)it->second.width;
-        frameSizes[i*2+1] = it->second.frameHeight/(GLfloat)it->second.height;
+        glBindTexture(GL_TEXTURE_2D, it->second->texture);
+        frameSizes[i*2] = it->second->frameWidth/(GLfloat)it->second->width;
+        frameSizes[i*2+1] = it->second->frameHeight/(GLfloat)it->second->height;
         i++;
     }
     glUniform2fv(frameSizesLocation, 8, frameSizes);
@@ -273,13 +297,18 @@ void LKParticleEffectSystem::render()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glDrawElements(GL_POINTS, 1, GL_UNSIGNED_SHORT, NULL);
+    glDrawElements(GL_POINTS, usedObjects.size(), GL_UNSIGNED_SHORT, NULL);
     glBindVertexArray(NULL);
     
 }
 
 LKParticleEffectSystem::~LKParticleEffectSystem()
 {
+    for (auto it=textureMap.begin(); it!=textureMap.end(); it++)
+    {
+        delete it->second;
+    }
+    textureMap.clear();
     if (spriteObjects)
     {
         delete [] spriteObjects;

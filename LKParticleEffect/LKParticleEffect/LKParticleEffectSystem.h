@@ -10,6 +10,7 @@
 #define LKParticleEffectSystem_h
 
 #include <string>
+#include <set>
 #include "LKParticleEffectEmitter.h"
 #include "LKParticleEffectObject.h"
 #include "LKParticleEffectTexture.h"
@@ -43,6 +44,8 @@ namespace LKKit
         void load(string path);
         void update(double timeDelta);
         void render();
+        LKParticleEffectObject *getUnusedObject();
+        void removeObject(LKParticleEffectObject *object);
         ~LKParticleEffectSystem();
     protected:
         LKParticleEffectConfig config;
@@ -53,11 +56,12 @@ namespace LKKit
         GLuint fragmentShader;
         GLuint program;
         Document document;
-        map<string,LKParticleEffectTexture> textureMap;
+        map<string,LKParticleEffectTexture*> textureMap;
         map<string,Pointer> objectMap;
         
-        vector<LKParticleEffectEmitter> emitters;
-        LKParticleEffectObject **spriteObjects;
+        set<LKParticleEffectObject*> unusedObjects;
+        set<LKParticleEffectObject*> usedObjects;
+        LKParticleEffectObject *spriteObjects;
         LKParticleEffectObjectData *spriteObjectDatas;
         GLshort *effectIndexes;
         void setupObjects();
