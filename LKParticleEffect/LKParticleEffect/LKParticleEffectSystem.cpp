@@ -162,7 +162,7 @@ void LKParticleEffectSystem::load(string path)
     const Value &objects = define["objects"];
     for (SizeType i = 0; i<objects.Size(); i++)
     {
-        LKParticleEffectObject *object = new LKParticleEffectObject(object[i]);
+        LKParticleEffectObject *object = new LKParticleEffectObject(objects[i]);
         objectMap[object->name] = object;
     }
 }

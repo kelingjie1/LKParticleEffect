@@ -94,7 +94,7 @@ namespace LKKit
         LKParticleEffectValue positionY;
         LKParticleEffectValue positionZ;
         GLfloat distance;
-        LKParticleEffectObject(Value &value);
+        LKParticleEffectObject(const Value &value);
         LKParticleEffectObject();
         ~LKParticleEffectObject();
     };

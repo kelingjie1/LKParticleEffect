@@ -11,24 +11,24 @@
 
 using namespace LKKit;
 
-LKParticleEffectValue::LKParticleEffectValue()
+LKParticleEffectValue::LKParticleEffectValue():op(NULL),num(0)
 {
     
 }
-LKParticleEffectValue::LKParticleEffectValue(const Value& value)
+LKParticleEffectValue::LKParticleEffectValue(const Value& value):op(NULL),num(0)
 {
     setValue(value);
 }
-LKParticleEffectValue::LKParticleEffectValue(const Value& value,vector<RVar*> varList)
+LKParticleEffectValue::LKParticleEffectValue(const Value& value,vector<RVar*> varList):op(NULL),num(0)
 {
     setValue(value);
     setVars(varList);
 }
-LKParticleEffectValue::LKParticleEffectValue(string expression)
+LKParticleEffectValue::LKParticleEffectValue(string expression):op(NULL),num(0)
 {
     setExpression(expression);
 }
-LKParticleEffectValue::LKParticleEffectValue(double number)
+LKParticleEffectValue::LKParticleEffectValue(double number):op(NULL),num(0)
 {
     setNumber(number);
 }

@@ -15,7 +15,7 @@ LKParticleEffectObject::LKParticleEffectObject():rotation(0),positionX(0),positi
     
 }
 
-LKParticleEffectObject::LKParticleEffectObject(Value &value)
+LKParticleEffectObject::LKParticleEffectObject(const Value &value):sprite(NULL)
 {
     vector<RVar*> vars;
     vars.push_back(new RVar("totalTime",&LKParticleEffectObject::globalProperty.totalTime));
@@ -46,12 +46,16 @@ LKParticleEffectObject::LKParticleEffectObject(Value &value)
     vars.push_back(new RVar("last_height",&objectProperty.last_height));
     
     name = value["name"].GetString();
-    const Value &vsprite = value["sprite"];
-    if (vsprite.IsObject())
+    if (value.HasMember("sprite"))
     {
-        sprite = new LKParticleEffectSpriteProperty();
-        sprite->colorR = LKParticleEffectValue(vsprite["colorR"]);
+        const Value &vsprite = value["sprite"];
+        if (vsprite.IsObject())
+        {
+            sprite = new LKParticleEffectSpriteProperty();
+            sprite->colorR = LKParticleEffectValue(vsprite["colorR"]);
+        }
     }
+    
 }
 
 LKParticleEffectObject::~LKParticleEffectObject()
