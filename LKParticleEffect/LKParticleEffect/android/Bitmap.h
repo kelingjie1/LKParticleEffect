@@ -78,6 +78,8 @@ public:
         return result;
     }*/
 
+    void release();
+
     /*operator uint32_t *() {
         return pixels;
     }*/

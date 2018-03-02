@@ -52,3 +52,12 @@ int32_t Bitmap::getType() {
 int Bitmap::getErrorCode() {
     return result;
 }
+
+void Bitmap::release() {
+    if (jenv && pixels != NULL) {
+        AndroidBitmap_unlockPixels(jenv, jbitmap);
+
+        jenv = NULL;
+        pixels = NULL;
+    }
+}

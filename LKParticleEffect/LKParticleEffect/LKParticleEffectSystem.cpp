@@ -16,6 +16,7 @@
 #include <list>
 #include <sstream>
 #include <fstream>
+#include <algorithm>
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/pointer.h"

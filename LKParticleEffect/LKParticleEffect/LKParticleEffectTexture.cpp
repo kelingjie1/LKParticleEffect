@@ -134,7 +134,7 @@ void LKParticleEffectTexture::loadFromPath(string path, string name)
             }
             else
             {
-                loadBitmapData(path, buffer, length);
+                loadBitmapData(filePath, buffer, length);
             }
         }
     }

@@ -35,9 +35,11 @@ pair<GLsizei, GLsizei> LKKit::AndroidBridge::glTexImage2DFromData(string path, u
     size.first = bmp.getWidth();
     size.second = bmp.getHeight();
 
-    LOGD(TAG, "load %s success", path.c_str());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bmp.getWidth(), bmp.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bmp.getWidth(), bmp.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    LOGD(TAG, "load texture %s success", path.c_str());
+
+    bmp.release();
 
     return size;
 }
