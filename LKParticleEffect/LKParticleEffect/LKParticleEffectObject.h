@@ -79,6 +79,7 @@ namespace LKKit
     class LKParticleEffectObject
     {
     public:
+        GLshort identifier;
         LKParticleEffectObjectData *data;
         
         string name;
