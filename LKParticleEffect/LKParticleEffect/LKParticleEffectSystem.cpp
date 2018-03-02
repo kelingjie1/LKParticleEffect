@@ -29,6 +29,8 @@ LKParticleEffectConfig::LKParticleEffectConfig()
     maxObjectCount = 10000;
 }
 
+const char* LKParticleEffectSystem::TAG = "LKParticleSystem";
+
 LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 {
     GLint success;
@@ -125,6 +127,8 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     
     glVertexAttribPointer(5, 1, GL_FLOAT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
     glBindVertexArray(NULL);
+
+    LKLogInfo("initialized");
 }
 
 void LKParticleEffectSystem::load(string path)
@@ -141,7 +145,7 @@ void LKParticleEffectSystem::load(string path)
     {
         LKLogError("document is not Object");
     }
-    
+
     const Value &resources = document["resources"];
     //--------textures--------
     const Value &textures = resources["textures"];

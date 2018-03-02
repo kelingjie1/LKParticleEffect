@@ -6,6 +6,7 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
+#include <stdarg.h>
 #include "LKParticleEffectLogger.h"
 
 using namespace LKKit;
@@ -19,10 +20,17 @@ LKParticleEffectLogger *LKParticleEffectLogger::instance()
     return instance;
 }
 
-void LKParticleEffectLogger::log(LKParticleEffectLogLevel level,string str)
+static char s_buf[1024];
+
+void LKParticleEffectLogger::log(LKParticleEffectLogLevel level, string fmt, ...)
 {
     if (listener)
     {
-        listener(level,str.c_str());
+        va_list args;
+        va_start(args, fmt);
+        snprintf(s_buf, 1024, fmt.c_str(), args);
+        va_end(args);
+
+        listener(level, s_buf);
     }
 }

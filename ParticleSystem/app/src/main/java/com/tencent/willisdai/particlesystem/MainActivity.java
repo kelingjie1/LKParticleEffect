@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements GLSurfaceView.Ren
         glview.setEGLContextClientVersion(3);
         glview.setRenderer(this);
 
+        ParticleSystemProxy.init();
 //        loadBitmap();
     }
 

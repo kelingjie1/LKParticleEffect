@@ -9,10 +9,10 @@
 #ifndef LKParticleEffectLogger_h
 #define LKParticleEffectLogger_h
 
-#define LKLog(level,str) LKParticleEffectLogger::instance()->log(level,str);
-#define LKLogInfo(str) LKLog(LKParticleEffectLogLevelInfo,str);
-#define LKLogWarning(str) LKLog(LKParticleEffectLogLevelWarning,str);
-#define LKLogError(str) LKLog(LKParticleEffectLogLevelError,str);
+#define LKLog(level, ...) LKParticleEffectLogger::instance()->log(level,__VA_ARGS__);
+#define LKLogInfo(...) LKLog(LKParticleEffectLogLevelInfo,__VA_ARGS__);
+#define LKLogWarning(...) LKLog(LKParticleEffectLogLevelWarning,__VA_ARGS__);
+#define LKLogError(...) LKLog(LKParticleEffectLogLevelError, __VA_ARGS__);
 
 #include <string>
 
@@ -31,7 +31,7 @@ namespace LKKit
     {
     public:
         static LKParticleEffectLogger *instance();
-        void log(LKParticleEffectLogLevel level,string str);
+        void log(LKParticleEffectLogLevel level, string fmt, ...);
         LKParticleEffectLoggerListener *listener;
     protected:
         LKParticleEffectLogger(){};

@@ -34,6 +34,7 @@ namespace LKKit
     class LKParticleEffectSystem
     {
     public:
+        static const char* TAG;
         LKParticleEffectCamera camera;
         vector<float> projectMatrix;
         GLuint texturesLocation;

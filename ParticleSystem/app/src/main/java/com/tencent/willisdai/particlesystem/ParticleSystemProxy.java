@@ -17,6 +17,11 @@ public class ParticleSystemProxy {
         renderNative();
     }
 
+    public static void init() {
+        initNative();
+    }
+
+    private static native void initNative();
     private static native void loadNative();
     private static native void renderNative();
 }
