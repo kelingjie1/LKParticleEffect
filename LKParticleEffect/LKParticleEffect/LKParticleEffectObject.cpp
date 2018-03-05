@@ -7,25 +7,24 @@
 //
 
 #include "LKParticleEffectObject.h"
-
+#include "LKParticleEffectSystem.h"
 using namespace LKKit;
-LKParticleEffectGlobalProperty LKParticleEffectObject::globalProperty = LKParticleEffectGlobalProperty();
 LKParticleEffectObject::LKParticleEffectObject():rotation(0),positionX(0),positionY(0),positionZ(0)
 {
     
 }
 
-LKParticleEffectObject::LKParticleEffectObject(const Value &value):sprite(NULL)
+LKParticleEffectObject::LKParticleEffectObject(LKParticleEffectSystem *system,const Value &value):sprite(NULL)
 {
     vector<RVar*> vars;
-    vars.push_back(new RVar("totalTime",&LKParticleEffectObject::globalProperty.totalTime));
-    vars.push_back(new RVar("stageTime",&LKParticleEffectObject::globalProperty.stageTime));
-    vars.push_back(new RVar("cameraX",&LKParticleEffectObject::globalProperty.cameraX));
-    vars.push_back(new RVar("cameraY",&LKParticleEffectObject::globalProperty.cameraY));
-    vars.push_back(new RVar("cameraZ",&LKParticleEffectObject::globalProperty.cameraZ));
-    vars.push_back(new RVar("cameraDirX",&LKParticleEffectObject::globalProperty.cameraDirX));
-    vars.push_back(new RVar("cameraDirY",&LKParticleEffectObject::globalProperty.cameraDirY));
-    vars.push_back(new RVar("cameraDirZ",&LKParticleEffectObject::globalProperty.cameraDirZ));
+    vars.push_back(new RVar("totalTime",&system->globalProperty.totalTime));
+    vars.push_back(new RVar("stageTime",&system->globalProperty.stageTime));
+    vars.push_back(new RVar("cameraX",&system->globalProperty.cameraX));
+    vars.push_back(new RVar("cameraY",&system->globalProperty.cameraY));
+    vars.push_back(new RVar("cameraZ",&system->globalProperty.cameraZ));
+    vars.push_back(new RVar("cameraDirX",&system->globalProperty.cameraDirX));
+    vars.push_back(new RVar("cameraDirY",&system->globalProperty.cameraDirY));
+    vars.push_back(new RVar("cameraDirZ",&system->globalProperty.cameraDirZ));
     
     vars.push_back(new RVar("rand0",&objectProperty.rand0));
     vars.push_back(new RVar("rand1",&objectProperty.rand1));
@@ -46,6 +45,11 @@ LKParticleEffectObject::LKParticleEffectObject(const Value &value):sprite(NULL)
     vars.push_back(new RVar("last_height",&objectProperty.last_height));
     
     name = value["name"].GetString();
+    type = value["type"].GetString();
+    rotation = LKParticleEffectValue(value["rotation"]);
+    positionX = LKParticleEffectValue(value["positionX"]);
+    positionY = LKParticleEffectValue(value["positionY"]);
+    positionZ = LKParticleEffectValue(value["positionZ"]);
     if (value.HasMember("sprite"))
     {
         const Value &vsprite = value["sprite"];
@@ -53,6 +57,13 @@ LKParticleEffectObject::LKParticleEffectObject(const Value &value):sprite(NULL)
         {
             sprite = new LKParticleEffectSpriteProperty();
             sprite->colorR = LKParticleEffectValue(vsprite["colorR"]);
+            sprite->colorG = LKParticleEffectValue(vsprite["colorG"]);
+            sprite->colorB = LKParticleEffectValue(vsprite["colorB"]);
+            sprite->colorA = LKParticleEffectValue(vsprite["colorA"]);
+            sprite->texture = vsprite["texture"].GetString();
+            sprite->frameIndex = LKParticleEffectValue(vsprite["frameIndex"]);
+            sprite->width = LKParticleEffectValue(vsprite["width"]);
+            sprite->height = LKParticleEffectValue(vsprite["height"]);
         }
     }
     

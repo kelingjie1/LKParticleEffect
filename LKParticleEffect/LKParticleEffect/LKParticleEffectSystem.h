@@ -31,6 +31,18 @@ namespace LKKit
         unsigned int viewHeight;
     };
     
+    struct LKParticleEffectGlobalProperty
+    {
+        double totalTime;
+        double stageTime;
+        double cameraX;
+        double cameraY;
+        double cameraZ;
+        double cameraDirX;
+        double cameraDirY;
+        double cameraDirZ;
+    };
+    
     class LKParticleEffectSystem
     {
     public:
@@ -40,6 +52,8 @@ namespace LKKit
         GLuint texturesLocation;
         GLuint frameSizesLocation;
         GLuint vpMatrixLocation;
+        
+        LKParticleEffectGlobalProperty globalProperty;
         
         LKParticleEffectSystem(LKParticleEffectConfig config);
         void load(string path);

@@ -14,6 +14,7 @@
 #define LKParticleEffectSpriteObject_h
 namespace LKKit
 {
+    class LKParticleEffectSystem;
     using namespace rapidjson;
     struct LKParticleEffectObjectData
     {
@@ -54,17 +55,7 @@ namespace LKKit
         double last_width;
         double last_height;
     };
-    struct LKParticleEffectGlobalProperty
-    {
-        double totalTime;
-        double stageTime;
-        double cameraX;
-        double cameraY;
-        double cameraZ;
-        double cameraDirX;
-        double cameraDirY;
-        double cameraDirZ;
-    };
+    
     
     struct LKParticleEffectSpriteProperty
     {
@@ -81,7 +72,7 @@ namespace LKKit
     class LKParticleEffectObject
     {
     public:
-        static LKParticleEffectGlobalProperty globalProperty;
+        LKParticleEffectSystem *system;
         LKParticleEffectObjectProperty objectProperty;
         GLshort identifier;
         LKParticleEffectObjectData *data;
@@ -94,7 +85,7 @@ namespace LKKit
         LKParticleEffectValue positionY;
         LKParticleEffectValue positionZ;
         GLfloat distance;
-        LKParticleEffectObject(const Value &value);
+        LKParticleEffectObject(LKParticleEffectSystem *system,const Value &value);
         LKParticleEffectObject();
         ~LKParticleEffectObject();
     };
