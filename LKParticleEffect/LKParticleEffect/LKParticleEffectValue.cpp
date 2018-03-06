@@ -21,9 +21,10 @@ LKParticleEffectValue::LKParticleEffectValue(const Value& value):op(NULL),num(0)
 }
 LKParticleEffectValue::LKParticleEffectValue(const Value& value,vector<RVar*> varList):op(NULL),num(0)
 {
-    setValue(value);
     setVars(varList);
+    setValue(value);
 }
+
 LKParticleEffectValue::LKParticleEffectValue(string expression):op(NULL),num(0)
 {
     setExpression(expression);
@@ -73,10 +74,10 @@ LKParticleEffectValue::~LKParticleEffectValue()
         op = NULL;
     }
     
-    for (int i=0; i<vars.size(); i++)
+    /*for (int i=0; i<vars.size(); i++)
     {
         delete vars[i];
-    }
+    }*/
     vars.clear();
 }
 
@@ -90,10 +91,14 @@ void LKParticleEffectValue::setVar(double *var,string name)
         vars.push_back(new RVar(name.c_str(),var));
         if (op)
         {
+            const char *str = op->Expr();
+
             delete op;
             op = NULL;
-            const char *str = op->Expr();
+
             op = new ROperation((char*)str,(int)vars.size(),vars.data());
+
+            delete(str);
         }
     }
     else
@@ -105,10 +110,10 @@ void LKParticleEffectValue::setVar(double *var,string name)
 
 void LKParticleEffectValue::setVars(vector<RVar *> varList)
 {
-    for (int i=0; i<vars.size(); i++)
+    /*for (int i=0; i<vars.size(); i++)
     {
         delete vars[i];
-    }
+    }*/
     vars.clear();
     
     vars = varList;
@@ -118,10 +123,13 @@ void LKParticleEffectValue::setVars(vector<RVar *> varList)
     }
     if (op)
     {
+        const char *str = op->Expr();
+
         delete op;
         op = NULL;
-        const char *str = op->Expr();
         op = new ROperation((char*)str,(int)vars.size(),vars.data());
+
+        delete(str);
     }
 }
 

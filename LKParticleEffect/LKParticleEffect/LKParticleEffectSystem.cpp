@@ -170,6 +170,13 @@ void LKParticleEffectSystem::load(string path)
         LKParticleEffectObject *object = new LKParticleEffectObject(this,objects[i]);
         objectMap[object->name] = object;
     }
+
+    // stage section
+    const  Value &stages = document["stages"];
+    for (SizeType i = 0; i < stages.Size(); ++i) {
+        LKParticleStage *stage = new LKParticleStage(this, stages[i]);
+        stageMap[stage->name] = stage;
+    }
 }
 
 void LKParticleEffectSystem::setupObjects()

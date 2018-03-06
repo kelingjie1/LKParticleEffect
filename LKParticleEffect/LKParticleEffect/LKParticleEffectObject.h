@@ -36,6 +36,7 @@ namespace LKKit
     
     struct LKParticleEffectObjectProperty
     {
+        double t;
         double rand0;
         double rand1;
         double rand2;
@@ -86,8 +87,12 @@ namespace LKKit
         LKParticleEffectValue positionZ;
         GLfloat distance;
         LKParticleEffectObject(LKParticleEffectSystem *system,const Value &value);
+        LKParticleEffectObject(const LKParticleEffectObject &obj);
         LKParticleEffectObject();
         ~LKParticleEffectObject();
+
+        vector<RVar*> vars;
+        bool __var_reuse;
     };
 }
 

@@ -17,6 +17,7 @@
 #include "LKParticleEffectCamera.h"
 #include "rapidjson/document.h"
 #include "rapidjson/pointer.h"
+#include "LKParticleStage.h"
 
 namespace LKKit
 {
@@ -54,7 +55,9 @@ namespace LKKit
         GLuint vpMatrixLocation;
         
         LKParticleEffectGlobalProperty globalProperty;
-        
+
+        map<string,LKParticleEffectObject*> objectMap;
+
         LKParticleEffectSystem(LKParticleEffectConfig config);
         void load(string path);
         void update(double timeDelta);
@@ -72,7 +75,7 @@ namespace LKKit
         GLuint program;
         Document document;
         map<string,LKParticleEffectTexture*> textureMap;
-        map<string,LKParticleEffectObject*> objectMap;
+        map<string, LKParticleStage*> stageMap;
         
         set<LKParticleEffectObject*> unusedObjects;
         set<LKParticleEffectObject*> usedObjects;
