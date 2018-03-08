@@ -6,53 +6,34 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#include "glcontext.h"
-#include "LKParticleEffectValue.h"
-#include "rapidjson/document.h"
-#include "LKParticleEffectProperty.h"
-#include "LKParticleEffectObjectTemplate.h"
+#include <OpenGLES/ES3/gl.h>
+#include <OpenGLES/ES3/glext.h>
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
-namespace LKKit
+struct LKParticleEffectObjectData
 {
-    class LKParticleEffectSystem;
-    using namespace rapidjson;
-    struct LKParticleEffectObjectData
-    {
-        GLuint identifier;
-        GLfloat positionX;
-        GLfloat positionY;
-        GLfloat positionZ;
-        GLfloat width;
-        GLfloat height;
-        GLfloat colorR;
-        GLfloat colorG;
-        GLfloat colorB;
-        GLfloat colorA;
-        GLfloat textureU;
-        GLfloat textureV;
-        GLfloat textureIndex;
-        GLfloat rotation;
-    };
-    
-    class LKParticleEffectObject
-    {
-    public:
-        LKParticleEffectSystem *system;
-        LKParticleEffectObjectProperty objectProperty;
-        LKParticleEffectObjectTemplate *objectTemplate;
-        GLshort identifier;
-        LKParticleEffectObjectData *data;
-        
-        GLfloat distance;
-        
-        LKParticleEffectObject();
-        ~LKParticleEffectObject();
+    GLuint identifier;
+    GLfloat positionX;
+    GLfloat positionY;
+    GLfloat positionZ;
+    GLfloat width;
+    GLfloat height;
+    GLfloat colorR;
+    GLfloat colorG;
+    GLfloat colorB;
+    GLfloat colorA;
+    GLfloat textureU;
+    GLfloat textureV;
+    GLfloat textureIndex;
+    GLfloat rotation;
+};
 
-        
-    };
-}
-
+class LKParticleEffectObject
+{
+public:
+    LKParticleEffectObjectData *data;
+    GLfloat distance;
+};
 
 #endif
 

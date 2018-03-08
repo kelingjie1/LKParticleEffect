@@ -7,15 +7,4 @@
 //
 
 #include "LKParticleEffectObject.h"
-#include "LKParticleEffectSystem.h"
-using namespace LKKit;
-LKParticleEffectObject::LKParticleEffectObject()
-{
-    
-}
 
-LKParticleEffectObject::~LKParticleEffectObject()
-{
-    
-
-}
