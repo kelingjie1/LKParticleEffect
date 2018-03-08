@@ -20,6 +20,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/pointer.h"
+#include "LKParticleEffectObjectTemplate.h"
 
 using namespace LKKit;
 using namespace rapidjson;
@@ -33,6 +34,8 @@ const char* LKParticleEffectSystem::TAG = "LKParticleSystem";
 
 LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 {
+    setupVars();
+    
     GLint success;
     GLchar infoLog[512];
     
@@ -41,23 +44,23 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     GLenum glerror = glGetError();
-    glShaderSource(vertexShader, 1, &vsStr, NULL);
+    glShaderSource(vertexShader, 1, &vsStr, nullptr);
     glCompileShader(vertexShader);
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if (!success)
     {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         LKLogError(string("vertexShader compile error")+infoLog);
         glDeleteShader(vertexShader);
     }
     
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fsStr, NULL);
+    glShaderSource(fragmentShader, 1, &fsStr, nullptr);
     glCompileShader(fragmentShader);
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if (!success)
     {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         LKLogError(string("fragmentShader compile error:")+infoLog);
         glDeleteShader(fragmentShader);
     }
@@ -76,7 +79,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     glGetProgramiv(program, GL_LINK_STATUS, &linked);
     if (!linked)
     {
-        glGetProgramInfoLog(program, 512, NULL, infoLog);
+        glGetProgramInfoLog(program, 512, nullptr, infoLog);
         LKLogError(string("program link error:")+infoLog);
         glDeleteProgram(program);
     }
@@ -97,11 +100,11 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, nullptr, GL_STREAM_DRAW);
     
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLshort)*config.maxObjectCount, NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLshort)*config.maxObjectCount, nullptr, GL_STREAM_DRAW);
     
     setupObjects();
     
@@ -126,9 +129,40 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     offset+=sizeof(GLfloat)*3;
     
     glVertexAttribPointer(5, 1, GL_FLOAT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
-    glBindVertexArray(NULL);
+    glBindVertexArray(0);
 
     LKLogInfo("initialized");
+}
+
+void LKParticleEffectSystem::setupVars()
+{
+    vars.push_back(new RVar("totalTime",&globalProperty.totalTime));
+    vars.push_back(new RVar("stageTime",&globalProperty.stageTime));
+    vars.push_back(new RVar("cameraX",&globalProperty.cameraX));
+    vars.push_back(new RVar("cameraY",&globalProperty.cameraY));
+    vars.push_back(new RVar("cameraZ",&globalProperty.cameraZ));
+    vars.push_back(new RVar("cameraDirX",&globalProperty.cameraDirX));
+    vars.push_back(new RVar("cameraDirY",&globalProperty.cameraDirY));
+    vars.push_back(new RVar("cameraDirZ",&globalProperty.cameraDirZ));
+    
+    vars.push_back(new RVar("t",&objectProperty.t));
+    vars.push_back(new RVar("rand0",&objectProperty.rand0));
+    vars.push_back(new RVar("rand1",&objectProperty.rand1));
+    vars.push_back(new RVar("rand2",&objectProperty.rand2));
+    vars.push_back(new RVar("rand3",&objectProperty.rand3));
+    vars.push_back(new RVar("rand4",&objectProperty.rand4));
+    vars.push_back(new RVar("rand5",&objectProperty.rand5));
+    vars.push_back(new RVar("rand6",&objectProperty.rand6));
+    vars.push_back(new RVar("rand7",&objectProperty.rand7));
+    vars.push_back(new RVar("rand8",&objectProperty.rand8));
+    vars.push_back(new RVar("rand9",&objectProperty.rand9));
+    vars.push_back(new RVar("last_colorR",&objectProperty.last_colorR));
+    vars.push_back(new RVar("last_colorG",&objectProperty.last_colorG));
+    vars.push_back(new RVar("last_colorB",&objectProperty.last_colorB));
+    vars.push_back(new RVar("last_colorA",&objectProperty.last_colorA));
+    vars.push_back(new RVar("last_frameIndex",&objectProperty.last_frameIndex));
+    vars.push_back(new RVar("last_width",&objectProperty.last_width));
+    vars.push_back(new RVar("last_height",&objectProperty.last_height));
 }
 
 void LKParticleEffectSystem::load(string path)
@@ -167,8 +201,8 @@ void LKParticleEffectSystem::load(string path)
     const Value &objects = define["objects"];
     for (SizeType i = 0; i<objects.Size(); i++)
     {
-        LKParticleEffectObject *object = new LKParticleEffectObject(this,objects[i]);
-        objectMap[object->name] = object;
+        LKParticleEffectObjectTemplate *objectTemplate = new LKParticleEffectObjectTemplate(vars,objects[i]);
+        objectTemplateMap[objectTemplate->name] = objectTemplate;
     }
 
     // stage section
@@ -221,7 +255,7 @@ void LKParticleEffectSystem::setupObjects()
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        spriteObjects[i].data = NULL;
+        spriteObjects[i].data = nullptr;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
@@ -257,12 +291,12 @@ void LKParticleEffectSystem::update(double timeDelta)
     }
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        spriteObjects[i].data = NULL;
+        spriteObjects[i].data = nullptr;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     glUnmapBuffer(GL_ARRAY_BUFFER);
-    glBindVertexArray(NULL);
+    glBindVertexArray(0);
 }
 
 LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject()
@@ -273,7 +307,7 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject()
         usedObjects.insert(object);
         return object;
     }
-    return NULL;
+    return nullptr;
 }
 void LKParticleEffectSystem::removeObject(LKParticleEffectObject *object)
 {
@@ -308,18 +342,18 @@ void LKParticleEffectSystem::render()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glDrawElements(GL_POINTS, usedObjects.size(), GL_UNSIGNED_SHORT, NULL);
-    glBindVertexArray(NULL);
+    glDrawElements(GL_POINTS, (GLsizei)usedObjects.size(), GL_UNSIGNED_SHORT, nullptr);
+    glBindVertexArray(0);
     
 }
 
 LKParticleEffectSystem::~LKParticleEffectSystem()
 {
-    for (auto it=objectMap.begin(); it!=objectMap.end(); it++)
+    for (auto it=objectTemplateMap.begin(); it!=objectTemplateMap.end(); it++)
     {
         delete it->second;
     }
-    objectMap.clear();
+    objectTemplateMap.clear();
     for (auto it=textureMap.begin(); it!=textureMap.end(); it++)
     {
         delete it->second;
@@ -328,7 +362,7 @@ LKParticleEffectSystem::~LKParticleEffectSystem()
     if (spriteObjects)
     {
         delete [] spriteObjects;
-        spriteObjects = NULL;
+        spriteObjects = nullptr;
     }
     if (program)
     {

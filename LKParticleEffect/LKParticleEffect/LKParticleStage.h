@@ -40,9 +40,9 @@ namespace LKKit {
         stStageEvent delayEvent;
         map<string, stStageEvent*> detectEventPoseMap;
         map<string, stStageEvent*> undetectEventPostMap;
-        map<string, LKParticleEffectObject*> objectMap;
+        map<string, LKParticleEffectObjectTemplate*> objectTemplateMap;
 
-        map<string, LKParticleEffectObject*> defineMap;
+        map<string, LKParticleEffectObjectTemplate*> defineMap;
 
     private:
         void createEvent(const Value &value);

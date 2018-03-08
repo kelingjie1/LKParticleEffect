@@ -7,63 +7,6 @@
 
 using namespace LKKit;
 
-static inline void mergeObject(LKParticleEffectObject *obj, const Value &value) {
-    if (value.HasMember("rotation")) {
-        obj->rotation = LKParticleEffectValue(value["rotation"], obj->vars);
-    }
-
-    if (value.HasMember("positionX")) {
-        obj->positionX = LKParticleEffectValue(value["positionX"], obj->vars);
-    }
-
-    if (value.HasMember("positionY")) {
-        obj->positionY = LKParticleEffectValue(value["positionY"], obj->vars);
-    }
-
-    if (value.HasMember("positionZ")) {
-        obj->positionZ = LKParticleEffectValue(value["positionZ"], obj->vars);
-    }
-
-    if (value.HasMember("sprite")) {
-        const Value &vsprite = value["sprite"];
-        if (vsprite.IsObject()) {
-            LKParticleEffectSpriteProperty *sprite = obj->sprite;
-
-            if (vsprite.HasMember("colorR")) {
-                sprite->colorR = LKParticleEffectValue(vsprite["colorR"], obj->vars);
-            }
-
-            if (vsprite.HasMember("colorG")) {
-                sprite->colorG = LKParticleEffectValue(vsprite["colorG"], obj->vars);
-            }
-
-            if (vsprite.HasMember("colorB")) {
-                sprite->colorB = LKParticleEffectValue(vsprite["colorB"], obj->vars);
-            }
-
-            if (vsprite.HasMember("colorA")) {
-                sprite->colorA = LKParticleEffectValue(vsprite["colorA"], obj->vars);
-            }
-
-            if (vsprite.HasMember("texture")) {
-                sprite->texture = vsprite["texture"].GetString();
-            }
-
-            if (vsprite.HasMember("frameIndex")) {
-                sprite->frameIndex = LKParticleEffectValue(vsprite["frameIndex"], obj->vars);
-            }
-
-            if (vsprite.HasMember("width")) {
-                sprite->width = LKParticleEffectValue(vsprite["width"], obj->vars);
-            }
-
-            if (vsprite.HasMember("height")) {
-                sprite->height = LKParticleEffectValue(vsprite["height"], obj->vars);
-            }
-        }
-    }
-}
-
 LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &stage) {
     delayEvent.type = "delay";
     delayEvent.time = -1.0f;
@@ -84,14 +27,14 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
         }
 
         for (auto &d : defines.GetObject()) {
-            auto iter = system->objectMap.find(d.name.GetString());
-            if (iter == system->objectMap.end()) {
+            auto iter = system->objectTemplateMap.find(d.name.GetString());
+            if (iter == system->objectTemplateMap.end()) {
                 continue;
             }
 
-            LKParticleEffectObject *obj = new LKParticleEffectObject(*(iter->second));
-            mergeObject(obj, d.value);
-            defineMap[d.name.GetString()] = new LKParticleEffectObject(*(iter->second));
+            LKParticleEffectObjectTemplate *objTemplate = new LKParticleEffectObjectTemplate(*(iter->second));
+            objTemplate->merge(d.value);
+            defineMap[d.name.GetString()] = objTemplate;
         }
     }
 
@@ -100,9 +43,9 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
         for (SizeType i = 0; i < objs.Size(); ++i) {
             string name = objs[i].GetString();
 
-            auto iter = system->objectMap.find(name);
-            if (iter != system->objectMap.end()) {
-                objectMap[name] = new LKParticleEffectObject(*(iter->second));
+            auto iter = system->objectTemplateMap.find(name);
+            if (iter != system->objectTemplateMap.end()) {
+                objectTemplateMap[name] = new LKParticleEffectObjectTemplate(*(iter->second));
             }
         }
     }

@@ -11,25 +11,25 @@
 
 using namespace LKKit;
 
-LKParticleEffectValue::LKParticleEffectValue():op(NULL),num(0)
+LKParticleEffectValue::LKParticleEffectValue():op(nullptr),num(0)
 {
     
 }
-LKParticleEffectValue::LKParticleEffectValue(const Value& value):op(NULL),num(0)
+LKParticleEffectValue::LKParticleEffectValue(const Value& value):op(nullptr),num(0)
 {
     setValue(value);
 }
-LKParticleEffectValue::LKParticleEffectValue(const Value& value,vector<RVar*> varList):op(NULL),num(0)
+LKParticleEffectValue::LKParticleEffectValue(const Value& value,vector<RVar*> varList):op(nullptr),num(0)
 {
     setVars(varList);
     setValue(value);
 }
 
-LKParticleEffectValue::LKParticleEffectValue(string expression):op(NULL),num(0)
+LKParticleEffectValue::LKParticleEffectValue(string expression):op(nullptr),num(0)
 {
     setExpression(expression);
 }
-LKParticleEffectValue::LKParticleEffectValue(double number):op(NULL),num(0)
+LKParticleEffectValue::LKParticleEffectValue(double number):op(nullptr),num(0)
 {
     setNumber(number);
 }
@@ -51,7 +51,7 @@ void LKParticleEffectValue::setExpression(string expression)
     if (op)
     {
         delete op;
-        op = NULL;
+        op = nullptr;
     }
     const char *str = expression.c_str();
     op = new ROperation((char*)str,(int)vars.size(),vars.data());
@@ -61,7 +61,7 @@ void LKParticleEffectValue::setNumber(double number)
     if (op)
     {
         delete op;
-        op = NULL;
+        op = nullptr;
     }
     num = number;
 }
@@ -71,7 +71,7 @@ LKParticleEffectValue::~LKParticleEffectValue()
     if (op)
     {
         delete op;
-        op = NULL;
+        op = nullptr;
     }
     
     /*for (int i=0; i<vars.size(); i++)
@@ -94,7 +94,7 @@ void LKParticleEffectValue::setVar(double *var,string name)
             const char *str = op->Expr();
 
             delete op;
-            op = NULL;
+            op = nullptr;
 
             op = new ROperation((char*)str,(int)vars.size(),vars.data());
 
@@ -126,7 +126,7 @@ void LKParticleEffectValue::setVars(vector<RVar *> varList)
         const char *str = op->Expr();
 
         delete op;
-        op = NULL;
+        op = nullptr;
         op = new ROperation((char*)str,(int)vars.size(),vars.data());
 
         delete(str);

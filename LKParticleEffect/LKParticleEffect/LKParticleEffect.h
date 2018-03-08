@@ -17,7 +17,6 @@ FOUNDATION_EXPORT const unsigned char LKParticleEffectVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <LKParticleEffect/PublicHeader.h>
 
 #import <LKParticleEffect/LKParticleEffectSystem.h>
-#import <LKParticleEffect/LKParticleEffectEmitter.h>
 #import <LKParticleEffect/LKParticleEffectObject.h>
 #import <LKParticleEffect/LKParticleEffectLogger.h>
 #import <LKParticleEffect/LKParticleEffectIOSBridge.h>

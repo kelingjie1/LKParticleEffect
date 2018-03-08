@@ -11,13 +11,14 @@
 
 #include <string>
 #include <set>
-#include "LKParticleEffectEmitter.h"
 #include "LKParticleEffectObject.h"
 #include "LKParticleEffectTexture.h"
 #include "LKParticleEffectCamera.h"
 #include "rapidjson/document.h"
 #include "rapidjson/pointer.h"
 #include "LKParticleStage.h"
+#include "LKParticleEffectProperty.h"
+#include "LKParticleEffectObjectTemplate.h"
 
 namespace LKKit
 {
@@ -32,18 +33,6 @@ namespace LKKit
         unsigned int viewHeight;
     };
     
-    struct LKParticleEffectGlobalProperty
-    {
-        double totalTime;
-        double stageTime;
-        double cameraX;
-        double cameraY;
-        double cameraZ;
-        double cameraDirX;
-        double cameraDirY;
-        double cameraDirZ;
-    };
-    
     class LKParticleEffectSystem
     {
     public:
@@ -55,8 +44,10 @@ namespace LKKit
         GLuint vpMatrixLocation;
         
         LKParticleEffectGlobalProperty globalProperty;
+        LKParticleEffectObjectProperty objectProperty;
+        vector<RVar*> vars;
 
-        map<string,LKParticleEffectObject*> objectMap;
+        map<string,LKParticleEffectObjectTemplate*> objectTemplateMap;
 
         LKParticleEffectSystem(LKParticleEffectConfig config);
         void load(string path);
@@ -84,6 +75,7 @@ namespace LKKit
         GLshort *effectIndexes;
         void setupObjects();
         void updateElementBuffer();
+        void setupVars();
     };
 }
 

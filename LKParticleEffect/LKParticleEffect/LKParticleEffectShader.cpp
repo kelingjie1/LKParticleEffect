@@ -12,7 +12,7 @@ using namespace LKKit;
 
 LKParticleEffectShader *LKParticleEffectShader::instance()
 {
-    static LKParticleEffectShader *instance = NULL;
+    static LKParticleEffectShader *instance = nullptr;
     if (!instance)
     {
         instance = new LKParticleEffectShader();
