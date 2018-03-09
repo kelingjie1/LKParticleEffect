@@ -35,13 +35,8 @@ LKParticleEffectValue::LKParticleEffectValue(double number):op(nullptr),num(0)
 
 void LKParticleEffectValue::setVars(vector<RVar *> varList)
 {
-    /*for (int i=0; i<vars.size(); i++)
-     {
-     delete vars[i];
-     }*/
-    vars.clear();
-    
     vars = varList;
+    varMap.clear();
     for (int i=0; i<vars.size(); i++)
     {
         varMap[vars[i]->name] = i;
@@ -100,12 +95,6 @@ LKParticleEffectValue::~LKParticleEffectValue()
         delete op;
         op = NULL;
     }
-    
-    for (int i=0; i<vars.size(); i++)
-    {
-        delete vars[i];
-    }
-    vars.clear();
 }
 
 void LKParticleEffectValue::setVar(double *var,string name)
