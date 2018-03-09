@@ -287,7 +287,7 @@ void LKParticleEffectSystem::update(double timeDelta)
     sort(objectsList.begin(), objectsList.end(), compare);
     for (int i=0; i<objectsList.size(); i++)
     {
-        effectIndexes[i] = objectsList[i]->identifier;
+        effectIndexes[i] = objectsList[i]->data->identifier;
     }
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {

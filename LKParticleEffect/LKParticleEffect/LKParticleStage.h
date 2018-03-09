@@ -7,6 +7,7 @@
 
 #include "rapidjson/document.h"
 #include "LKParticleEffectObject.h"
+#include "LKParticleEffectObjectTemplate.h"
 #include <string>
 #include <map>
 
