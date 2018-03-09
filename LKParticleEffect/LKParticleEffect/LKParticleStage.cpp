@@ -4,6 +4,7 @@
 
 #include "LKParticleStage.h"
 #include "LKParticleEffectSystem.h"
+#include "LKParticleEffectLogger.h"
 
 using namespace LKKit;
 
@@ -20,6 +21,7 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
         }
     }
 
+    LKLogInfo("%s@%d parse define section", __LINE__, __LINE__);
     if (stage.HasMember("define")) {
         const Value &defines = stage["define"];
         if (!defines.IsObject()) {

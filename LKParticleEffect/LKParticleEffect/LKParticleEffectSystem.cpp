@@ -171,6 +171,7 @@ void LKParticleEffectSystem::load(string path)
     if (!f.is_open())
     {
         LKLogError("open json failed");
+        return;
     }
     IStreamWrapper isw(f);
     document.ParseStream(isw);
