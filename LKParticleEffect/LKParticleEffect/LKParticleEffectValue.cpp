@@ -10,6 +10,68 @@
 
 
 using namespace LKKit;
+LKParticleEffectValue::LKParticleEffectValue():op(nullptr),num(0)
+{
+    
+}
+LKParticleEffectValue::LKParticleEffectValue(const Value& value):op(nullptr),num(0)
+{
+    setValue(value);
+}
+LKParticleEffectValue::LKParticleEffectValue(const Value& value,vector<RVar*> varList):op(nullptr),num(0)
+{
+    setVars(varList);
+    setValue(value);
+}
+
+LKParticleEffectValue::LKParticleEffectValue(string expression):op(nullptr),num(0)
+{
+    setExpression(expression);
+}
+LKParticleEffectValue::LKParticleEffectValue(double number):op(nullptr),num(0)
+{
+    setNumber(number);
+}
+
+void LKParticleEffectValue::setVars(vector<RVar *> varList)
+{
+    /*for (int i=0; i<vars.size(); i++)
+     {
+     delete vars[i];
+     }*/
+    vars.clear();
+    
+    vars = varList;
+    for (int i=0; i<vars.size(); i++)
+    {
+        varMap[vars[i]->name] = i;
+    }
+    if (op)
+    {
+        const char *str = op->Expr();
+        
+        delete op;
+        op = nullptr;
+        op = new ROperation((char*)str,(int)vars.size(),vars.data());
+        
+        delete(str);
+    }
+}
+
+
+void LKParticleEffectValue::setValue(const Value &value)
+{
+    if (value.IsString())
+    {
+        setExpression(value.GetString());
+    }
+    else
+    {
+        setNumber(value.GetDouble());
+    }
+}
+
+
 
 void LKParticleEffectValue::setExpression(string expression)
 {
