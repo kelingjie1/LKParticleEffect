@@ -21,7 +21,7 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
         }
     }
 
-    LKLogInfo("%s@%d parse define section", __LINE__, __LINE__);
+    LKLogInfo("%s@%d parse define section", __FILE__, __LINE__);
     if (stage.HasMember("define")) {
         const Value &defines = stage["define"];
         if (!defines.IsObject()) {
@@ -37,6 +37,8 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
             LKParticleEffectObjectTemplate *objTemplate = new LKParticleEffectObjectTemplate(*(iter->second));
             objTemplate->merge(d.value);
             defineMap[d.name.GetString()] = objTemplate;
+
+            objTemplate->dump();
         }
     }
 

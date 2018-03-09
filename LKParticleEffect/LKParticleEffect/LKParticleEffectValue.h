@@ -14,12 +14,13 @@
 #include <vector>
 #include "mathexpr.h"
 #include "rapidjson/document.h"
+#include "Printable.h"
 
 namespace LKKit
 {
     using namespace std;
     using namespace rapidjson;
-    class LKParticleEffectValue
+    class LKParticleEffectValue : public Printable
     {
     public:
         LKParticleEffectValue();
@@ -34,12 +35,17 @@ namespace LKKit
         void setVar(double *var,string name);
         void setVars(vector<RVar*> varList);
         double value();
+
+        string to_string();
         ~LKParticleEffectValue();
+
+        const char *rawStr;
     protected:
         map<string,int> varMap;
         vector<RVar*> vars;
         ROperation *op;
         double num;
+        string expr;
     };
 }
 

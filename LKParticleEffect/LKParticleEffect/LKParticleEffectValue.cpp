@@ -6,13 +6,15 @@
 //  Copyright © 2017年 lingtonke. All rights reserved.
 //
 
+#include <sstream>
 #include "LKParticleEffectValue.h"
+#include <memory>
 
 
 using namespace LKKit;
 LKParticleEffectValue::LKParticleEffectValue():op(nullptr),num(0)
 {
-    
+
 }
 LKParticleEffectValue::LKParticleEffectValue(const Value& value):op(nullptr),num(0)
 {
@@ -43,13 +45,11 @@ void LKParticleEffectValue::setVars(vector<RVar *> varList)
     }
     if (op)
     {
-        const char *str = op->Expr();
+        shared_ptr<char> str(op->Expr());
         
         delete op;
         op = nullptr;
-        op = new ROperation((char*)str,(int)vars.size(),vars.data());
-        
-        delete(str);
+        op = new ROperation(str.get(),(int)vars.size(),vars.data());
     }
 }
 
@@ -77,6 +77,9 @@ void LKParticleEffectValue::setExpression(string expression)
     }
     const char *str = expression.c_str();
     op = new ROperation((char*)str,(int)vars.size(),vars.data());
+
+    shared_ptr<char> ptr(op->Expr());
+    expr = ptr.get();
 }
 void LKParticleEffectValue::setNumber(double number)
 {
@@ -109,8 +112,8 @@ void LKParticleEffectValue::setVar(double *var,string name)
         {
             delete op;
             op = NULL;
-            const char *str = op->Expr();
-            op = new ROperation((char*)str,(int)vars.size(),vars.data());
+            shared_ptr<char> str(op->Expr());
+            op = new ROperation(str.get(),(int)vars.size(),vars.data());
         }
     }
     else
@@ -129,5 +132,16 @@ double LKParticleEffectValue::value()
     else
     {
         return num;
+    }
+}
+
+string LKParticleEffectValue::to_string() {
+    if (op) {
+        return expr;
+
+    } else {
+        ostringstream stream;
+        stream<<num;
+        return stream.str();
     }
 }
