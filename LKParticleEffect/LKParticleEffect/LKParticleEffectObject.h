@@ -8,6 +8,7 @@
 
 #include "glcontext.h"
 #include <string>
+#include "LKParticleEffectObjectTemplate.h"
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
 namespace LKKit
@@ -15,7 +16,7 @@ namespace LKKit
     using namespace std;
     struct LKParticleEffectObjectData
     {
-        GLuint identifier;
+        GLuint index;
         GLfloat positionX;
         GLfloat positionY;
         GLfloat positionZ;
@@ -34,7 +35,14 @@ namespace LKKit
     class LKParticleEffectObject
     {
     public:
-        LKParticleEffectObjectData *data;
+        GLuint index;
+        LKParticleEffectObjectTemplate *objectTemplate;
+        double life;
+        double positionOffsetX;
+        double positionOffsetY;
+        double positionOffsetZ;
+        double rotationOffset;
+        double emitRestTime;
         string group;
         GLfloat distance;
     };

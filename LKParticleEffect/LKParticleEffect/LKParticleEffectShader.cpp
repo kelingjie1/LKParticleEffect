@@ -25,7 +25,7 @@ LKParticleEffectShader::LKParticleEffectShader()
     vertexShaderStr = string("#version 300 es\n")+
     MULTI_LINE_STRING
     (
-     layout(location = 0) in uint identifier;
+     layout(location = 0) in uint index;
      layout(location = 1) in vec3 position;
      layout(location = 2) in vec2 pointSize;
      layout(location = 3) in vec4 a_colorFactor;

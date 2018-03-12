@@ -93,6 +93,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
                                                          5, 20000);
     
     spriteObjects = new LKParticleEffectObject[config.maxObjectCount];
+    memset(spriteObjects, 0, sizeof(LKParticleEffectObject)*config.maxObjectCount);
     
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -231,47 +232,33 @@ void LKParticleEffectSystem::changeToStage(LKParticleStage *stage)
 void LKParticleEffectSystem::setupObjects()
 {
     glBindVertexArray(vao);
-    spriteObjectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
+    objectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
     
     effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT);
     
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
         LKParticleEffectObject *object = &spriteObjects[i];
-        object->data = &spriteObjectDatas[i];
-        spriteObjectDatas[i].identifier = i;
-        spriteObjectDatas[i].colorR = 1;
-        spriteObjectDatas[i].colorG = 1;
-        spriteObjectDatas[i].colorB = 1;
-        spriteObjectDatas[i].colorA = 1;
+        LKParticleEffectObjectData *data = &objectDatas[i];
+        data->index = i;
+        data->colorR = 1;
+        data->colorG = 1;
+        data->colorB = 1;
+        data->colorA = 1;
         unusedObjects.insert(object);
     }
     
     auto obj0 = getUnusedObject();
+    auto data0 = &objectDatas[obj0->index];
     
-    obj0->data->positionX = 0.3;
-    obj0->data->positionY = 0.3;
-    obj0->data->positionZ = 0;
-    obj0->data->width = 200;
-    obj0->data->height = 200;
-    
-    spriteObjectDatas[1].positionX = -0.3;
-    spriteObjectDatas[1].positionY = 0;
-    spriteObjectDatas[1].positionZ = 0;
-    
-    spriteObjectDatas[2].positionX = 0;
-    spriteObjectDatas[2].positionY = -0.3;
-    spriteObjectDatas[2].positionZ = 0;
+    obj0->life = 10;
+    data0->positionX = 0.3;
+    data0->positionY = 0.3;
+    data0->positionZ = 0;
+    data0->width = 200;
+    data0->height = 200;
     
     effectIndexes[0] = 0;
-    effectIndexes[1] = 1;
-    effectIndexes[2] = 2;
-    effectIndexes[3] = 3;
-    
-    for (GLuint i=0; i<config.maxObjectCount; i++)
-    {
-        spriteObjects[i].data = nullptr;
-    }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -285,19 +272,70 @@ bool compare(LKParticleEffectObject* a,LKParticleEffectObject* b)
 void LKParticleEffectSystem::update(double timeDelta)
 {
     glBindVertexArray(vao);
-    spriteObjectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT);
+    objectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
     
-    effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT);
+    effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
     
-    for (GLuint i=0; i<config.maxObjectCount; i++)
-    {
-        spriteObjects[i].data = &spriteObjectDatas[i];
-    }
-    
+    //emit
     auto objects = usedObjects;
     for (auto it=objects.begin(); it!=objects.end(); it++)
     {
-        
+        LKParticleEffectObject *object = *it;
+        LKParticleEffectObjectTemplate *temp = object->objectTemplate;
+        LKParticleEffectObjectData *data = &objectDatas[object->index];
+        object->life -= timeDelta;
+        if (object->life<=0)
+        {
+            removeObject(object);
+            continue;
+        }
+        if (!temp)
+        {
+            continue;
+        }
+        data->positionX = temp->positionX.value();
+        data->positionY = temp->positionY.value();
+        data->positionZ = temp->positionZ.value();
+        data->rotation = temp->rotation.value();
+        if (temp->sprite)
+        {
+            LKParticleEffectSpriteProperty *sprite = temp->sprite;
+            data->colorR = sprite->colorR.value();
+            data->colorG = sprite->colorG.value();
+            data->colorB = sprite->colorB.value();
+            data->colorA = sprite->colorA.value();
+            data->width = sprite->width.value();
+            data->height = sprite->height.value();
+            data->textureU = 0;
+            data->textureV = 0;
+            data->colorR = sprite->colorR.value();
+        }
+        if (temp->emitter)
+        {
+            LKParticleEffectEmitterProperty *emitter = temp->emitter;
+            double emitRate = emitter->emitRate.value();
+            double emissionDuration = 1/emitRate;
+            int emitNum = (timeDelta+object->emitRestTime)/emissionDuration;
+            object->emitRestTime = (timeDelta+object->emitRestTime)-emitNum*emissionDuration;
+            for (int i=0; i<emitNum; i++)
+            {
+                LKParticleEffectObject *newObject = getUnusedObject();
+                if (!newObject)
+                {
+                    break;
+                }
+                int tempIndex = rand()%emitter->emitObjects.size();
+                string newTempName = emitter->emitObjects[tempIndex];
+                newObject->objectTemplate = objectTemplateMap[newTempName];
+                newObject->life = newObject->objectTemplate->life.value();
+                newObject->positionOffsetX = data->positionX;
+                newObject->positionOffsetY = data->positionY;
+                newObject->positionOffsetZ = data->positionZ;
+                newObject->rotationOffset = data->rotation;
+                newObject->emitRestTime = 0;
+                newObject->group = object->group;
+            }
+        }
     }
     
     vector<LKParticleEffectObject*> objectsList;
@@ -308,11 +346,7 @@ void LKParticleEffectSystem::update(double timeDelta)
     sort(objectsList.begin(), objectsList.end(), compare);
     for (int i=0; i<objectsList.size(); i++)
     {
-        effectIndexes[i] = objectsList[i]->data->identifier;
-    }
-    for (GLuint i=0; i<config.maxObjectCount; i++)
-    {
-        spriteObjects[i].data = nullptr;
+        effectIndexes[i] = objectsList[i]->index;
     }
     
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);

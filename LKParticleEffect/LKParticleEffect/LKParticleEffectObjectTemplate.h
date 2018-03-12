@@ -42,6 +42,7 @@ namespace LKKit
         
         LKParticleEffectSpriteProperty *sprite;
         LKParticleEffectEmitterProperty *emitter;
+        LKParticleEffectValue life;
         LKParticleEffectValue rotation;
         LKParticleEffectValue positionX;
         LKParticleEffectValue positionY;

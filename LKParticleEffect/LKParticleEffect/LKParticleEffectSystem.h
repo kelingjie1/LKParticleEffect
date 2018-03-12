@@ -72,7 +72,7 @@ namespace LKKit
         set<LKParticleEffectObject*> unusedObjects;
         set<LKParticleEffectObject*> usedObjects;
         LKParticleEffectObject *spriteObjects;
-        LKParticleEffectObjectData *spriteObjectDatas;
+        LKParticleEffectObjectData *objectDatas;
         GLshort *effectIndexes;
         void setupObjects();
         void updateElementBuffer();

@@ -50,6 +50,7 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    self.system->update(self.timeSinceLastDraw);
     glClearColor(1, 1, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     self.system->render();
