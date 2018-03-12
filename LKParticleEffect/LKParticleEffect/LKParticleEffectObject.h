@@ -9,6 +9,7 @@
 #include "glcontext.h"
 #include <string>
 #include "LKParticleEffectObjectTemplate.h"
+#include "LKParticleEffectProperty.h"
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
 namespace LKKit
@@ -37,6 +38,7 @@ namespace LKKit
     public:
         GLuint index;
         LKParticleEffectObjectTemplate *objectTemplate;
+        LKParticleEffectObjectProperty *property;
         double life;
         double positionOffsetX;
         double positionOffsetY;

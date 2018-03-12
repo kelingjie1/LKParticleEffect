@@ -37,10 +37,10 @@ namespace LKKit {
         string object;
     } stStageTransformEntity;
 
-    class LKParticleStage {
+    class LKParticleEffectStage {
     public:
-        LKParticleStage(LKParticleEffectSystem *system, const Value &stage);
-        LKParticleStage();
+        LKParticleEffectStage(LKParticleEffectSystem *system, const Value &stage);
+        LKParticleEffectStage();
 
         string name;
         stStageEvent delayEvent;

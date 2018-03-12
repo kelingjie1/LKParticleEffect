@@ -2,7 +2,7 @@
 // Created by willisdai on 2018/3/5.
 //
 
-#include "LKParticleStage.h"
+#include "LKParticleEffectStage.h"
 #include "LKParticleEffectSystem.h"
 #include "LKParticleEffectLogger.h"
 
@@ -27,7 +27,7 @@ static inline void parseStageTransformSection(vector<stStageTransformEntity *> &
     }
 }
 
-LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &stage) {
+LKParticleEffectStage::LKParticleEffectStage(LKParticleEffectSystem *system, const Value &stage) {
     delayEvent.type = "delay";
     delayEvent.time = -1.0f;
 
@@ -88,7 +88,7 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
     }
 }
 
-LKParticleStage::LKParticleStage() {
+LKParticleEffectStage::LKParticleEffectStage() {
     delayEvent.type = "delay";
     delayEvent.time = -1;
 }
@@ -133,7 +133,7 @@ static inline void initPoseEvent(const Value &ev, stStageEvent *stev) {
     initAction(ev, stev);
 }
 
-void LKParticleStage::createEvent(const Value &ev) {
+void LKParticleEffectStage::createEvent(const Value &ev) {
     if (!ev.HasMember("type")) {
         return;
     }

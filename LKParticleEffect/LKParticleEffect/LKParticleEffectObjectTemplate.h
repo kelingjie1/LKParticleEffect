@@ -20,18 +20,18 @@ namespace LKKit
     using namespace std;
     struct LKParticleEffectSpriteProperty
     {
-        LKParticleEffectValue colorR;
-        LKParticleEffectValue colorG;
-        LKParticleEffectValue colorB;
-        LKParticleEffectValue colorA;
-        LKParticleEffectTexture *texture;
-        LKParticleEffectValue frameIndex;
-        LKParticleEffectValue width;
-        LKParticleEffectValue height;
+        shared_ptr<LKParticleEffectValue> colorR;
+        shared_ptr<LKParticleEffectValue> colorG;
+        shared_ptr<LKParticleEffectValue> colorB;
+        shared_ptr<LKParticleEffectValue> colorA;
+        shared_ptr<LKParticleEffectTexture> texture;
+        shared_ptr<LKParticleEffectValue> frameIndex;
+        shared_ptr<LKParticleEffectValue> width;
+        shared_ptr<LKParticleEffectValue> height;
     };
     struct LKParticleEffectEmitterProperty
     {
-        LKParticleEffectValue emitRate;
+        shared_ptr<LKParticleEffectValue> emitRate;
         vector<string> emitObjects;
     };
     
@@ -41,13 +41,13 @@ namespace LKKit
         string name;
         string type;
         
-        LKParticleEffectSpriteProperty *sprite;
-        LKParticleEffectEmitterProperty *emitter;
-        LKParticleEffectValue life;
-        LKParticleEffectValue rotation;
-        LKParticleEffectValue positionX;
-        LKParticleEffectValue positionY;
-        LKParticleEffectValue positionZ;
+        shared_ptr<LKParticleEffectSpriteProperty> sprite;
+        shared_ptr<LKParticleEffectEmitterProperty> emitter;
+        shared_ptr<LKParticleEffectValue> life;
+        shared_ptr<LKParticleEffectValue> rotation;
+        shared_ptr<LKParticleEffectValue> positionX;
+        shared_ptr<LKParticleEffectValue> positionY;
+        shared_ptr<LKParticleEffectValue> positionZ;
         
         LKParticleEffectObjectTemplate(LKParticleEffectSystem *system,const Value &value);
         LKParticleEffectObjectTemplate(LKParticleEffectObjectTemplate &obj);
