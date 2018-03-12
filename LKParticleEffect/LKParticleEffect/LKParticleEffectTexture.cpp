@@ -138,8 +138,20 @@ void LKParticleEffectTexture::loadFromPath(string path, string name)
             }
         }
     }
-    
-    
+
+}
+
+pair<int, int> LKParticleEffectTexture::getPosition(int frameIndex)
+{
+    int rowCount = width/frameWidth;
+    int columnCount = height/frameHeight;
+    int y = frameIndex/rowCount;
+    if (y>columnCount)
+    {
+        y = columnCount;
+    }
+    int x = frameIndex%rowCount;
+    return pair<int, int>(x,y);
 }
 
 

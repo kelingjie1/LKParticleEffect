@@ -16,6 +16,7 @@ using namespace LKKit;
 
 LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectObjectTemplate &obj):vars(obj.vars),sprite(nullptr)
 {
+    system = obj.system;
     name = obj.name;
     type = obj.type;
     rotation = obj.rotation;
@@ -23,7 +24,8 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectO
     positionY = obj.positionY;
     positionZ = obj.positionZ;
     
-    if (obj.sprite != nullptr) {
+    if (obj.sprite != nullptr)
+    {
         sprite = new LKParticleEffectSpriteProperty();
         sprite->colorR = obj.sprite->colorR;
         sprite->colorG = obj.sprite->colorG;
@@ -36,8 +38,10 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectO
     }
 }
 
-LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(vector<RVar*> &vars,const Value &value):vars(vars),sprite(nullptr)
+LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectSystem *system,const Value &value):vars(system->vars),sprite(nullptr)
 {
+    this->system = system;
+    vector<RVar*> &vars = system->vars;
     name = value["name"].GetString();
     type = value["type"].GetString();
     rotation = LKParticleEffectValue(value["rotation"], vars);
@@ -54,7 +58,8 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(vector<RVar*> &va
             sprite->colorG = LKParticleEffectValue(vsprite["colorG"], vars);
             sprite->colorB = LKParticleEffectValue(vsprite["colorB"], vars);
             sprite->colorA = LKParticleEffectValue(vsprite["colorA"], vars);
-            sprite->texture = vsprite["texture"].GetString();
+            string textureName = vsprite["texture"].GetString();
+            sprite->texture = system->textureMap[textureName];
             sprite->frameIndex = LKParticleEffectValue(vsprite["frameIndex"], vars);
             sprite->width = LKParticleEffectValue(vsprite["width"], vars);
             sprite->height = LKParticleEffectValue(vsprite["height"], vars);
@@ -111,7 +116,8 @@ void LKParticleEffectObjectTemplate::merge(const Value &value)
             }
             
             if (vsprite.HasMember("texture")) {
-                sprite->texture = vsprite["texture"].GetString();
+                string textureName = vsprite["texture"].GetString();
+                sprite->texture = system->textureMap[textureName];
             }
             
             if (vsprite.HasMember("frameIndex")) {
@@ -148,7 +154,7 @@ void LKParticleEffectObjectTemplate::dump() {
     LKLogInfo("name: %s", name.c_str());
     LKLogInfo("type: %s", type.c_str());
     if (sprite != nullptr) {
-        LKLogInfo("sprite.texture: %s", sprite->texture.c_str())
+        LKLogInfo("sprite.texture: %s", sprite->texture->name.c_str());
         LKLogInfo("sprite.width: %s", sprite->width.to_string().c_str());
         LKLogInfo("sprite.height: %s", sprite->height.to_string().c_str());
         LKLogInfo("sprite.R: %s", sprite->colorR.to_string().c_str());

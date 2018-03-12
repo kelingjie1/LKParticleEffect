@@ -193,6 +193,7 @@ void LKParticleEffectSystem::load(string path)
         texture->loadFromPath(path, texture->name);
         texture->frameWidth = tex["frameWidth"].GetDouble();
         texture->frameHeight = tex["frameHeight"].GetDouble();
+        texture->index = i;
         textureMap[texture->name] = texture;
     }
     
@@ -205,9 +206,8 @@ void LKParticleEffectSystem::load(string path)
     LKLogInfo("%s@%d load objects", __FILE__, __LINE__);
     for (SizeType i = 0; i<objects.Size(); i++)
     {
-        LKParticleEffectObjectTemplate *objectTemplate = new LKParticleEffectObjectTemplate(vars,objects[i]);
+        LKParticleEffectObjectTemplate *objectTemplate = new LKParticleEffectObjectTemplate(this,objects[i]);
         objectTemplateMap[objectTemplate->name] = objectTemplate;
-
         objectTemplate->dump();
     }
 
@@ -306,8 +306,11 @@ void LKParticleEffectSystem::update(double timeDelta)
             data->colorA = sprite->colorA.value();
             data->width = sprite->width.value();
             data->height = sprite->height.value();
-            data->textureU = 0;
-            data->textureV = 0;
+            data->textureIndex = sprite->texture->index;
+            int frameIndex = sprite->frameIndex.value();
+            pair<int, int> pos = sprite->texture->getPosition(frameIndex);
+            data->textureU = pos.first;
+            data->textureV = pos.second;
             data->colorR = sprite->colorR.value();
         }
         if (temp->emitter)

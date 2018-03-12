@@ -24,6 +24,7 @@ namespace LKKit
     {
     public:
         string name;
+        GLuint index;
         GLuint texture;
         GLsizei width;
         GLsizei height;
@@ -35,6 +36,7 @@ namespace LKKit
         void loadFromPath(string path,string name);
         void loadKTXData(uint8_t *data,int length);
         void loadBitmapData(string path, uint8_t *data,int length);
+        pair<int, int> getPosition(int frameIndex);
     };
 }
 

@@ -11,6 +11,7 @@
 
 #include "glcontext.h"
 #include "LKParticleEffectValue.h"
+#include "LKParticleEffectTexture.h"
 #include "rapidjson/document.h"
 #include <string>
 namespace LKKit
@@ -23,7 +24,7 @@ namespace LKKit
         LKParticleEffectValue colorG;
         LKParticleEffectValue colorB;
         LKParticleEffectValue colorA;
-        string texture;
+        LKParticleEffectTexture *texture;
         LKParticleEffectValue frameIndex;
         LKParticleEffectValue width;
         LKParticleEffectValue height;
@@ -48,7 +49,7 @@ namespace LKKit
         LKParticleEffectValue positionY;
         LKParticleEffectValue positionZ;
         
-        LKParticleEffectObjectTemplate(vector<RVar*> &vars,const Value &value);
+        LKParticleEffectObjectTemplate(LKParticleEffectSystem *system,const Value &value);
         LKParticleEffectObjectTemplate(LKParticleEffectObjectTemplate &obj);
         ~LKParticleEffectObjectTemplate();
         void merge(const Value &value);
@@ -56,6 +57,7 @@ namespace LKKit
         void dump();
 
     protected:
+        LKParticleEffectSystem *system;
         vector<RVar*> &vars;
     };
 }

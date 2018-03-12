@@ -35,6 +35,7 @@ namespace LKKit
     
     class LKParticleEffectSystem
     {
+        friend class LKParticleEffectObjectTemplate;
     public:
         static const char* TAG;
         LKParticleEffectCamera camera;
