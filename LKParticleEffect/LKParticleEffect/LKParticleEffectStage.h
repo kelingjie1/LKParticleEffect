@@ -10,6 +10,7 @@
 #include "LKParticleEffectObjectTemplate.h"
 #include <string>
 #include <map>
+#include "LKParticleEffectStageOperation.h"
 
 namespace LKKit {
     using namespace rapidjson;
@@ -23,7 +24,8 @@ namespace LKKit {
         StageActionTypeReset,
     };
 
-    typedef struct {
+    typedef struct
+    {
         string type;
         float time;
         string pose;
@@ -32,13 +34,11 @@ namespace LKKit {
         string actionTarget;
     } stStageEvent;
 
-    typedef struct {
-        string group;
-        string object;
-    } stStageTransformEntity;
 
-    class LKParticleEffectStage {
+    class LKParticleEffectStage
+    {
     public:
+        LKParticleEffectSystem *system;
         LKParticleEffectStage(LKParticleEffectSystem *system, const Value &stage);
         LKParticleEffectStage();
 
@@ -46,17 +46,17 @@ namespace LKKit {
         stStageEvent delayEvent;
         map<string, stStageEvent*> detectEventPoseMap;
         map<string, stStageEvent*> undetectEventPostMap;
-//        map<string, LKParticleEffectObjectTemplate*> objectTemplateMap;
-
-        vector<stStageTransformEntity *> enterTransformEntitiesAdded;
-        vector<stStageTransformEntity *> enterTransformEntitiesRemoved;
-        vector<stStageTransformEntity *> leaveTransformEntitiesAdded;
-        vector<stStageTransformEntity *> leaveTransformEntitiesRemoved;
+        
+        vector<shared_ptr<LKParticleEffectStageOperation>> enterStageOperations;
+        vector<shared_ptr<LKParticleEffectStageOperation>> leaveStageOperations;
 
         map<string, LKParticleEffectObjectTemplate*> defineMap;
-
-    private:
+        
+        void enterStage();
+        void leaveStage();
+    protected:
         void createEvent(const Value &value);
+        void parseStageOperations(vector<shared_ptr<LKParticleEffectStageOperation>> &ops,const Value &objs);
     };
 }
 

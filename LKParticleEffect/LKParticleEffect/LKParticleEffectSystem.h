@@ -15,7 +15,6 @@
 #include "LKParticleEffectTexture.h"
 #include "LKParticleEffectCamera.h"
 #include "rapidjson/document.h"
-#include "rapidjson/pointer.h"
 #include "LKParticleEffectStage.h"
 #include "LKParticleEffectProperty.h"
 #include "LKParticleEffectObjectTemplate.h"
@@ -38,7 +37,7 @@ namespace LKKit
         friend class LKParticleEffectObjectTemplate;
     public:
         static const char* TAG;
-        LKParticleEffectCamera camera;
+        shared_ptr<LKParticleEffectCamera> camera;
         vector<float> projectMatrix;
         GLuint texturesLocation;
         GLuint frameSizesLocation;
@@ -54,9 +53,11 @@ namespace LKKit
         void load(string path);
         void update(double timeDelta);
         void render();
-        LKParticleEffectObject *getUnusedObject();
+        LKParticleEffectObject *getUnusedObject(string templateName,LKParticleEffectObject *parent=nullptr);
         void removeObject(LKParticleEffectObject *object);
         ~LKParticleEffectSystem();
+        
+        set<LKParticleEffectObject*> usedObjects;
     protected:
         LKParticleEffectConfig config;
         GLuint vbo;
@@ -71,7 +72,7 @@ namespace LKKit
         map<string, shared_ptr<LKParticleEffectStage>> stageMap;
         
         set<LKParticleEffectObject*> unusedObjects;
-        set<LKParticleEffectObject*> usedObjects;
+        
         vector<LKParticleEffectObject> spriteObjects;
         LKParticleEffectObjectData *objectDatas;
         GLshort *effectIndexes;

@@ -8,26 +8,9 @@
 
 using namespace LKKit;
 
-static inline void parseStageTransformSection(vector<stStageTransformEntity *> &entities, const Value &section) {
-    for (SizeType i = 0; i < section.Size(); ++i) {
-        const Value &entity = section[i];
-
-        stStageTransformEntity *stEntity = new stStageTransformEntity;
-        if (entity.HasMember("group")) {
-            stEntity->group = entity["group"].GetString();
-        }
-
-        if (entity.HasMember("object")) {
-            stEntity->object = entity["object"].GetString();
-        }
-
-        LKLogInfo("entry(%s, %s)", stEntity->group.c_str(), stEntity->object.c_str());
-
-        entities.push_back(stEntity);
-    }
-}
-
-LKParticleEffectStage::LKParticleEffectStage(LKParticleEffectSystem *system, const Value &stage) {
+LKParticleEffectStage::LKParticleEffectStage(LKParticleEffectSystem *system, const Value &stage)
+{
+    this->system = system;
     delayEvent.type = "delay";
     delayEvent.time = -1.0f;
 
@@ -61,34 +44,36 @@ LKParticleEffectStage::LKParticleEffectStage(LKParticleEffectSystem *system, con
         }
     }
 
-    if (stage.HasMember("enter_stage")) {
+    if (stage.HasMember("enter_stage"))
+    {
         const Value &objs = stage["enter_stage"];
-        if (objs.HasMember("add")) {
-            LKLogInfo("%s@%d: parse enter_stage [add] section", __FILE__, __LINE__);
-            parseStageTransformSection(enterTransformEntitiesAdded, objs["add"]);
-        }
-
-        if (objs.HasMember("remove")) {
-            LKLogInfo("%s@%d: parse enter_stage [remove] section", __FILE__, __LINE__);
-            parseStageTransformSection(enterTransformEntitiesAdded, objs["remove"]);
-        }
+        parseStageOperations(enterStageOperations,objs);
     }
 
-    if (stage.HasMember("leave_stage")) {
+    if (stage.HasMember("leave_stage"))
+    {
         const Value &objs = stage["leave_stage"];
-        if (objs.HasMember("add")) {
-            LKLogInfo("%s@%d: parse leave_stage [add] section", __FILE__, __LINE__);
-            parseStageTransformSection(leaveTransformEntitiesAdded, objs["add"]);
-        }
-
-        if (objs.HasMember("remove")) {
-            LKLogInfo("%s@%d: parse leave_stage [remove] section", __FILE__, __LINE__);
-            parseStageTransformSection(leaveTransformEntitiesAdded, objs["remove"]);
-        }
+        parseStageOperations(leaveStageOperations,objs);
     }
 }
 
-LKParticleEffectStage::LKParticleEffectStage() {
+void LKParticleEffectStage::parseStageOperations(vector<shared_ptr<LKParticleEffectStageOperation>> &ops,const Value &objs)
+{
+    if (objs.HasMember("add"))
+    {
+        auto op = shared_ptr<LKParticleEffectStageOperation>(new LKParticleEffectStageAddOperation(this,objs["add"]));
+        ops.push_back(op);
+    }
+    
+    if (objs.HasMember("remove"))
+    {
+        auto op = shared_ptr<LKParticleEffectStageOperation>(new LKParticleEffectStageRemoveOperation(this,objs["remove"]));
+        ops.push_back(op);
+    }
+}
+
+LKParticleEffectStage::LKParticleEffectStage()
+{
     delayEvent.type = "delay";
     delayEvent.time = -1;
 }
@@ -152,5 +137,21 @@ void LKParticleEffectStage::createEvent(const Value &ev) {
             auto &evmap = strncmp(type, "detect", strlen("detect")) == 0 ? detectEventPoseMap : undetectEventPostMap;
             evmap[stev->pose] = stev;
         }
+    }
+}
+
+void LKParticleEffectStage::enterStage()
+{
+    for (int i=0; i<enterStageOperations.size(); i++)
+    {
+        enterStageOperations[i]->process();
+    }
+}
+
+void LKParticleEffectStage::leaveStage()
+{
+    for (int i=0; i<leaveStageOperations.size(); i++)
+    {
+        leaveStageOperations[i]->process();
     }
 }

@@ -18,6 +18,7 @@
     {
         "camera":
         {
+            "type":"perspective",
             "positionX":0,
             "positionY":"t",
             "positionZ":0

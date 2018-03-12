@@ -212,7 +212,19 @@ void LKParticleEffectSystem::load(string path)
     
     const Value &define = document["define"];
     //--------camera--------
-    const Value &camera = define["camera"];
+    const Value &cameraValue = define["camera"];
+    if (cameraValue["type"]=="perspective")
+    {
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue));
+    }
+    else if (cameraValue["type"]=="orthogonal")
+    {
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue));
+    }
+    else
+    {
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue));
+    }
     //--------objects--------
     const Value &objects = define["objects"];
 
@@ -236,23 +248,32 @@ void LKParticleEffectSystem::load(string path)
         }
     }
     
-    //setupTestData
-    mapData();
-    auto obj0 = getUnusedObject();
-    obj0->objectTemplate = objectTemplateMap["flower0"];
-    obj0->life = obj0->objectTemplate->life->value();
-    obj0->positionOffsetX = 0;
-    obj0->positionOffsetY = 0;
-    obj0->positionOffsetZ = 0;
-    obj0->rotationOffset = 0;
-    obj0->emitRestTime = 0;
-    obj0->group = "";
-    unmapData();
+//    //setupTestData
+//    mapData();
+//    auto obj0 = getUnusedObject();
+//    obj0->objectTemplate = objectTemplateMap["flower0"];
+//    obj0->life = obj0->objectTemplate->life->value();
+//    obj0->positionOffsetX = 0;
+//    obj0->positionOffsetY = 0;
+//    obj0->positionOffsetZ = 0;
+//    obj0->rotationOffset = 0;
+//    obj0->emitRestTime = 0;
+//    obj0->group = "";
+//    unmapData();
 }
 
 void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectStage> stage)
 {
+    if (currentStage)
+    {
+        currentStage->leaveStage();
+    }
     currentStage = stage;
+    if (stage)
+    {
+        stage->enterStage();
+    }
+    
 }
 
 void LKParticleEffectSystem::setupObjects()
@@ -306,7 +327,6 @@ void LKParticleEffectSystem::update(double timeDelta)
         data->positionY = temp->positionY->value()+object->positionOffsetY;
         data->positionZ = temp->positionZ->value()+object->positionOffsetZ;
         data->rotation = temp->rotation->value()+object->rotationOffset;
-        cout<<"id:"<<object->index<<"-"<<data->positionY<<endl;
         if (temp->sprite)
         {
             auto sprite = temp->sprite;
@@ -336,21 +356,13 @@ void LKParticleEffectSystem::update(double timeDelta)
             
             for (int i=0; i<emitNum; i++)
             {
-                LKParticleEffectObject *newObject = getUnusedObject();
+                int tempIndex = rand()%emitter->emitObjects.size();
+                string newTempName = emitter->emitObjects[tempIndex];
+                LKParticleEffectObject *newObject = getUnusedObject(newTempName,object);
                 if (!newObject)
                 {
                     break;
                 }
-                int tempIndex = rand()%emitter->emitObjects.size();
-                string newTempName = emitter->emitObjects[tempIndex];
-                newObject->objectTemplate = objectTemplateMap[newTempName];
-                newObject->life = newObject->objectTemplate->life->value();
-                newObject->positionOffsetX = data->positionX;
-                newObject->positionOffsetY = data->positionY;
-                newObject->positionOffsetZ = data->positionZ;
-                newObject->rotationOffset = data->rotation;
-                newObject->emitRestTime = 0;
-                newObject->group = object->group;
             }
         }
     }
@@ -376,14 +388,33 @@ void LKParticleEffectSystem::update(double timeDelta)
     glBindVertexArray(0);
 }
 
-LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject()
+LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateName,LKParticleEffectObject *parent)
 {
     if (unusedObjects.size()>0)
     {
         LKParticleEffectObject *object = *unusedObjects.begin();
         unusedObjects.erase(object);
         usedObjects.insert(object);
-        object->property.reset();
+        object->objectTemplate = objectTemplateMap[templateName];
+        object->life = object->objectTemplate->life->value();
+        if (parent)
+        {
+            LKParticleEffectObjectData *data = &objectDatas[parent->index];
+            object->positionOffsetX = data->positionX;
+            object->positionOffsetY = data->positionY;
+            object->positionOffsetZ = data->positionZ;
+            object->rotationOffset = data->rotation;
+        }
+        else
+        {
+            object->positionOffsetX = 0;
+            object->positionOffsetY = 0;
+            object->positionOffsetZ = 0;
+            object->rotationOffset = 0;
+        }
+        
+        object->emitRestTime = 0;
+        object->group = object->group;
         return object;
     }
     return nullptr;
@@ -415,7 +446,7 @@ void LKParticleEffectSystem::render()
     }
     glUniform2fv(frameSizesLocation, 8, frameSizes);
     
-    vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera.m, projectMatrix);
+    vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera->m, projectMatrix);
     glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMartix.data());
     
     glEnable(GL_BLEND);

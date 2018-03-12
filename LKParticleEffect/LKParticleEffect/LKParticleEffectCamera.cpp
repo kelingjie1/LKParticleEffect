@@ -10,12 +10,12 @@
 #include "LKParticleEffectUtil.h"
 
 using namespace LKKit;
-LKParticleEffectCamera::LKParticleEffectCamera()
+LKParticleEffectCamera::LKParticleEffectCamera(const Value &value)
 {
     m.resize(16);
 }
 
-void LKParticleEffectCamera::setMotionMatrix(vector<float> motionMatrix)
+void LKParticleEffect3DCamera::setMotionMatrix(vector<float> motionMatrix)
 {
     // 0, 0, -1
 #define M(x,y) motionMatrix[x+y*4];
@@ -60,3 +60,25 @@ void LKParticleEffectCamera::setMotionMatrix(vector<float> motionMatrix)
     // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
     m = LKParticleEffectUtil::gluLookAt(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 }
+
+LKParticleEffect2DCamera::LKParticleEffect2DCamera(const Value &value):LKParticleEffectCamera(value)
+{
+    
+}
+
+LKParticleEffect3DCamera::LKParticleEffect3DCamera(const Value &value):LKParticleEffectCamera(value)
+{
+    
+}
+
+LKParticleEffect3DPerspectiveCamera::LKParticleEffect3DPerspectiveCamera(const Value &value):LKParticleEffect3DCamera(value)
+{
+    
+}
+
+LKParticleEffect3DOrthogonalCamera::LKParticleEffect3DOrthogonalCamera(const Value &value):LKParticleEffect3DCamera(value)
+{
+    
+}
+
+
