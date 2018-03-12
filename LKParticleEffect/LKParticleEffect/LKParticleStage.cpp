@@ -8,6 +8,25 @@
 
 using namespace LKKit;
 
+static inline void parseStageTransformSection(vector<stStageTransformEntity *> &entities, const Value &section) {
+    for (SizeType i = 0; i < section.Size(); ++i) {
+        const Value &entity = section[i];
+
+        stStageTransformEntity *stEntity = new stStageTransformEntity;
+        if (entity.HasMember("group")) {
+            stEntity->group = entity["group"].GetString();
+        }
+
+        if (entity.HasMember("object")) {
+            stEntity->object = entity["object"].GetString();
+        }
+
+        LKLogInfo("entry(%s, %s)", stEntity->group.c_str(), stEntity->object.c_str());
+
+        entities.push_back(stEntity);
+    }
+}
+
 LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &stage) {
     delayEvent.type = "delay";
     delayEvent.time = -1.0f;
@@ -21,7 +40,7 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
         }
     }
 
-    LKLogInfo("%s@%d parse define section", __FILE__, __LINE__);
+    LKLogInfo("%s@%d: parse define section", __FILE__, __LINE__);
     if (stage.HasMember("define")) {
         const Value &defines = stage["define"];
         if (!defines.IsObject()) {
@@ -42,15 +61,29 @@ LKParticleStage::LKParticleStage(LKParticleEffectSystem *system, const Value &st
         }
     }
 
-    if (stage.HasMember("objects")) {
-        const Value &objs = stage["objects"];
-        for (SizeType i = 0; i < objs.Size(); ++i) {
-            string name = objs[i].GetString();
+    if (stage.HasMember("enter_stage")) {
+        const Value &objs = stage["enter_stage"];
+        if (objs.HasMember("add")) {
+            LKLogInfo("%s@%d: parse enter_stage [add] section", __FILE__, __LINE__);
+            parseStageTransformSection(enterTransformEntitiesAdded, objs["add"]);
+        }
 
-            auto iter = system->objectTemplateMap.find(name);
-            if (iter != system->objectTemplateMap.end()) {
-                objectTemplateMap[name] = new LKParticleEffectObjectTemplate(*(iter->second));
-            }
+        if (objs.HasMember("remove")) {
+            LKLogInfo("%s@%d: parse enter_stage [remove] section", __FILE__, __LINE__);
+            parseStageTransformSection(enterTransformEntitiesAdded, objs["remove"]);
+        }
+    }
+
+    if (stage.HasMember("leave_stage")) {
+        const Value &objs = stage["leave_stage"];
+        if (objs.HasMember("add")) {
+            LKLogInfo("%s@%d: parse leave_stage [add] section", __FILE__, __LINE__);
+            parseStageTransformSection(leaveTransformEntitiesAdded, objs["add"]);
+        }
+
+        if (objs.HasMember("remove")) {
+            LKLogInfo("%s@%d: parse leave_stage [remove] section", __FILE__, __LINE__);
+            parseStageTransformSection(leaveTransformEntitiesAdded, objs["remove"]);
         }
     }
 }

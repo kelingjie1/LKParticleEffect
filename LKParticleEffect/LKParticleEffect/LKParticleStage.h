@@ -32,6 +32,11 @@ namespace LKKit {
         string actionTarget;
     } stStageEvent;
 
+    typedef struct {
+        string group;
+        string object;
+    } stStageTransformEntity;
+
     class LKParticleStage {
     public:
         LKParticleStage(LKParticleEffectSystem *system, const Value &stage);
@@ -41,7 +46,12 @@ namespace LKKit {
         stStageEvent delayEvent;
         map<string, stStageEvent*> detectEventPoseMap;
         map<string, stStageEvent*> undetectEventPostMap;
-        map<string, LKParticleEffectObjectTemplate*> objectTemplateMap;
+//        map<string, LKParticleEffectObjectTemplate*> objectTemplateMap;
+
+        vector<stStageTransformEntity *> enterTransformEntitiesAdded;
+        vector<stStageTransformEntity *> enterTransformEntitiesRemoved;
+        vector<stStageTransformEntity *> leaveTransformEntitiesAdded;
+        vector<stStageTransformEntity *> leaveTransformEntitiesRemoved;
 
         map<string, LKParticleEffectObjectTemplate*> defineMap;
 
