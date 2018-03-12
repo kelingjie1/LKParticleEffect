@@ -14,6 +14,7 @@
 #include "LKParticleEffectUtil.h"
 #include "PlatformBridge.h"
 #include <list>
+#include <iostream>
 #include <sstream>
 #include <fstream>
 #include <algorithm>
@@ -92,8 +93,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
                                                          config.viewWidth/(float)config.viewHeight,
                                                          5, 20000);
     
-    spriteObjects = new LKParticleEffectObject[config.maxObjectCount];
-    memset(spriteObjects, 0, sizeof(LKParticleEffectObject)*config.maxObjectCount);
+    spriteObjects.resize(config.maxObjectCount);
     
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -137,6 +137,8 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 
 void LKParticleEffectSystem::setupVars()
 {
+    memset(&globalProperty, 0, sizeof(LKParticleEffectGlobalProperty));
+    memset(&objectProperty, 0, sizeof(LKParticleEffectObjectProperty));
     vars.push_back(new RVar("totalTime",&globalProperty.totalTime));
     vars.push_back(new RVar("stageTime",&globalProperty.stageTime));
     vars.push_back(new RVar("cameraX",&globalProperty.cameraX));
@@ -147,16 +149,12 @@ void LKParticleEffectSystem::setupVars()
     vars.push_back(new RVar("cameraDirZ",&globalProperty.cameraDirZ));
     
     vars.push_back(new RVar("t",&objectProperty.t));
-    vars.push_back(new RVar("rand0",&objectProperty.rand0));
-    vars.push_back(new RVar("rand1",&objectProperty.rand1));
-    vars.push_back(new RVar("rand2",&objectProperty.rand2));
-    vars.push_back(new RVar("rand3",&objectProperty.rand3));
-    vars.push_back(new RVar("rand4",&objectProperty.rand4));
-    vars.push_back(new RVar("rand5",&objectProperty.rand5));
-    vars.push_back(new RVar("rand6",&objectProperty.rand6));
-    vars.push_back(new RVar("rand7",&objectProperty.rand7));
-    vars.push_back(new RVar("rand8",&objectProperty.rand8));
-    vars.push_back(new RVar("rand9",&objectProperty.rand9));
+    for (int i=0; i<10; i++)
+    {
+        stringstream ss;
+        ss<<"rand"<<i;
+        vars.push_back(new RVar(ss.str().c_str(),&objectProperty.random[i]));
+    }
     vars.push_back(new RVar("last_colorR",&objectProperty.last_colorR));
     vars.push_back(new RVar("last_colorG",&objectProperty.last_colorG));
     vars.push_back(new RVar("last_colorB",&objectProperty.last_colorB));
@@ -221,7 +219,7 @@ void LKParticleEffectSystem::load(string path)
     LKLogInfo("%s@%d load objects", __FILE__, __LINE__);
     for (SizeType i = 0; i<objects.Size(); i++)
     {
-        LKParticleEffectObjectTemplate *objectTemplate = new LKParticleEffectObjectTemplate(this,objects[i]);
+        auto objectTemplate = shared_ptr<LKParticleEffectObjectTemplate>(new LKParticleEffectObjectTemplate(this,objects[i]));
         objectTemplateMap[objectTemplate->name] = objectTemplate;
         objectTemplate->dump();
     }
@@ -230,7 +228,7 @@ void LKParticleEffectSystem::load(string path)
     const  Value &stages = document["stages"];
     for (SizeType i = 0; i < stages.Size(); ++i)
     {
-        shared_ptr<LKParticleEffectStage> stage = shared_ptr<LKParticleEffectStage>(new LKParticleEffectStage(this, stages[i]));
+        auto stage = shared_ptr<LKParticleEffectStage>(new LKParticleEffectStage(this, stages[i]));
         stageMap[stage->name] = stage;
         if (i==0)
         {
@@ -264,6 +262,7 @@ void LKParticleEffectSystem::setupObjects()
     {
         LKParticleEffectObject *object = &spriteObjects[i];
         LKParticleEffectObjectData *data = &objectDatas[i];
+        object->index = i;
         data->index = i;
         data->colorR = 1;
         data->colorG = 1;
@@ -281,14 +280,18 @@ bool compare(LKParticleEffectObject* a,LKParticleEffectObject* b)
 
 void LKParticleEffectSystem::update(double timeDelta)
 {
+    globalProperty.totalTime+=timeDelta;
+    globalProperty.stageTime+=timeDelta;
     mapData();
     //emit
     auto objects = usedObjects;
     for (auto it=objects.begin(); it!=objects.end(); it++)
     {
-        LKParticleEffectObject *object = *it;
-        LKParticleEffectObjectTemplate *temp = object->objectTemplate;
-        LKParticleEffectObjectData *data = &objectDatas[object->index];
+        auto object = *it;
+        auto temp = object->objectTemplate;
+        auto data = &objectDatas[object->index];
+        object->property.t+= timeDelta;
+        memcpy(&objectProperty, &object->property, sizeof(LKParticleEffectObjectProperty));
         object->life -= timeDelta;
         if (object->life<=0)
         {
@@ -299,10 +302,11 @@ void LKParticleEffectSystem::update(double timeDelta)
         {
             continue;
         }
-        data->positionX = temp->positionX->value();
-        data->positionY = temp->positionY->value();
-        data->positionZ = temp->positionZ->value();
-        data->rotation = temp->rotation->value();
+        data->positionX = temp->positionX->value()+object->positionOffsetX;
+        data->positionY = temp->positionY->value()+object->positionOffsetY;
+        data->positionZ = temp->positionZ->value()+object->positionOffsetZ;
+        data->rotation = temp->rotation->value()+object->rotationOffset;
+        cout<<"id:"<<object->index<<"-"<<data->positionY<<endl;
         if (temp->sprite)
         {
             auto sprite = temp->sprite;
@@ -322,9 +326,14 @@ void LKParticleEffectSystem::update(double timeDelta)
         {
             auto emitter = temp->emitter;
             double emitRate = emitter->emitRate->value();
-            double emissionDuration = 1/emitRate;
-            int emitNum = (timeDelta+object->emitRestTime)/emissionDuration;
-            object->emitRestTime = (timeDelta+object->emitRestTime)-emitNum*emissionDuration;
+            int emitNum = 0;
+            if (emitRate>0)
+            {
+                double emissionDuration = 1/emitRate;
+                emitNum = (timeDelta+object->emitRestTime)/emissionDuration;
+                object->emitRestTime = (timeDelta+object->emitRestTime)-emitNum*emissionDuration;
+            }
+            
             for (int i=0; i<emitNum; i++)
             {
                 LKParticleEffectObject *newObject = getUnusedObject();
@@ -349,7 +358,12 @@ void LKParticleEffectSystem::update(double timeDelta)
     vector<LKParticleEffectObject*> objectsList;
     for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
     {
-        objectsList.push_back(*it);
+        auto object = *it;
+        auto temp = object->objectTemplate;
+        if (temp->sprite)
+        {
+            objectsList.push_back(*it);
+        }
     }
     sort(objectsList.begin(), objectsList.end(), compare);
     for (int i=0; i<objectsList.size(); i++)
@@ -367,7 +381,9 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject()
     if (unusedObjects.size()>0)
     {
         LKParticleEffectObject *object = *unusedObjects.begin();
+        unusedObjects.erase(object);
         usedObjects.insert(object);
+        object->property.reset();
         return object;
     }
     return nullptr;
@@ -416,17 +432,9 @@ LKParticleEffectSystem::~LKParticleEffectSystem()
         delete(vars[i]);
     }
     vars.clear();
-    for (auto it=objectTemplateMap.begin(); it!=objectTemplateMap.end(); it++)
-    {
-        delete it->second;
-    }
     objectTemplateMap.clear();
     textureMap.clear();
-    if (spriteObjects)
-    {
-        delete [] spriteObjects;
-        spriteObjects = nullptr;
-    }
+    spriteObjects.clear();
     if (program)
     {
         glDeleteProgram(program);

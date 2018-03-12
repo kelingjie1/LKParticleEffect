@@ -8,6 +8,12 @@
 
 #include "glcontext.h"
 #include <vector>
+#include <list>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <algorithm>
+#include <memory>
 
 #define LKDeletePointer(p) if(p){delete p;}p=nullptr;
 #define LKDeleteArray(p) if(p){delete[] p;}p=nullptr;

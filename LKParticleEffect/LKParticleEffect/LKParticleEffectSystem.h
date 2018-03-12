@@ -48,7 +48,7 @@ namespace LKKit
         LKParticleEffectObjectProperty objectProperty;
         vector<RVar*> vars;
 
-        map<string,LKParticleEffectObjectTemplate*> objectTemplateMap;
+        map<string,shared_ptr<LKParticleEffectObjectTemplate>> objectTemplateMap;
 
         LKParticleEffectSystem(LKParticleEffectConfig config);
         void load(string path);
@@ -72,7 +72,7 @@ namespace LKKit
         
         set<LKParticleEffectObject*> unusedObjects;
         set<LKParticleEffectObject*> usedObjects;
-        LKParticleEffectObject *spriteObjects;
+        vector<LKParticleEffectObject> spriteObjects;
         LKParticleEffectObjectData *objectDatas;
         GLshort *effectIndexes;
         void setupObjects();

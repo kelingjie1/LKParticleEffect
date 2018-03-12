@@ -37,8 +37,8 @@ namespace LKKit
     {
     public:
         GLuint index;
-        LKParticleEffectObjectTemplate *objectTemplate;
-        LKParticleEffectObjectProperty *property;
+        shared_ptr<LKParticleEffectObjectTemplate> objectTemplate;
+        LKParticleEffectObjectProperty property;
         double life;
         double positionOffsetX;
         double positionOffsetY;

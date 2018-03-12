@@ -26,16 +26,7 @@ namespace LKKit
     struct LKParticleEffectObjectProperty
     {
         double t;
-        double rand0;
-        double rand1;
-        double rand2;
-        double rand3;
-        double rand4;
-        double rand5;
-        double rand6;
-        double rand7;
-        double rand8;
-        double rand9;
+        double random[10];
         
         double last_colorR;
         double last_colorG;
@@ -44,6 +35,8 @@ namespace LKKit
         double last_frameIndex;
         double last_width;
         double last_height;
+        
+        void reset();
     };
 }
 
