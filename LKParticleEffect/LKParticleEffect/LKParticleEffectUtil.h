@@ -9,6 +9,9 @@
 #include "glcontext.h"
 #include <vector>
 
+#define LKDeletePointer(p) if(p){delete p;}p=nullptr;
+#define LKDeleteArray(p) if(p){delete[] p;}p=nullptr;
+
 namespace LKKit
 {
     using namespace std;

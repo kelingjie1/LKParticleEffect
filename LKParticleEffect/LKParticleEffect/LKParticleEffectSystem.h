@@ -16,7 +16,7 @@
 #include "LKParticleEffectCamera.h"
 #include "rapidjson/document.h"
 #include "rapidjson/pointer.h"
-#include "LKParticleStage.h"
+#include "LKParticleEffectStage.h"
 #include "LKParticleEffectProperty.h"
 #include "LKParticleEffectObjectTemplate.h"
 
@@ -66,9 +66,9 @@ namespace LKKit
         GLuint fragmentShader;
         GLuint program;
         Document document;
-        map<string,LKParticleEffectTexture*> textureMap;
-        LKParticleStage *currentStage;
-        map<string, LKParticleStage*> stageMap;
+        map<string,shared_ptr<LKParticleEffectTexture>> textureMap;
+        shared_ptr<LKParticleEffectStage> currentStage;
+        map<string, shared_ptr<LKParticleEffectStage>> stageMap;
         
         set<LKParticleEffectObject*> unusedObjects;
         set<LKParticleEffectObject*> usedObjects;
@@ -78,7 +78,9 @@ namespace LKKit
         void setupObjects();
         void updateElementBuffer();
         void setupVars();
-        void changeToStage(LKParticleStage *stage);
+        void changeToStage(shared_ptr<LKParticleEffectStage> stage);
+        void mapData();
+        void unmapData();
     };
 }
 

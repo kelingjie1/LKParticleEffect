@@ -9,6 +9,7 @@
 #include "LKParticleEffectObjectTemplate.h"
 #include "LKParticleEffectSystem.h"
 #include "LKParticleEffectLogger.h"
+#include "LKParticleEffectUtil.h"
 
 using namespace LKKit;
 
@@ -26,7 +27,7 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectO
     
     if (obj.sprite != nullptr)
     {
-        sprite = new LKParticleEffectSpriteProperty();
+        sprite = shared_ptr<LKParticleEffectSpriteProperty>(new LKParticleEffectSpriteProperty());
         sprite->colorR = obj.sprite->colorR;
         sprite->colorG = obj.sprite->colorG;
         sprite->colorB = obj.sprite->colorB;
@@ -44,32 +45,41 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectS
     vector<RVar*> &vars = system->vars;
     name = value["name"].GetString();
     type = value["type"].GetString();
-    rotation = LKParticleEffectValue(value["rotation"], vars);
-    positionX = LKParticleEffectValue(value["positionX"], vars);
-    positionY = LKParticleEffectValue(value["positionY"], vars);
-    positionZ = LKParticleEffectValue(value["positionZ"], vars);
+    if (value.HasMember("life"))
+    {
+        life = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["life"], vars));
+    }
+    else
+    {
+        life = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(99999));
+        life->setVars(vars);
+    }
+    rotation = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["rotation"], vars));
+    positionX = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionX"], vars));
+    positionY = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionY"], vars));
+    positionZ = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionZ"], vars));
     if (value.HasMember("sprite"))
     {
         const Value &vsprite = value["sprite"];
         if (vsprite.IsObject())
         {
-            sprite = new LKParticleEffectSpriteProperty();
-            sprite->colorR = LKParticleEffectValue(vsprite["colorR"], vars);
-            sprite->colorG = LKParticleEffectValue(vsprite["colorG"], vars);
-            sprite->colorB = LKParticleEffectValue(vsprite["colorB"], vars);
-            sprite->colorA = LKParticleEffectValue(vsprite["colorA"], vars);
+            sprite = shared_ptr<LKParticleEffectSpriteProperty>(new LKParticleEffectSpriteProperty());
+            sprite->colorR = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorR"], vars));
+            sprite->colorG = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorG"], vars));
+            sprite->colorB = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorB"], vars));
+            sprite->colorA = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorA"], vars));
             string textureName = vsprite["texture"].GetString();
             sprite->texture = system->textureMap[textureName];
-            sprite->frameIndex = LKParticleEffectValue(vsprite["frameIndex"], vars);
-            sprite->width = LKParticleEffectValue(vsprite["width"], vars);
-            sprite->height = LKParticleEffectValue(vsprite["height"], vars);
+            sprite->frameIndex = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["frameIndex"], vars));
+            sprite->width = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["width"], vars));
+            sprite->height = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["height"], vars));
         }
     }
     if (value.HasMember("emitter"))
     {
         const Value &vemitter = value["emitter"];
-        emitter = new LKParticleEffectEmitterProperty();
-        emitter->emitRate = LKParticleEffectValue(vemitter["emitRate"], vars);
+        emitter = shared_ptr<LKParticleEffectEmitterProperty>(new LKParticleEffectEmitterProperty());
+        emitter->emitRate = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vemitter["emitRate"], vars));
         const Value &emitObjects = vemitter["emitObjects"];
         for (SizeType i = 0; i<emitObjects.Size(); i++)
         {
@@ -80,39 +90,44 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectS
 
 void LKParticleEffectObjectTemplate::merge(const Value &value)
 {
+    if (value.HasMember("life"))
+    {
+        life = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["life"], vars));
+    }
+    
     if (value.HasMember("rotation")) {
-        rotation = LKParticleEffectValue(value["rotation"], vars);
+        rotation = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["rotation"], vars));
     }
     
     if (value.HasMember("positionX")) {
-        positionX = LKParticleEffectValue(value["positionX"], vars);
+        positionX = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionX"], vars));
     }
     
     if (value.HasMember("positionY")) {
-        positionY = LKParticleEffectValue(value["positionY"], vars);
+        positionY = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionY"], vars));
     }
     
     if (value.HasMember("positionZ")) {
-        positionZ = LKParticleEffectValue(value["positionZ"], vars);
+        positionZ = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionZ"], vars));
     }
     
     if (value.HasMember("sprite")) {
         const Value &vsprite = value["sprite"];
         if (vsprite.IsObject()) {
             if (vsprite.HasMember("colorR")) {
-                sprite->colorR = LKParticleEffectValue(vsprite["colorR"], vars);
+                sprite->colorR = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorR"], vars));
             }
             
             if (vsprite.HasMember("colorG")) {
-                sprite->colorG = LKParticleEffectValue(vsprite["colorG"], vars);
+                sprite->colorG = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorG"], vars));
             }
             
             if (vsprite.HasMember("colorB")) {
-                sprite->colorB = LKParticleEffectValue(vsprite["colorB"], vars);
+                sprite->colorB = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorB"], vars));
             }
             
             if (vsprite.HasMember("colorA")) {
-                sprite->colorA = LKParticleEffectValue(vsprite["colorA"], vars);
+                sprite->colorA = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["colorA"], vars));
             }
             
             if (vsprite.HasMember("texture")) {
@@ -121,15 +136,15 @@ void LKParticleEffectObjectTemplate::merge(const Value &value)
             }
             
             if (vsprite.HasMember("frameIndex")) {
-                sprite->frameIndex = LKParticleEffectValue(vsprite["frameIndex"], vars);
+                sprite->frameIndex = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["frameIndex"], vars));
             }
             
             if (vsprite.HasMember("width")) {
-                sprite->width = LKParticleEffectValue(vsprite["width"], vars);
+                sprite->width = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["width"], vars));
             }
             
             if (vsprite.HasMember("height")) {
-                sprite->height = LKParticleEffectValue(vsprite["height"], vars);
+                sprite->height = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vsprite["height"], vars));
             }
         }
     }
@@ -137,16 +152,7 @@ void LKParticleEffectObjectTemplate::merge(const Value &value)
 
 LKParticleEffectObjectTemplate::~LKParticleEffectObjectTemplate()
 {
-    if (sprite)
-    {
-        delete sprite;
-    }
-    sprite = nullptr;
     
-    for (int i = 0; i < vars.size(); ++i) {
-        delete(vars[i]);
-    }
-    vars.clear();
 }
 
 void LKParticleEffectObjectTemplate::dump() {
@@ -155,13 +161,13 @@ void LKParticleEffectObjectTemplate::dump() {
     LKLogInfo("type: %s", type.c_str());
     if (sprite != nullptr) {
         LKLogInfo("sprite.texture: %s", sprite->texture->name.c_str());
-        LKLogInfo("sprite.width: %s", sprite->width.to_string().c_str());
-        LKLogInfo("sprite.height: %s", sprite->height.to_string().c_str());
-        LKLogInfo("sprite.R: %s", sprite->colorR.to_string().c_str());
-        LKLogInfo("sprite.G: %s", sprite->colorG.to_string().c_str());
-        LKLogInfo("sprite.B: %s", sprite->colorB.to_string().c_str());
-        LKLogInfo("sprite.A: %s", sprite->colorA.to_string().c_str());
-        LKLogInfo("sprite.frameIndex: %s", sprite->frameIndex.to_string().c_str());
+        LKLogInfo("sprite.width: %s", sprite->width->to_string().c_str());
+        LKLogInfo("sprite.height: %s", sprite->height->to_string().c_str());
+        LKLogInfo("sprite.R: %s", sprite->colorR->to_string().c_str());
+        LKLogInfo("sprite.G: %s", sprite->colorG->to_string().c_str());
+        LKLogInfo("sprite.B: %s", sprite->colorB->to_string().c_str());
+        LKLogInfo("sprite.A: %s", sprite->colorA->to_string().c_str());
+        LKLogInfo("sprite.frameIndex: %s", sprite->frameIndex->to_string().c_str());
     }
     LKLogInfo("######### %s #########", TAG);
 }
