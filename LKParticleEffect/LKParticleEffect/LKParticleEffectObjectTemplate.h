@@ -14,6 +14,7 @@
 #include "LKParticleEffectTexture.h"
 #include "rapidjson/document.h"
 #include <string>
+#include <memory>
 namespace LKKit
 {
     class LKParticleEffectSystem;
