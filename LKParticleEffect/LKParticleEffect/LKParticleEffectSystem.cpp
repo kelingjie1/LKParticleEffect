@@ -207,10 +207,20 @@ void LKParticleEffectSystem::load(string path)
 
     // stage section
     const  Value &stages = document["stages"];
-    for (SizeType i = 0; i < stages.Size(); ++i) {
+    for (SizeType i = 0; i < stages.Size(); ++i)
+    {
         LKParticleStage *stage = new LKParticleStage(this, stages[i]);
         stageMap[stage->name] = stage;
+        if (i==0)
+        {
+            changeToStage(stage);
+        }
     }
+}
+
+void LKParticleEffectSystem::changeToStage(LKParticleStage *stage)
+{
+    currentStage = stage;
 }
 
 void LKParticleEffectSystem::setupObjects()

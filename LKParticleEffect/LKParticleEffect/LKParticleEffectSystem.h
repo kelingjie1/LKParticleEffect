@@ -66,6 +66,7 @@ namespace LKKit
         GLuint program;
         Document document;
         map<string,LKParticleEffectTexture*> textureMap;
+        LKParticleStage *currentStage;
         map<string, LKParticleStage*> stageMap;
         
         set<LKParticleEffectObject*> unusedObjects;
@@ -76,6 +77,7 @@ namespace LKKit
         void setupObjects();
         void updateElementBuffer();
         void setupVars();
+        void changeToStage(LKParticleStage *stage);
     };
 }
 
