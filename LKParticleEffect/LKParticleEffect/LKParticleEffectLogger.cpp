@@ -28,7 +28,7 @@ void LKParticleEffectLogger::log(LKParticleEffectLogLevel level, string fmt, ...
     {
         va_list args;
         va_start(args, fmt);
-        snprintf(s_buf, 1024, fmt.c_str(), args);
+        vsnprintf(s_buf, 1024, fmt.c_str(), args);
         va_end(args);
 
         listener(level, s_buf);

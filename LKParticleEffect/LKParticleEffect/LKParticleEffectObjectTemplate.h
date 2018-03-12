@@ -45,6 +45,9 @@ namespace LKKit
         LKParticleEffectObjectTemplate(LKParticleEffectObjectTemplate &obj);
         ~LKParticleEffectObjectTemplate();
         void merge(const Value &value);
+
+        void dump();
+
     protected:
         vector<RVar*> &vars;
     };

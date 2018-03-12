@@ -171,6 +171,7 @@ void LKParticleEffectSystem::load(string path)
     if (!f.is_open())
     {
         LKLogError("open json failed");
+        return;
     }
     IStreamWrapper isw(f);
     document.ParseStream(isw);
@@ -199,10 +200,14 @@ void LKParticleEffectSystem::load(string path)
     const Value &camera = define["camera"];
     //--------objects--------
     const Value &objects = define["objects"];
+
+    LKLogInfo("%s@%d load objects", __FILE__, __LINE__);
     for (SizeType i = 0; i<objects.Size(); i++)
     {
         LKParticleEffectObjectTemplate *objectTemplate = new LKParticleEffectObjectTemplate(vars,objects[i]);
         objectTemplateMap[objectTemplate->name] = objectTemplate;
+
+        objectTemplate->dump();
     }
 
     // stage section

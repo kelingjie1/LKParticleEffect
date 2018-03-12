@@ -8,7 +8,11 @@
 
 #include "LKParticleEffectObjectTemplate.h"
 #include "LKParticleEffectSystem.h"
+#include "LKParticleEffectLogger.h"
+
 using namespace LKKit;
+
+#define TAG "LKParticleEffectObjectTemplate"
 
 LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectObjectTemplate &obj):vars(obj.vars),sprite(nullptr)
 {
@@ -126,4 +130,21 @@ LKParticleEffectObjectTemplate::~LKParticleEffectObjectTemplate()
         delete(vars[i]);
     }
     vars.clear();
+}
+
+void LKParticleEffectObjectTemplate::dump() {
+    LKLogInfo("--------- %s ---------", TAG);
+    LKLogInfo("name: %s", name.c_str());
+    LKLogInfo("type: %s", type.c_str());
+    if (sprite != nullptr) {
+        LKLogInfo("sprite.texture: %s", sprite->texture.c_str())
+        LKLogInfo("sprite.width: %s", sprite->width.to_string().c_str());
+        LKLogInfo("sprite.height: %s", sprite->height.to_string().c_str());
+        LKLogInfo("sprite.R: %s", sprite->colorR.to_string().c_str());
+        LKLogInfo("sprite.G: %s", sprite->colorG.to_string().c_str());
+        LKLogInfo("sprite.B: %s", sprite->colorB.to_string().c_str());
+        LKLogInfo("sprite.A: %s", sprite->colorA.to_string().c_str());
+        LKLogInfo("sprite.frameIndex: %s", sprite->frameIndex.to_string().c_str());
+    }
+    LKLogInfo("######### %s #########", TAG);
 }
