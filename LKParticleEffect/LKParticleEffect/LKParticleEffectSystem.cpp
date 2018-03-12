@@ -294,6 +294,12 @@ void LKParticleEffectSystem::update(double timeDelta)
         spriteObjects[i].data = &spriteObjectDatas[i];
     }
     
+    auto objects = usedObjects;
+    for (auto it=objects.begin(); it!=objects.end(); it++)
+    {
+        
+    }
+    
     vector<LKParticleEffectObject*> objectsList;
     for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
     {

@@ -60,6 +60,17 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(vector<RVar*> &va
             sprite->height = LKParticleEffectValue(vsprite["height"], vars);
         }
     }
+    if (value.HasMember("emitter"))
+    {
+        const Value &vemitter = value["emitter"];
+        emitter = new LKParticleEffectEmitterProperty();
+        emitter->emitRate = LKParticleEffectValue(vemitter["emitRate"], vars);
+        const Value &emitObjects = vemitter["emitObjects"];
+        for (SizeType i = 0; i<emitObjects.Size(); i++)
+        {
+            emitter->emitObjects.push_back(emitObjects[i].GetString());
+        }
+    }
 }
 
 void LKParticleEffectObjectTemplate::merge(const Value &value)

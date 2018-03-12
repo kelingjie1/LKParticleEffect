@@ -58,31 +58,35 @@
                     "width":100,
                     "height":100
                 },
+                "emitter":
+                {
+                    "emitRate":10,
+                    "emitObjects":
+                    [
+                        "flower2"
+                    ]
+                },
                 "life":3,
                 "rotation":0,
                 "positionX":"rand0%1000-500",
                 "positionY":"1000-t*10",
-                "positionZ":"rand1%1000-500",
-                "emitRate":10,
-                "emit_objects":
-                [
-                    "flower2"
-                ]
-         
+                "positionZ":"rand1%1000-500"
             },
             {
                 "name":"flower0",
                 "type":"default",
+                "emitter":
+                {
+                    "emitRate":20,
+                    "emitObjects":
+                    [
+                        "flower1"
+                    ]
+                },
                 "rotation":0,
                 "positionX":0,
                 "positionY":0,
-                "positionZ":0,
-                "emitRate":20,
-                "emit_objects":
-                [
-                    "flower1"
-                ]
-         
+                "positionZ":0
             }
 
         ]

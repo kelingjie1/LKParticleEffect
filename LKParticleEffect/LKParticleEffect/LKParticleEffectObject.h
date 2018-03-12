@@ -7,32 +7,39 @@
 //
 
 #include "glcontext.h"
+#include <string>
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
-struct LKParticleEffectObjectData
+namespace LKKit
 {
-    GLuint identifier;
-    GLfloat positionX;
-    GLfloat positionY;
-    GLfloat positionZ;
-    GLfloat width;
-    GLfloat height;
-    GLfloat colorR;
-    GLfloat colorG;
-    GLfloat colorB;
-    GLfloat colorA;
-    GLfloat textureU;
-    GLfloat textureV;
-    GLfloat textureIndex;
-    GLfloat rotation;
-};
+    using namespace std;
+    struct LKParticleEffectObjectData
+    {
+        GLuint identifier;
+        GLfloat positionX;
+        GLfloat positionY;
+        GLfloat positionZ;
+        GLfloat width;
+        GLfloat height;
+        GLfloat colorR;
+        GLfloat colorG;
+        GLfloat colorB;
+        GLfloat colorA;
+        GLfloat textureU;
+        GLfloat textureV;
+        GLfloat textureIndex;
+        GLfloat rotation;
+    };
+    
+    class LKParticleEffectObject
+    {
+    public:
+        LKParticleEffectObjectData *data;
+        string group;
+        GLfloat distance;
+    };
+}
 
-class LKParticleEffectObject
-{
-public:
-    LKParticleEffectObjectData *data;
-    GLfloat distance;
-};
 
 #endif
 

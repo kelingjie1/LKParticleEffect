@@ -28,6 +28,11 @@ namespace LKKit
         LKParticleEffectValue width;
         LKParticleEffectValue height;
     };
+    struct LKParticleEffectEmitterProperty
+    {
+        LKParticleEffectValue emitRate;
+        vector<string> emitObjects;
+    };
     
     class LKParticleEffectObjectTemplate
     {
@@ -36,6 +41,7 @@ namespace LKKit
         string type;
         
         LKParticleEffectSpriteProperty *sprite;
+        LKParticleEffectEmitterProperty *emitter;
         LKParticleEffectValue rotation;
         LKParticleEffectValue positionX;
         LKParticleEffectValue positionY;
