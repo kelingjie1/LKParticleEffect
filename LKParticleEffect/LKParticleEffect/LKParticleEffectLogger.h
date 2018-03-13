@@ -34,7 +34,7 @@ namespace LKKit
         void log(LKParticleEffectLogLevel level, string fmt, ...);
         LKParticleEffectLoggerListener *listener;
     protected:
-        LKParticleEffectLogger(){};
+        LKParticleEffectLogger():listener(nullptr){};
     };
 
 }

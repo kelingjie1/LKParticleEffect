@@ -99,7 +99,7 @@
             "events":
             [
                 {
-                    "type":"delay",
+                    "name":"delay",
                     "time":3,
                     "action":
                     { 
@@ -108,35 +108,15 @@
                     }
                 },
                 {
-                    "type":"detect",
-                    "pose":"show_hand",
+                    "name":"tap",
                     "action":
                     {
                         "type":"change_stage",
                         "target":"stage2"
                     }
-                },
-                {
-                    "type":"undetect",
-                    "pose":"show_hand",
-                    "action":
-                    {
-                        "type":"reset"
-                    }
                 }
 
             ],
-            "define":
-            {
-                "flower1":
-                {
-                    "positionX":"t",
-                    "sprite":
-                    {
-                        "width":"t"
-                    }
-                }
-            },
             "enter_stage":
             {
                 "add":
@@ -157,6 +137,16 @@
                     }
                 ]
             }
+        },
+        {
+            "name":"stage2",
+            "define":
+            [
+                {
+                    "name":"flower2",
+                    "positionY":"t"
+                }
+            ]
         }
     ]
     

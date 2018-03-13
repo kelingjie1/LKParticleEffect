@@ -6,15 +6,16 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#ifndef LKParticleEffectObjectTemplate_h
-#define LKParticleEffectObjectTemplate_h
-
 #include "glcontext.h"
 #include "LKParticleEffectValue.h"
 #include "LKParticleEffectTexture.h"
 #include "rapidjson/document.h"
 #include <string>
 #include <memory>
+
+#ifndef LKParticleEffectObjectTemplate_h
+#define LKParticleEffectObjectTemplate_h
+
 namespace LKKit
 {
     class LKParticleEffectSystem;

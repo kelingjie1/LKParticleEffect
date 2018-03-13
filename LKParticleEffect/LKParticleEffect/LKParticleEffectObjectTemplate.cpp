@@ -20,6 +20,7 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectO
     system = obj.system;
     name = obj.name;
     type = obj.type;
+    life = obj.life;
     rotation = obj.rotation;
     positionX = obj.positionX;
     positionY = obj.positionY;

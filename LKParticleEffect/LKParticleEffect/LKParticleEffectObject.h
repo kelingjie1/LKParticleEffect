@@ -8,8 +8,10 @@
 
 #include "glcontext.h"
 #include <string>
+#include <memory>
 #include "LKParticleEffectObjectTemplate.h"
 #include "LKParticleEffectProperty.h"
+
 #ifndef LKParticleEffectSpriteObject_h
 #define LKParticleEffectSpriteObject_h
 namespace LKKit

@@ -6,11 +6,10 @@
 //  Copyright © 2018年 柯灵杰. All rights reserved.
 //
 
-#ifndef LKParticleEffectSystem_h
-#define LKParticleEffectSystem_h
-
 #include <string>
 #include <set>
+#include <memory>
+#include <map>
 #include "LKParticleEffectObject.h"
 #include "LKParticleEffectTexture.h"
 #include "LKParticleEffectCamera.h"
@@ -18,6 +17,10 @@
 #include "LKParticleEffectStage.h"
 #include "LKParticleEffectProperty.h"
 #include "LKParticleEffectObjectTemplate.h"
+
+#ifndef LKParticleEffectSystem_h
+#define LKParticleEffectSystem_h
+
 
 namespace LKKit
 {
@@ -52,11 +55,14 @@ namespace LKKit
         void load(string path);
         void update(double timeDelta);
         void render();
+        void triggerEvent(string name,map<string,string> params = map<string,string>());
+        
         LKParticleEffectObject *getUnusedObject(string templateName,LKParticleEffectObject *parent=nullptr);
         void removeObject(LKParticleEffectObject *object);
         ~LKParticleEffectSystem();
-        
         set<LKParticleEffectObject*> usedObjects;
+        void changeToStage(shared_ptr<LKParticleEffectStage> stage);
+        void changeToStage(string stageName);
     protected:
         LKParticleEffectConfig config;
         GLuint vbo;
@@ -78,7 +84,7 @@ namespace LKKit
         void setupObjects();
         void updateElementBuffer();
         void setupVars();
-        void changeToStage(shared_ptr<LKParticleEffectStage> stage);
+        
         void mapData();
         void unmapData();
     };

@@ -31,17 +31,17 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)startRecord
 {
-    NSError *error;
-    self.videoQueue = dispatch_queue_create("videoQueue", nil);
-    self.session = [[AVCaptureSession alloc] init];
-    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] error:&error];
-    [self.session addInput:self.videoInput];
-    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
-    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoQueue];
-    [[self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
-    AVCaptureConnection *videoConnection = [self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
-    [self.session addOutput:self.videoDataOutput];
-    [self.session startRunning];
+//    NSError *error;
+//    self.videoQueue = dispatch_queue_create("videoQueue", nil);
+//    self.session = [[AVCaptureSession alloc] init];
+//    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] error:&error];
+//    [self.session addInput:self.videoInput];
+//    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
+//    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoQueue];
+//    [[self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
+//    AVCaptureConnection *videoConnection = [self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
+//    [self.session addOutput:self.videoDataOutput];
+//    [self.session startRunning];
 }
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
@@ -65,6 +65,22 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     self.system = new LKParticleEffectSystem(config);
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
     self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGR:)]];
+    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGR:)]];
+}
+
+- (void)tapGR:(UITapGestureRecognizer*)gr
+{
+    if (gr.state == UIGestureRecognizerStateEnded)
+    {
+        self.system->triggerEvent("tap");
+    }
+}
+
+- (void)panGR:(UIPanGestureRecognizer*)gr
+{
+    
 }
 
 - (void)dealloc
@@ -74,10 +90,12 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    glBindVertexArray(1);
     self.system->update(self.timeSinceLastDraw);
     glClearColor(1, 1, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     self.system->render();
+    glBindVertexArray(0);
 }
 
 

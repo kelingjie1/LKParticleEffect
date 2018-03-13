@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		073E166920480209007B1BAF /* PlatformBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 073E166820480208007B1BAF /* PlatformBridge.cpp */; };
 		073E166A20481606007B1BAF /* glcontext.h in Headers */ = {isa = PBXBuildFile; fileRef = 073E1664204801AA007B1BAF /* glcontext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		073E16962048182C007B1BAF /* Headers in Resources */ = {isa = PBXBuildFile; fileRef = 073E16952048182C007B1BAF /* Headers */; };
 		073E16FF20512F24007B1BAF /* LKParticleEffectObjectTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 073E16FD20512F24007B1BAF /* LKParticleEffectObjectTemplate.cpp */; };
 		073E170020512F24007B1BAF /* LKParticleEffectObjectTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 073E16FE20512F24007B1BAF /* LKParticleEffectObjectTemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		073E170320513227007B1BAF /* LKParticleEffectProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 073E170120513227007B1BAF /* LKParticleEffectProperty.cpp */; };
@@ -20,6 +19,8 @@
 		0747F4282056A40600525610 /* LKParticleEffectStageOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0747F4262056A40600525610 /* LKParticleEffectStageOperation.cpp */; };
 		0747F4292056A40600525610 /* LKParticleEffectStageOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0747F4272056A40600525610 /* LKParticleEffectStageOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0747F6C42057814F00525610 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0747F6C32057814F00525610 /* GLKit.framework */; };
+		0747FE962057F4B000525610 /* LKParticleEffectStageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0747FE942057F4B000525610 /* LKParticleEffectStageEvent.cpp */; };
+		0747FE972057F4B000525610 /* LKParticleEffectStageEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0747FE952057F4B000525610 /* LKParticleEffectStageEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */; };
 		07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */; };
@@ -52,7 +53,6 @@
 		073E1664204801AA007B1BAF /* glcontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glcontext.h; sourceTree = "<group>"; };
 		073E1666204801C9007B1BAF /* PlatformBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformBridge.h; sourceTree = "<group>"; };
 		073E166820480208007B1BAF /* PlatformBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlatformBridge.cpp; sourceTree = "<group>"; };
-		073E16952048182C007B1BAF /* Headers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Headers; path = LKParticleEffect/Headers; sourceTree = "<group>"; };
 		073E16FD20512F24007B1BAF /* LKParticleEffectObjectTemplate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectObjectTemplate.cpp; sourceTree = "<group>"; };
 		073E16FE20512F24007B1BAF /* LKParticleEffectObjectTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectObjectTemplate.h; sourceTree = "<group>"; };
 		073E170120513227007B1BAF /* LKParticleEffectProperty.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectProperty.cpp; sourceTree = "<group>"; };
@@ -63,6 +63,8 @@
 		0747F4262056A40600525610 /* LKParticleEffectStageOperation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectStageOperation.cpp; sourceTree = "<group>"; };
 		0747F4272056A40600525610 /* LKParticleEffectStageOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectStageOperation.h; sourceTree = "<group>"; };
 		0747F6C32057814F00525610 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		0747FE942057F4B000525610 /* LKParticleEffectStageEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LKParticleEffectStageEvent.cpp; path = LKParticleEffect.xcodeproj/LKParticleEffectStageEvent.cpp; sourceTree = SOURCE_ROOT; };
+		0747FE952057F4B000525610 /* LKParticleEffectStageEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LKParticleEffectStageEvent.h; path = LKParticleEffect.xcodeproj/LKParticleEffectStageEvent.h; sourceTree = SOURCE_ROOT; };
 		07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectIOSBridge.h; sourceTree = "<group>"; };
 		07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectIOSBridge.mm; sourceTree = "<group>"; };
 		07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectTexture.cpp; sourceTree = "<group>"; };
@@ -222,7 +224,6 @@
 		7855E719203291E00035D240 = {
 			isa = PBXGroup;
 			children = (
-				073E16952048182C007B1BAF /* Headers */,
 				7855E725203291E00035D240 /* LKParticleEffect */,
 				7855E724203291E00035D240 /* Products */,
 				78FE1D13203F112C00D9C7FD /* Frameworks */,
@@ -251,6 +252,8 @@
 				7855E735203292030035D240 /* LKParticleEffectSystem.cpp */,
 				0747F4272056A40600525610 /* LKParticleEffectStageOperation.h */,
 				0747F4262056A40600525610 /* LKParticleEffectStageOperation.cpp */,
+				0747FE952057F4B000525610 /* LKParticleEffectStageEvent.h */,
+				0747FE942057F4B000525610 /* LKParticleEffectStageEvent.cpp */,
 				073E170520513536007B1BAF /* LKParticleEffectStage.h */,
 				073E170620513536007B1BAF /* LKParticleEffectStage.cpp */,
 				073E16FE20512F24007B1BAF /* LKParticleEffectObjectTemplate.h */,
@@ -315,6 +318,7 @@
 				0747F41B20562DA700525610 /* Printable.h in Headers */,
 				7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */,
 				0747F4292056A40600525610 /* LKParticleEffectStageOperation.h in Headers */,
+				0747FE972057F4B000525610 /* LKParticleEffectStageEvent.h in Headers */,
 				073E166A20481606007B1BAF /* glcontext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,7 +381,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				073E16962048182C007B1BAF /* Headers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +404,7 @@
 				7855E73F203292C90035D240 /* LKParticleEffectObject.cpp in Sources */,
 				7855E737203292030035D240 /* LKParticleEffectSystem.cpp in Sources */,
 				78809F3E2033DCC200982F23 /* mathexpr.cpp in Sources */,
+				0747FE962057F4B000525610 /* LKParticleEffectStageEvent.cpp in Sources */,
 				78809F0E2033100700982F23 /* LKParticleEffectUtil.cpp in Sources */,
 				0747F4282056A40600525610 /* LKParticleEffectStageOperation.cpp in Sources */,
 			);
@@ -535,9 +539,10 @@
 					"IOS=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LKParticleEffect/Headers/\"";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LKParticleEffect/ThirdPart\"";
 				INFOPLIST_FILE = LKParticleEffect/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.KLJ.LKParticleEffect;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -559,9 +564,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREPROCESSOR_DEFINITIONS = "IOS=1";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LKParticleEffect/Headers/\"";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/LKParticleEffect/ThirdPart\"";
 				INFOPLIST_FILE = LKParticleEffect/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.KLJ.LKParticleEffect;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

@@ -11,29 +11,13 @@
 #include <string>
 #include <map>
 #include "LKParticleEffectStageOperation.h"
+#include "LKParticleEffectStageEvent.h"
 
 namespace LKKit {
     using namespace rapidjson;
     using namespace std;
 
     class LKParticleEffectSystem;
-
-    enum StageActionType {
-        StageActionTypeNone = -1,
-        StageActionTypeChangeStage,
-        StageActionTypeReset,
-    };
-
-    typedef struct
-    {
-        string type;
-        float time;
-        string pose;
-
-        StageActionType actionType;
-        string actionTarget;
-    } stStageEvent;
-
 
     class LKParticleEffectStage
     {
@@ -43,15 +27,13 @@ namespace LKKit {
         LKParticleEffectStage();
 
         string name;
-        stStageEvent delayEvent;
-        map<string, stStageEvent*> detectEventPoseMap;
-        map<string, stStageEvent*> undetectEventPostMap;
+        map<string, shared_ptr<LKParticleEffectStageEvent>> eventMap;
         
         vector<shared_ptr<LKParticleEffectStageOperation>> enterStageOperations;
         vector<shared_ptr<LKParticleEffectStageOperation>> leaveStageOperations;
 
-        map<string, LKParticleEffectObjectTemplate*> defineMap;
-        
+        map<string, shared_ptr<LKParticleEffectObjectTemplate>> objectTemplateMap;
+        void triggerEvent(string name,map<string,string> params = map<string,string>());
         void enterStage();
         void leaveStage();
     protected:

@@ -129,8 +129,10 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     offset+=sizeof(GLfloat)*3;
     
     glVertexAttribPointer(5, 1, GL_FLOAT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
+    
     glBindVertexArray(0);
-
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     LKLogInfo("initialized");
 }
 
@@ -165,6 +167,8 @@ void LKParticleEffectSystem::setupVars()
 
 void LKParticleEffectSystem::mapData()
 {
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBindVertexArray(vao);
     objectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
     effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
@@ -174,8 +178,12 @@ void LKParticleEffectSystem::unmapData()
 {
     objectDatas = nullptr;
     effectIndexes = nullptr;
-    glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+    
     glUnmapBuffer(GL_ARRAY_BUFFER);
+    glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void LKParticleEffectSystem::load(string path)
@@ -193,7 +201,7 @@ void LKParticleEffectSystem::load(string path)
     {
         LKLogError("document is not Object");
     }
-
+    
     const Value &resources = document["resources"];
     //--------textures--------
     const Value &textures = resources["textures"];
@@ -226,7 +234,7 @@ void LKParticleEffectSystem::load(string path)
     }
     //--------objects--------
     const Value &objects = define["objects"];
-
+    
     LKLogInfo("%s@%d load objects", __FILE__, __LINE__);
     for (SizeType i = 0; i<objects.Size(); i++)
     {
@@ -234,7 +242,7 @@ void LKParticleEffectSystem::load(string path)
         objectTemplateMap[objectTemplate->name] = objectTemplate;
         objectTemplate->dump();
     }
-
+    
     // stage section
     const  Value &stages = document["stages"];
     for (SizeType i = 0; i < stages.Size(); ++i)
@@ -246,19 +254,6 @@ void LKParticleEffectSystem::load(string path)
             changeToStage(stage);
         }
     }
-    
-//    //setupTestData
-//    mapData();
-//    auto obj0 = getUnusedObject();
-//    obj0->objectTemplate = objectTemplateMap["flower0"];
-//    obj0->life = obj0->objectTemplate->life->value();
-//    obj0->positionOffsetX = 0;
-//    obj0->positionOffsetY = 0;
-//    obj0->positionOffsetZ = 0;
-//    obj0->rotationOffset = 0;
-//    obj0->emitRestTime = 0;
-//    obj0->group = "";
-//    unmapData();
 }
 
 void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectStage> stage)
@@ -275,22 +270,20 @@ void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectSta
     
 }
 
+void LKParticleEffectSystem::changeToStage(string stageName)
+{
+    auto stage = stageMap[stageName];
+    changeToStage(stage);
+}
+
 void LKParticleEffectSystem::setupObjects()
 {
-    mapData();
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
         LKParticleEffectObject *object = &spriteObjects[i];
-        LKParticleEffectObjectData *data = &objectDatas[i];
         object->index = i;
-        data->index = i;
-        data->colorR = 1;
-        data->colorG = 1;
-        data->colorB = 1;
-        data->colorA = 1;
         unusedObjects.insert(object);
     }
-    unmapData();
 }
 
 bool compare(LKParticleEffectObject* a,LKParticleEffectObject* b)
@@ -310,6 +303,7 @@ void LKParticleEffectSystem::update(double timeDelta)
         auto object = *it;
         auto temp = object->objectTemplate;
         auto data = &objectDatas[object->index];
+        data->index = object->index;
         object->property.t+= timeDelta;
         memcpy(&objectProperty, &object->property, sizeof(LKParticleEffectObjectProperty));
         object->life -= timeDelta;
@@ -382,9 +376,7 @@ void LKParticleEffectSystem::update(double timeDelta)
         effectIndexes[i] = objectsList[i]->index;
     }
     
-    glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-    glUnmapBuffer(GL_ARRAY_BUFFER);
-    glBindVertexArray(0);
+    unmapData();
 }
 
 LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateName,LKParticleEffectObject *parent)
@@ -394,7 +386,7 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateN
         LKParticleEffectObject *object = *unusedObjects.begin();
         unusedObjects.erase(object);
         usedObjects.insert(object);
-        object->objectTemplate = objectTemplateMap[templateName];
+        object->objectTemplate = currentStage->objectTemplateMap[templateName];
         object->life = object->objectTemplate->life->value();
         if (parent)
         {
@@ -426,9 +418,7 @@ void LKParticleEffectSystem::removeObject(LKParticleEffectObject *object)
 
 void LKParticleEffectSystem::render()
 {
-    
     glUseProgram(program);
-    glBindVertexArray(vao);
     glDisable(GL_DEPTH_TEST);
     int i=0;
     GLint textures[8] = {0,1,2,3,4,5,6,7};
@@ -453,10 +443,15 @@ void LKParticleEffectSystem::render()
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+    glBindVertexArray(vao);
     glDrawElements(GL_POINTS, (GLsizei)usedObjects.size(), GL_UNSIGNED_SHORT, nullptr);
     glBindVertexArray(0);
-    
+    glDisable(GL_BLEND);
+}
+
+void LKParticleEffectSystem::triggerEvent(string name,map<string,string> params)
+{
+    currentStage->triggerEvent(name,params);
 }
 
 LKParticleEffectSystem::~LKParticleEffectSystem()
