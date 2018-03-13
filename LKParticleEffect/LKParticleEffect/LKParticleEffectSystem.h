@@ -38,7 +38,6 @@ namespace LKKit
     public:
         static const char* TAG;
         shared_ptr<LKParticleEffectCamera> camera;
-        vector<float> projectMatrix;
         GLuint texturesLocation;
         GLuint frameSizesLocation;
         GLuint vpMatrixLocation;

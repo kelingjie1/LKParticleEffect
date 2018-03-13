@@ -42,7 +42,7 @@ LKParticleEffectShader::LKParticleEffectShader()
      
      void main()
     {
-        gl_Position = vec4(position.x, position.y, position.z, 1.0);
+        gl_Position = vpMatrix*vec4(position.x, position.y, position.z, 1.0);
         float longEdge = max(pointSize.x,pointSize.y);
         gl_PointSize = longEdge;//*gl_Position.z*1.414*1.0;
         v_pointScale = vec2(pointSize.x/longEdge,pointSize.y/longEdge);

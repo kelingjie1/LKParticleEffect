@@ -11,24 +11,29 @@
 #include "glcontext.h"
 #include <vector>
 #include "rapidjson/document.h"
+#include "Eigen/Eigen"
 
 namespace LKKit
 {
     using namespace std;
+    using namespace Eigen;
     using namespace rapidjson;
+    class LKParticleEffectConfig;
     class LKParticleEffectCamera
     {
         
     public:
-        LKParticleEffectCamera(const Value &value);
-        vector<float> m;
+        LKParticleEffectCamera(const Value &value,LKParticleEffectConfig &config);
+        Matrix4f viewMatrix;
+        Matrix4f projectionMatrix;
+        Matrix4f getVPMatrix();
         
     };
    
     class LKParticleEffect2DCamera:public LKParticleEffectCamera
     {
     public:
-        LKParticleEffect2DCamera(const Value &value);
+        LKParticleEffect2DCamera(const Value &value,LKParticleEffectConfig &config);
     };
     
     
@@ -36,19 +41,19 @@ namespace LKKit
     class LKParticleEffect3DCamera:public LKParticleEffectCamera
     {
     public:
-        LKParticleEffect3DCamera(const Value &value);
+        LKParticleEffect3DCamera(const Value &value,LKParticleEffectConfig &config);
         void setMotionMatrix(vector<float> motionMatrix);
     };
     class LKParticleEffect3DPerspectiveCamera:public LKParticleEffect3DCamera
     {
     public:
-        LKParticleEffect3DPerspectiveCamera(const Value &value);
+        LKParticleEffect3DPerspectiveCamera(const Value &value,LKParticleEffectConfig &config);
         
     };
     class LKParticleEffect3DOrthogonalCamera:public LKParticleEffect3DCamera
     {
     public:
-        LKParticleEffect3DOrthogonalCamera(const Value &value);
+        LKParticleEffect3DOrthogonalCamera(const Value &value,LKParticleEffectConfig &config);
         
     };
     

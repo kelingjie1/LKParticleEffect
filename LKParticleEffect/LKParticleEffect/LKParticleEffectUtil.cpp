@@ -125,3 +125,14 @@ vector<float> LKParticleEffectUtil::mat4DotMat4(vector<float> a,vector<float> b)
 #undef R
     return r;
 }
+
+vector<float> LKParticleEffectUtil::mat4Identify()
+{
+    vector<float> m;
+    m.resize(16);
+    m[0*4+0] = 1;
+    m[1*4+1] = 1;
+    m[2*4+2] = 1;
+    m[3*4+3] = 1;
+    return m;
+}

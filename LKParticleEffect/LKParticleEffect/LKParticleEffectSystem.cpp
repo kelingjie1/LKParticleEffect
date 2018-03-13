@@ -35,6 +35,7 @@ const char* LKParticleEffectSystem::TAG = "LKParticleSystem";
 
 LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 {
+    this->config = config;
     setupVars();
     
     GLint success;
@@ -89,9 +90,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     frameSizesLocation = glGetUniformLocation(program, "frameSizes");
     vpMatrixLocation = glGetUniformLocation(program, "vpMatrix");
     
-    projectMatrix = LKParticleEffectUtil::gluPerspective(3.1415926/2,
-                                                         config.viewWidth/(float)config.viewHeight,
-                                                         5, 20000);
+    
     
     spriteObjects.resize(config.maxObjectCount);
     
@@ -215,15 +214,15 @@ void LKParticleEffectSystem::load(string path)
     const Value &cameraValue = define["camera"];
     if (cameraValue["type"]=="perspective")
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue,config));
     }
     else if (cameraValue["type"]=="orthogonal")
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue,config));
     }
     else
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue,config));
     }
     //--------objects--------
     const Value &objects = define["objects"];
@@ -446,8 +445,11 @@ void LKParticleEffectSystem::render()
     }
     glUniform2fv(frameSizesLocation, 8, frameSizes);
     
-    vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera->m, projectMatrix);
-    glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMartix.data());
+    //vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera->m, projectMatrix);
+    auto m = camera->getVPMatrix();
+    Matrix<float, 4, 4, RowMajor> vpMatrix = m;
+    auto da = vpMatrix.data();
+    glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMatrix.data());
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

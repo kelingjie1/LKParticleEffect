@@ -30,6 +30,7 @@ namespace LKKit
                                        GLfloat centerx, GLfloat centery, GLfloat centerz,
                                        GLfloat upx, GLfloat upy, GLfloat upz);
         static vector<float> mat4DotMat4(vector<float> a,vector<float> b);
+        static vector<float> mat4Identify();
     };
 }
 

@@ -29,7 +29,14 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)startRecord
+{
+    self.session = [[AVCaptureSession alloc] init];
+    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:(nonnull AVCaptureDevice *) error:<#(NSError *__autoreleasing  _Nullable * _Nullable)#>]
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     LKParticleEffectLogger::instance()->listener = loggerListener;
@@ -38,7 +45,10 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     self.glview = (GLKView*)self.view;
     self.glview.context = self.context;
     [EAGLContext setCurrentContext:self.context];
-    self.system = new LKParticleEffectSystem(LKParticleEffectConfig());
+    auto config = LKParticleEffectConfig();
+    config.viewWidth = self.view.bounds.size.width;
+    config.viewHeight = self.view.bounds.size.height;
+    self.system = new LKParticleEffectSystem(config);
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
     self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
 }
