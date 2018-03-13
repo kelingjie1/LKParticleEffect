@@ -31,8 +31,22 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)startRecord
 {
+    NSError *error;
+    self.videoQueue = dispatch_queue_create("videoQueue", nil);
     self.session = [[AVCaptureSession alloc] init];
-    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:(nonnull AVCaptureDevice *) error:<#(NSError *__autoreleasing  _Nullable * _Nullable)#>]
+    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] error:&error];
+    [self.session addInput:self.videoInput];
+    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoQueue];
+    [[self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
+    AVCaptureConnection *videoConnection = [self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
+    [self.session addOutput:self.videoDataOutput];
+    [self.session startRunning];
+}
+
+- (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
+{
+    
 }
 
 - (void)viewDidLoad

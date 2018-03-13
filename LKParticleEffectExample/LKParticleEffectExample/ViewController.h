@@ -10,10 +10,13 @@
 #import <GLKit/GLKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface ViewController : GLKViewController
+@interface ViewController : GLKViewController<AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic) AVCaptureSession *session;
 @property (nonatomic) AVCaptureDeviceInput *videoInput;
+@property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
+@property (nonatomic) AVCaptureVideoDataOutput *videoDataOutput;
+@property (nonatomic) dispatch_queue_t videoQueue;
 
 @end
 

@@ -180,10 +180,10 @@ void LKParticleEffectSystem::unmapData()
 
 void LKParticleEffectSystem::load(string path)
 {
-    fstream f(path+"/params.json");
+    fstream f(path+"/params.json",ios::in);
     if (!f.is_open())
     {
-        LKLogError("open json failed");
+        LKLogError("open json failed:%d",errno);
         return;
     }
     IStreamWrapper isw(f);
