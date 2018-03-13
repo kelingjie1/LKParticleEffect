@@ -20,8 +20,9 @@ namespace LKKit
 {
     class LKParticleEffectSystem;
     using namespace std;
-    struct LKParticleEffectSpriteProperty
+    class LKParticleEffectSpriteProperty
     {
+    public:
         shared_ptr<LKParticleEffectValue> colorR;
         shared_ptr<LKParticleEffectValue> colorG;
         shared_ptr<LKParticleEffectValue> colorB;
@@ -30,11 +31,16 @@ namespace LKKit
         shared_ptr<LKParticleEffectValue> frameIndex;
         shared_ptr<LKParticleEffectValue> width;
         shared_ptr<LKParticleEffectValue> height;
+        LKParticleEffectSpriteProperty();
+        LKParticleEffectSpriteProperty(LKParticleEffectSpriteProperty &obj);
     };
-    struct LKParticleEffectEmitterProperty
+    class LKParticleEffectEmitterProperty
     {
+    public:
         shared_ptr<LKParticleEffectValue> emitRate;
         vector<string> emitObjects;
+        LKParticleEffectEmitterProperty();
+        LKParticleEffectEmitterProperty(LKParticleEffectEmitterProperty &obj);
     };
     
     class LKParticleEffectObjectTemplate

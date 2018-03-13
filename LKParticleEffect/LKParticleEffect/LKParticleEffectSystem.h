@@ -62,7 +62,7 @@ namespace LKKit
         ~LKParticleEffectSystem();
         set<LKParticleEffectObject*> usedObjects;
         void changeToStage(shared_ptr<LKParticleEffectStage> stage);
-        void changeToStage(string stageName);
+        void setNextStage(string stageName);
     protected:
         LKParticleEffectConfig config;
         GLuint vbo;
@@ -74,6 +74,7 @@ namespace LKKit
         Document document;
         map<string,shared_ptr<LKParticleEffectTexture>> textureMap;
         shared_ptr<LKParticleEffectStage> currentStage;
+        shared_ptr<LKParticleEffectStage> nextStage;
         map<string, shared_ptr<LKParticleEffectStage>> stageMap;
         
         set<LKParticleEffectObject*> unusedObjects;

@@ -29,7 +29,7 @@ LKParticleEffectStageEventChangeStageAction::LKParticleEffectStageEventChangeSta
 void LKParticleEffectStageEventChangeStageAction::trigger()
 {
     auto system = stage->system;
-    system->changeToStage(target);
+    system->setNextStage(target);
 }
 
 

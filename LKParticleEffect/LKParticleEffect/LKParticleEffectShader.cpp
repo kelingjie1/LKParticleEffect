@@ -31,6 +31,7 @@ LKParticleEffectShader::LKParticleEffectShader()
      layout(location = 3) in vec4 a_colorFactor;
      layout(location = 4) in vec3 a_texCoord;
      layout(location = 5) in float a_rotation;
+     layout(location = 6) in float a_frameIndex;
      
      out vec4 v_colorFactor;
      out vec3 v_texCoord;

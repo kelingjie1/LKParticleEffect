@@ -15,6 +15,34 @@ using namespace LKKit;
 
 #define TAG "LKParticleEffectObjectTemplate"
 
+LKParticleEffectSpriteProperty::LKParticleEffectSpriteProperty()
+{
+    
+}
+
+LKParticleEffectSpriteProperty::LKParticleEffectSpriteProperty(LKParticleEffectSpriteProperty &obj)
+{
+    colorR = obj.colorR;
+    colorG = obj.colorG;
+    colorB = obj.colorB;
+    colorA = obj.colorA;
+    texture = obj.texture;
+    frameIndex = obj.frameIndex;
+    width = obj.width;
+    height = obj.height;
+}
+LKParticleEffectEmitterProperty::LKParticleEffectEmitterProperty()
+{
+    
+}
+
+
+LKParticleEffectEmitterProperty::LKParticleEffectEmitterProperty(LKParticleEffectEmitterProperty &obj)
+{
+    emitRate = obj.emitRate;
+    emitObjects = obj.emitObjects;
+}
+
 LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectObjectTemplate &obj):vars(obj.vars),sprite(nullptr)
 {
     system = obj.system;
@@ -28,15 +56,11 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectO
     
     if (obj.sprite != nullptr)
     {
-        sprite = shared_ptr<LKParticleEffectSpriteProperty>(new LKParticleEffectSpriteProperty());
-        sprite->colorR = obj.sprite->colorR;
-        sprite->colorG = obj.sprite->colorG;
-        sprite->colorB = obj.sprite->colorB;
-        sprite->colorA = obj.sprite->colorA;
-        sprite->texture = obj.sprite->texture;
-        sprite->frameIndex = obj.sprite->frameIndex;
-        sprite->width = obj.sprite->width;
-        sprite->height = obj.sprite->height;
+        sprite = shared_ptr<LKParticleEffectSpriteProperty>(new LKParticleEffectSpriteProperty(*obj.sprite.get()));
+    }
+    if (obj.emitter != nullptr)
+    {
+        emitter = shared_ptr<LKParticleEffectEmitterProperty>(new LKParticleEffectEmitterProperty(*obj.emitter.get()));
     }
 }
 

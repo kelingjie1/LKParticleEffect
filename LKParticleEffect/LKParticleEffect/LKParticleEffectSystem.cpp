@@ -129,6 +129,9 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     offset+=sizeof(GLfloat)*3;
     
     glVertexAttribPointer(5, 1, GL_FLOAT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
+    offset+=sizeof(GLfloat)*1;
+    
+    //glVertexAttribPointer(6, 1, GL_FLOAT, false, sizeof(LKParticleEffectObjectData), (const void*)offset);
     
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -150,6 +153,7 @@ void LKParticleEffectSystem::setupVars()
     vars.push_back(new RVar("cameraDirZ",&globalProperty.cameraDirZ));
     
     vars.push_back(new RVar("t",&objectProperty.t));
+    vars.push_back(new RVar("total_t",&objectProperty.total_t));
     for (int i=0; i<10; i++)
     {
         stringstream ss;
@@ -163,6 +167,9 @@ void LKParticleEffectSystem::setupVars()
     vars.push_back(new RVar("last_frameIndex",&objectProperty.last_frameIndex));
     vars.push_back(new RVar("last_width",&objectProperty.last_width));
     vars.push_back(new RVar("last_height",&objectProperty.last_height));
+    vars.push_back(new RVar("last_positionX",&objectProperty.last_positionX));
+    vars.push_back(new RVar("last_positionY",&objectProperty.last_positionY));
+    vars.push_back(new RVar("last_positionZ",&objectProperty.last_positionZ));
 }
 
 void LKParticleEffectSystem::mapData()
@@ -263,17 +270,34 @@ void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectSta
         currentStage->leaveStage();
     }
     currentStage = stage;
+    for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
+    {
+        auto object = *it;
+        auto data = &objectDatas[object->index];
+        object->property.last_colorR = data->colorR;
+        object->property.last_colorG = data->colorG;
+        object->property.last_colorB = data->colorB;
+        object->property.last_colorA = data->colorA;
+        object->property.last_frameIndex = data->frameIndex;
+        object->property.last_width = data->width;
+        object->property.last_height = data->height;
+        object->property.last_positionX = data->positionX;
+        object->property.last_positionY = data->positionY;
+        object->property.last_positionZ = data->positionZ;
+        
+        object->objectTemplate = stage->objectTemplateMap[object->objectTemplate->name];
+    }
     if (stage)
     {
         stage->enterStage();
     }
-    
+    LKLogInfo("EnterStage:%s",stage->name.c_str());
 }
 
-void LKParticleEffectSystem::changeToStage(string stageName)
+void LKParticleEffectSystem::setNextStage(string stageName)
 {
     auto stage = stageMap[stageName];
-    changeToStage(stage);
+    nextStage = stage;
 }
 
 void LKParticleEffectSystem::setupObjects()
@@ -297,6 +321,11 @@ void LKParticleEffectSystem::update(double timeDelta)
     globalProperty.stageTime+=timeDelta;
     mapData();
     //emit
+    if (nextStage)
+    {
+        changeToStage(nextStage);
+        nextStage = nullptr;
+    }
     auto objects = usedObjects;
     for (auto it=objects.begin(); it!=objects.end(); it++)
     {
@@ -305,6 +334,7 @@ void LKParticleEffectSystem::update(double timeDelta)
         auto data = &objectDatas[object->index];
         data->index = object->index;
         object->property.t+= timeDelta;
+        object->property.total_t+= timeDelta;
         memcpy(&objectProperty, &object->property, sizeof(LKParticleEffectObjectProperty));
         object->life -= timeDelta;
         if (object->life<=0)
@@ -330,8 +360,8 @@ void LKParticleEffectSystem::update(double timeDelta)
             data->width = sprite->width->value();
             data->height = sprite->height->value();
             data->textureIndex = sprite->texture->index;
-            int frameIndex = sprite->frameIndex->value();
-            pair<int, int> pos = sprite->texture->getPosition(frameIndex);
+            data->frameIndex = sprite->frameIndex->value();
+            pair<int, int> pos = sprite->texture->getPosition(data->frameIndex);
             data->textureU = pos.first;
             data->textureV = pos.second;
         }

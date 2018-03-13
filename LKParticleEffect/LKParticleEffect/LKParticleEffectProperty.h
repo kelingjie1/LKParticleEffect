@@ -11,8 +11,9 @@
 
 namespace LKKit
 {
-    struct LKParticleEffectGlobalProperty
+    class LKParticleEffectGlobalProperty
     {
+    public:
         double totalTime;
         double stageTime;
         double cameraX;
@@ -23,9 +24,11 @@ namespace LKKit
         double cameraDirZ;
     };
     
-    struct LKParticleEffectObjectProperty
+    class LKParticleEffectObjectProperty
     {
+    public:
         double t;
+        double total_t;
         double random[10];
         
         double last_colorR;
@@ -35,6 +38,9 @@ namespace LKKit
         double last_frameIndex;
         double last_width;
         double last_height;
+        double last_positionX;
+        double last_positionY;
+        double last_positionZ;
         
         void reset();
     };

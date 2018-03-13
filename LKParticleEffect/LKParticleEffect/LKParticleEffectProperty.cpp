@@ -10,6 +10,8 @@
 #include "LKParticleEffectUtil.h"
 
 using namespace LKKit;
+
+
 void LKParticleEffectObjectProperty::reset()
 {
     memset(this, 0, sizeof(LKParticleEffectObjectProperty));

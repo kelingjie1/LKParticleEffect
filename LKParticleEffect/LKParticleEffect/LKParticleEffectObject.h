@@ -33,6 +33,7 @@ namespace LKKit
         GLfloat textureV;
         GLfloat textureIndex;
         GLfloat rotation;
+        GLfloat frameIndex;
     };
     
     class LKParticleEffectObject
