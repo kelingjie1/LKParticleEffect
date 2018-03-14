@@ -24,17 +24,18 @@ LKParticleEffectStage::LKParticleEffectStage(LKParticleEffectSystem *system, con
     LKLogInfo("%s@%d: parse define section", __FILE__, __LINE__);
     if (stage.HasMember("define")) {
         const Value &defines = stage["define"];
-        if (!defines.IsObject()) {
+        if (!defines.IsObject())
+        {
             return;
         }
 
         for (auto &d : defines.GetObject())
         {
             auto iter = system->objectTemplateMap.find(d.name.GetString());
-            if (iter == system->objectTemplateMap.end()) {
+            if (iter == system->objectTemplateMap.end())
+            {
                 continue;
             }
-
             auto objTemplate = shared_ptr<LKParticleEffectObjectTemplate>(new LKParticleEffectObjectTemplate(*(iter->second)));
             objTemplate->merge(d.value);
             objectTemplateMap[d.name.GetString()] = objTemplate;

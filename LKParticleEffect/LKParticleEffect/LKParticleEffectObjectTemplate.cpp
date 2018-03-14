@@ -68,7 +68,6 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectS
 {
     this->system = system;
     vector<RVar*> &vars = system->vars;
-    name = value["name"].GetString();
     type = value["type"].GetString();
     if (value.HasMember("life"))
     {

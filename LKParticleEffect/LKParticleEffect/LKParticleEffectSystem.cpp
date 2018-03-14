@@ -243,9 +243,10 @@ void LKParticleEffectSystem::load(string path)
     const Value &objects = define["objects"];
     
     LKLogInfo("%s@%d load objects", __FILE__, __LINE__);
-    for (SizeType i = 0; i<objects.Size(); i++)
+    for (auto &object: objects.GetObject())
     {
-        auto objectTemplate = shared_ptr<LKParticleEffectObjectTemplate>(new LKParticleEffectObjectTemplate(this,objects[i]));
+        auto objectTemplate = shared_ptr<LKParticleEffectObjectTemplate>(new LKParticleEffectObjectTemplate(this,object.value));
+        objectTemplate->name = object.name.GetString();
         objectTemplateMap[objectTemplate->name] = objectTemplate;
         objectTemplate->dump();
     }
@@ -274,6 +275,7 @@ void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectSta
     {
         auto object = *it;
         auto data = &objectDatas[object->index];
+        object->property.t = 0;
         object->property.last_colorR = data->colorR;
         object->property.last_colorG = data->colorG;
         object->property.last_colorB = data->colorB;

@@ -24,9 +24,9 @@
             "positionZ":0
         },
         "objects":
-        [
+        {
+            "flower2":
             {
-                "name":"flower2",
                 "type":"default",
                 "sprite":
                 {
@@ -41,12 +41,12 @@
                 },
                 "life":10,
                 "rotation":0,
-                "positionX":"t",
-                "positionY":"0",
-                "positionZ":"0"
+                "positionX":"last_positionX+t",
+                "positionY":"last_positionY+0",
+                "positionZ":"last_positionZ+0"
             },
+            "flower1":
             {
-                "name":"flower1",
                 "type":"default",
                 "sprite":
                 {
@@ -73,8 +73,8 @@
                 "positionY":"t*0.1",
                 "positionZ":"0"
             },
+            "flower0":
             {
-                "name":"flower0",
                 "type":"default",
                 "emitter":
                 {
@@ -90,7 +90,7 @@
                 "positionZ":0
             }
 
-        ]
+        }
     },
     "stages":
     [
@@ -141,12 +141,12 @@
         {
             "name":"stage2",
             "define":
-            [
+            {
+                "flower2":
                 {
-                    "name":"flower2",
-                    "positionY":"t"
+                    "positionY":"last_positionY+t"
                 }
-            ]
+            }
         }
     ]
     
