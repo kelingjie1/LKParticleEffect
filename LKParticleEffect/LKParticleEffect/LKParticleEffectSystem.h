@@ -45,6 +45,7 @@ namespace LKKit
         GLuint texturesLocation;
         GLuint frameSizesLocation;
         GLuint vpMatrixLocation;
+        GLuint screenSizeLocation;
         
         LKParticleEffectGlobalProperty globalProperty;
         LKParticleEffectObjectProperty objectProperty;

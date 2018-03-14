@@ -89,7 +89,7 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     texturesLocation = glGetUniformLocation(program, "textures");
     frameSizesLocation = glGetUniformLocation(program, "frameSizes");
     vpMatrixLocation = glGetUniformLocation(program, "vpMatrix");
-    
+    screenSizeLocation = glGetUniformLocation(program, "screenSize");
     
     
     spriteObjects.resize(config.maxObjectCount);
@@ -424,6 +424,7 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateN
         unusedObjects.erase(object);
         usedObjects.insert(object);
         object->objectTemplate = currentStage->objectTemplateMap[templateName];
+        object->property.reset();
         object->life = object->objectTemplate->life->value();
         if (parent)
         {
@@ -477,7 +478,7 @@ void LKParticleEffectSystem::render()
     Matrix<float, 4, 4, RowMajor> vpMatrix = m;
     auto da = vpMatrix.data();
     glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMatrix.data());
-    
+    glUniform2f(screenSizeLocation, config.viewWidth, config.viewHeight);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindVertexArray(vao);
