@@ -14,11 +14,20 @@
 
 using namespace LKKit;
 
+class LKParticleEffectVarExt
+{
+public:
+    double panX;
+    double panY;
+};
+
 @interface ViewController ()
 
 @property (nonatomic) EAGLContext *context;
 @property (nonatomic) GLKView *glview;
 @property (nonatomic) LKParticleEffectSystem *system;
+@property (nonatomic) LKParticleEffectVarExt varExt;
+@property (nonatomic) CGPoint oldPoint;
 
 @end
 
@@ -53,6 +62,8 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 {
     [super viewDidLoad];
     
+    self.preferredFramesPerSecond = 60;
+    
     LKParticleEffectLogger::instance()->listener = loggerListener;
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
@@ -62,6 +73,8 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     auto config = LKParticleEffectConfig();
     config.viewWidth = self.view.bounds.size.width;
     config.viewHeight = self.view.bounds.size.height;
+    config.vars.push_back(new RVar("panX",&_varExt.panX));
+    config.vars.push_back(new RVar("panY",&_varExt.panY));
     self.system = new LKParticleEffectSystem(config);
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
     self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -80,7 +93,20 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)panGR:(UIPanGestureRecognizer*)gr
 {
-    
+    if (gr.state == UIGestureRecognizerStateBegan)
+    {
+        self.oldPoint = CGPointMake(_varExt.panX, _varExt.panY);
+    }
+    else if (gr.state == UIGestureRecognizerStateChanged)
+    {
+        CGPoint point = [gr translationInView:self.view];
+        _varExt.panX = self.oldPoint.x+point.x/self.view.bounds.size.width;
+        _varExt.panY = self.oldPoint.y+point.y/self.view.bounds.size.height;
+    }
+    else if (gr.state == UIGestureRecognizerStateEnded||gr.state == UIGestureRecognizerStateCancelled)
+    {
+        
+    }
 }
 
 - (void)dealloc
@@ -92,7 +118,7 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 {
     glBindVertexArray(1);
     self.system->update(self.timeSinceLastDraw);
-    glClearColor(1, 1, 1, 1);
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     self.system->render();
     glBindVertexArray(0);

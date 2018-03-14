@@ -33,6 +33,7 @@ namespace LKKit
         unsigned int maxObjectCount;
         unsigned int viewWidth;
         unsigned int viewHeight;
+        vector<RVar*> vars;
     };
     
     class LKParticleEffectSystem

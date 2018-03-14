@@ -7,3 +7,8 @@
 //
 
 #include "LKParticleEffectObject.h"
+using namespace LKKit;
+LKParticleEffectObject::LKParticleEffectObject()
+{
+    property.reset();
+}

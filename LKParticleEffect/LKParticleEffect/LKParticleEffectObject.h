@@ -50,6 +50,7 @@ namespace LKKit
         double emitRestTime;
         string group;
         GLfloat distance;
+        LKParticleEffectObject();
     };
 }
 

@@ -170,6 +170,8 @@ void LKParticleEffectSystem::setupVars()
     vars.push_back(new RVar("last_positionX",&objectProperty.last_positionX));
     vars.push_back(new RVar("last_positionY",&objectProperty.last_positionY));
     vars.push_back(new RVar("last_positionZ",&objectProperty.last_positionZ));
+    
+    vars.insert(vars.end(), config.vars.begin(),config.vars.end());
 }
 
 void LKParticleEffectSystem::mapData()
@@ -229,15 +231,15 @@ void LKParticleEffectSystem::load(string path)
     const Value &cameraValue = define["camera"];
     if (cameraValue["type"]=="perspective")
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue,config));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue,config,vars));
     }
     else if (cameraValue["type"]=="orthogonal")
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue,config));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue,config,vars));
     }
     else
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue,config));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue,config,vars));
     }
     //--------objects--------
     const Value &objects = define["objects"];
@@ -283,9 +285,9 @@ void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectSta
         object->property.last_frameIndex = data->frameIndex;
         object->property.last_width = data->width;
         object->property.last_height = data->height;
-        object->property.last_positionX = data->positionX;
-        object->property.last_positionY = data->positionY;
-        object->property.last_positionZ = data->positionZ;
+        object->property.last_positionX = data->positionX-object->positionOffsetX;
+        object->property.last_positionY = data->positionY-object->positionOffsetY;
+        object->property.last_positionZ = data->positionZ-object->positionOffsetZ;
         
         object->objectTemplate = stage->objectTemplateMap[object->objectTemplate->name];
     }
@@ -322,12 +324,15 @@ void LKParticleEffectSystem::update(double timeDelta)
     globalProperty.totalTime+=timeDelta;
     globalProperty.stageTime+=timeDelta;
     mapData();
-    //emit
+    //stage change
     if (nextStage)
     {
         changeToStage(nextStage);
         nextStage = nullptr;
     }
+    
+    camera->update();
+    
     auto objects = usedObjects;
     for (auto it=objects.begin(); it!=objects.end(); it++)
     {
