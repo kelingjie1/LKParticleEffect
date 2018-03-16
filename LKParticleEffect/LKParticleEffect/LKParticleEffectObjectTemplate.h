@@ -39,6 +39,7 @@ namespace LKKit
     public:
         shared_ptr<LKParticleEffectValue> emitRate;
         vector<string> emitObjects;
+        shared_ptr<LKParticleEffectValue> emitCount;
         LKParticleEffectEmitterProperty();
         LKParticleEffectEmitterProperty(LKParticleEffectEmitterProperty &obj);
     };

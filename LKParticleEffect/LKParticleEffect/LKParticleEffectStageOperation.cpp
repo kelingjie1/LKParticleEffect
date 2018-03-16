@@ -76,6 +76,18 @@ void LKParticleEffectStageRemoveOperation::process()
         }
         
     }
+
+}
+
+LKParticleEffectStageResetAllObjectsOperation::LKParticleEffectStageResetAllObjectsOperation(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageOperation(stage,value)
+{
     
-    
+}
+void LKParticleEffectStageResetAllObjectsOperation::process()
+{
+    LKParticleEffectSystem *system = stage->system;
+    for (auto &it:system->usedObjects)
+    {
+        it->reset();
+    }
 }

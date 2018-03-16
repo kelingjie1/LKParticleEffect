@@ -53,6 +53,7 @@ namespace LKKit
     public:
         LKParticleEffectStageDelayEvent(LKParticleEffectStage *stage,const Value &value);
         double time;
+        virtual void check();
     };
     
 

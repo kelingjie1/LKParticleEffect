@@ -273,6 +273,7 @@ void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectSta
         currentStage->leaveStage();
     }
     currentStage = stage;
+    globalProperty.stageTime = 0;
     for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
     {
         auto object = *it;
@@ -331,6 +332,9 @@ void LKParticleEffectSystem::update(double timeDelta)
         nextStage = nullptr;
     }
     
+    
+    currentStage->checkEvent();
+    
     camera->update();
     
     auto objects = usedObjects;
@@ -383,7 +387,20 @@ void LKParticleEffectSystem::update(double timeDelta)
                 emitNum = (timeDelta+object->emitRestTime)/emissionDuration;
                 object->emitRestTime = (timeDelta+object->emitRestTime)-emitNum*emissionDuration;
             }
-            
+            int emitRestCount = 0;
+            if (temp->emitter->emitCount)
+            {
+                emitRestCount = temp->emitter->emitCount->value()-object->emitCount;
+            }
+            if (emitRestCount<0)
+            {
+                emitRestCount = 0;
+            }
+            if (emitNum>emitRestCount)
+            {
+                emitNum = emitRestCount;
+            }
+            object->emitCount+=emitNum;
             for (int i=0; i<emitNum; i++)
             {
                 int tempIndex = rand()%emitter->emitObjects.size();
@@ -426,6 +443,7 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateN
         object->objectTemplate = currentStage->objectTemplateMap[templateName];
         object->property.reset();
         object->life = object->objectTemplate->life->value();
+
         if (parent)
         {
             LKParticleEffectObjectData *data = &objectDatas[parent->index];

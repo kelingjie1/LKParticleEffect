@@ -70,6 +70,12 @@ void LKParticleEffectStage::parseStageOperations(vector<shared_ptr<LKParticleEff
         auto op = shared_ptr<LKParticleEffectStageOperation>(new LKParticleEffectStageRemoveOperation(this,objs["remove"]));
         ops.push_back(op);
     }
+    
+    if (objs.HasMember("resetAllObjects"))
+    {
+        auto op = shared_ptr<LKParticleEffectStageOperation>(new LKParticleEffectStageResetAllObjectsOperation(this,objs["resetAllObjects"]));
+        ops.push_back(op);
+    }
 }
 
 LKParticleEffectStage::LKParticleEffectStage()
@@ -102,6 +108,17 @@ void LKParticleEffectStage::triggerEvent(string name,map<string,string> params)
     if (it!= eventMap.end())
     {
         it->second->trigger();
+    }
+}
+
+void LKParticleEffectStage::checkEvent()
+{
+    for (auto &it:eventMap)
+    {
+        if (it.second->autoCheck)
+        {
+            it.second->check();
+        }
     }
 }
 

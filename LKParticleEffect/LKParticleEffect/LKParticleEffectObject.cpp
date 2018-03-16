@@ -12,3 +12,9 @@ LKParticleEffectObject::LKParticleEffectObject()
 {
     property.reset();
 }
+
+void LKParticleEffectObject::reset()
+{
+    emitRestTime = 0;
+    emitCount = 0;
+}

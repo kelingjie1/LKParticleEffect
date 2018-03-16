@@ -136,10 +136,12 @@ double LKParticleEffectValue::value()
 }
 
 string LKParticleEffectValue::to_string() {
-    if (op) {
+    if (op)
+    {
         return expr;
-
-    } else {
+    }
+    else
+    {
         ostringstream stream;
         stream<<num;
         return stream.str();

@@ -54,6 +54,13 @@ namespace LKKit
         LKParticleEffectStageRemoveOperation(LKParticleEffectStage *stage,const Value &value);
         virtual void process();
     };
+    
+    class LKParticleEffectStageResetAllObjectsOperation:public LKParticleEffectStageOperation
+    {
+    public:
+        LKParticleEffectStageResetAllObjectsOperation(LKParticleEffectStage *stage,const Value &value);
+        virtual void process();
+    };
 }
 
 #endif /* LKStageOperation_h */

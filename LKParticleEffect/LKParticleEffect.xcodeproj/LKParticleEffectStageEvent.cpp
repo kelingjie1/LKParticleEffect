@@ -64,4 +64,14 @@ void LKParticleEffectStageEvent::trigger()
 LKParticleEffectStageDelayEvent::LKParticleEffectStageDelayEvent(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageEvent(stage,value)
 {
     autoCheck = true;
+    time = value["time"].GetDouble();
+}
+
+void LKParticleEffectStageDelayEvent::check()
+{
+    auto system = stage->system;
+    if (system->globalProperty.stageTime>time)
+    {
+        trigger();
+    }
 }

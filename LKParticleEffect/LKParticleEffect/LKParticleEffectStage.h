@@ -34,6 +34,7 @@ namespace LKKit {
 
         map<string, shared_ptr<LKParticleEffectObjectTemplate>> objectTemplateMap;
         void triggerEvent(string name,map<string,string> params = map<string,string>());
+        void checkEvent();
         void enterStage();
         void leaveStage();
     protected:

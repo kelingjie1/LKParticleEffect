@@ -48,9 +48,11 @@ namespace LKKit
         double positionOffsetZ;
         double rotationOffset;
         double emitRestTime;
+        int emitCount;
         string group;
         GLfloat distance;
         LKParticleEffectObject();
+        void reset();
     };
 }
 

@@ -127,8 +127,8 @@ LKParticleEffect3DPerspectiveCamera::LKParticleEffect3DPerspectiveCamera(const V
     float angle = 3.1415926/4;
     float xScale = cos(angle/2)/sin(angle/2)/aspect;
     float yScale = cos(angle/2)/sin(angle/2);
-    float zNear = 5;
-    float zFar = 10000;
+    float zNear = value["near"].GetDouble();
+    float zFar = value["far"].GetDouble();
     projectionMatrix<<
     xScale,0,0,0,
     0,yScale,0,0,
