@@ -55,10 +55,10 @@ namespace LKKit
         virtual void process();
     };
     
-    class LKParticleEffectStageResetAllObjectsOperation:public LKParticleEffectStageOperation
+    class LKParticleEffectStageResetObjectsOperation:public LKParticleEffectStageOperation
     {
     public:
-        LKParticleEffectStageResetAllObjectsOperation(LKParticleEffectStage *stage,const Value &value);
+        LKParticleEffectStageResetObjectsOperation(LKParticleEffectStage *stage,const Value &value);
         virtual void process();
     };
 }

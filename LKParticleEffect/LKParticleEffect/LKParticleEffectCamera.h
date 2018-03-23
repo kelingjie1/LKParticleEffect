@@ -19,12 +19,14 @@ namespace LKKit
     using namespace std;
     using namespace Eigen;
     using namespace rapidjson;
+    class LKParticleEffectSystem;
     class LKParticleEffectConfig;
     class LKParticleEffectCamera
     {
         
     public:
-        LKParticleEffectCamera(const Value &value,LKParticleEffectConfig &config,vector<RVar*> vars);
+        LKParticleEffectCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system);
+        LKParticleEffectSystem *system;
         Matrix4f viewMatrix;
         Matrix4f projectionMatrix;
         virtual Matrix4f getVPMatrix();
@@ -35,7 +37,7 @@ namespace LKKit
     class LKParticleEffect2DCamera:public LKParticleEffectCamera
     {
     public:
-        LKParticleEffect2DCamera(const Value &value,LKParticleEffectConfig &config,vector<RVar*> vars);
+        LKParticleEffect2DCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system);
     };
     
     
@@ -43,8 +45,10 @@ namespace LKKit
     class LKParticleEffect3DCamera:public LKParticleEffectCamera
     {
     public:
-        LKParticleEffect3DCamera(const Value &value,LKParticleEffectConfig &config,vector<RVar*> vars);
-        void setMotionMatrix(vector<float> motionMatrix);
+        LKParticleEffect3DCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system);
+        virtual Matrix4f getVPMatrix();
+        
+        Matrix4f motionMatrix;
         shared_ptr<LKParticleEffectValue> positionX;
         shared_ptr<LKParticleEffectValue> positionY;
         shared_ptr<LKParticleEffectValue> positionZ;
@@ -58,13 +62,13 @@ namespace LKKit
     class LKParticleEffect3DPerspectiveCamera:public LKParticleEffect3DCamera
     {
     public:
-        LKParticleEffect3DPerspectiveCamera(const Value &value,LKParticleEffectConfig &config,vector<RVar*> vars);
+        LKParticleEffect3DPerspectiveCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system);
         virtual void update();
     };
     class LKParticleEffect3DOrthogonalCamera:public LKParticleEffect3DCamera
     {
     public:
-        LKParticleEffect3DOrthogonalCamera(const Value &value,LKParticleEffectConfig &config,vector<RVar*> vars);
+        LKParticleEffect3DOrthogonalCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system);
         
     };
     

@@ -73,6 +73,10 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectS
     {
         type = value["type"].GetString();
     }
+    else
+    {
+        type = "point";
+    }
     if (value.HasMember("life"))
     {
         life = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["life"], vars));
@@ -151,7 +155,7 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectS
         }
         else
         {
-            emitter->emitCount = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(INTMAX_MAX));
+            emitter->emitCount = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(INT32_MAX));
         }
     }
 }
@@ -161,6 +165,11 @@ void LKParticleEffectObjectTemplate::merge(const Value &value)
     if (value.HasMember("life"))
     {
         life = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["life"], vars));
+    }
+    
+    if (value.HasMember("type"))
+    {
+        type = value["type"].GetString();
     }
     
     if (value.HasMember("rotation"))

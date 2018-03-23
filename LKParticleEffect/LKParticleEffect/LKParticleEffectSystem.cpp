@@ -44,8 +44,10 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     const GLchar *const vsStr = LKParticleEffectShader::instance()->vertexShaderStr.c_str();
     const GLchar *const fsStr = LKParticleEffectShader::instance()->fragmentShaderStr.c_str();
     
+    GLuint vertexShader;
+    GLuint fragmentShader;
+    
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    GLenum glerror = glGetError();
     glShaderSource(vertexShader, 1, &vsStr, nullptr);
     glCompileShader(vertexShader);
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
@@ -67,32 +69,43 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
         glDeleteShader(fragmentShader);
     }
     
-    program = glCreateProgram();
-    if (!program)
+    pointProgram = glCreateProgram();
+    if (!pointProgram)
     {
         LKLogError("glprogram create failed");
     }
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
+    glAttachShader(pointProgram, vertexShader);
+    glAttachShader(pointProgram, fragmentShader);
     
     GLint linked;
     
-    glLinkProgram(program);
-    glGetProgramiv(program, GL_LINK_STATUS, &linked);
+    glLinkProgram(pointProgram);
+    glGetProgramiv(pointProgram, GL_LINK_STATUS, &linked);
     if (!linked)
     {
-        glGetProgramInfoLog(program, 512, nullptr, infoLog);
+        glGetProgramInfoLog(pointProgram, 512, nullptr, infoLog);
         LKLogError(string("program link error:")+infoLog);
-        glDeleteProgram(program);
+        glDeleteProgram(pointProgram);
+    }
+    if (vertexShader)
+    {
+        glDeleteShader(vertexShader);
+        vertexShader = 0;
+    }
+    if (fragmentShader)
+    {
+        glDeleteShader(fragmentShader);
+        fragmentShader = 0;
     }
     
-    texturesLocation = glGetUniformLocation(program, "textures");
-    frameSizesLocation = glGetUniformLocation(program, "frameSizes");
-    vpMatrixLocation = glGetUniformLocation(program, "vpMatrix");
-    screenSizeLocation = glGetUniformLocation(program, "screenSize");
+    texturesLocation = glGetUniformLocation(pointProgram, "textures");
+    frameSizesLocation = glGetUniformLocation(pointProgram, "frameSizes");
+    vpMatrixLocation = glGetUniformLocation(pointProgram, "vpMatrix");
+    screenSizeLocation = glGetUniformLocation(pointProgram, "screenSize");
     
     
-    spriteObjects.resize(config.maxObjectCount);
+    pointObject.resize(config.maxObjectCount);
+    lineObject.resize(config.maxObjectCount);
     
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -179,13 +192,13 @@ void LKParticleEffectSystem::mapData()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBindVertexArray(vao);
-    objectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
+    pointObjectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
     effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
     
 }
 void LKParticleEffectSystem::unmapData()
 {
-    objectDatas = nullptr;
+    pointObjectDatas = nullptr;
     effectIndexes = nullptr;
     
     glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -231,15 +244,15 @@ void LKParticleEffectSystem::load(string path)
     const Value &cameraValue = define["camera"];
     if (cameraValue["type"]=="perspective")
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue,config,vars));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DPerspectiveCamera(cameraValue,config,this));
     }
     else if (cameraValue["type"]=="orthogonal")
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue,config,vars));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect3DOrthogonalCamera(cameraValue,config,this));
     }
     else
     {
-        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue,config,vars));
+        camera = shared_ptr<LKParticleEffectCamera>(new LKParticleEffect2DCamera(cameraValue,config,this));
     }
     //--------objects--------
     const Value &objects = define["objects"];
@@ -274,24 +287,29 @@ void LKParticleEffectSystem::changeToStage(shared_ptr<LKKit::LKParticleEffectSta
     }
     currentStage = stage;
     globalProperty.stageTime = 0;
-    for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
+    for (auto objsetIt = usedObjects.begin();objsetIt!=usedObjects.end();objsetIt++)
     {
-        auto object = *it;
-        auto data = &objectDatas[object->index];
-        object->property.t = 0;
-        object->property.last_colorR = data->colorR;
-        object->property.last_colorG = data->colorG;
-        object->property.last_colorB = data->colorB;
-        object->property.last_colorA = data->colorA;
-        object->property.last_frameIndex = data->frameIndex;
-        object->property.last_width = data->width;
-        object->property.last_height = data->height;
-        object->property.last_positionX = data->positionX-object->positionOffsetX;
-        object->property.last_positionY = data->positionY-object->positionOffsetY;
-        object->property.last_positionZ = data->positionZ-object->positionOffsetZ;
-        
-        object->objectTemplate = stage->objectTemplateMap[object->objectTemplate->name];
+        auto &objset = objsetIt->second;
+        for (auto it=objset.begin(); it!=objset.end(); it++)
+        {
+            auto object = *it;
+            auto data = &pointObjectDatas[object->index];
+            object->property.t = 0;
+            object->property.last_colorR = data->colorR;
+            object->property.last_colorG = data->colorG;
+            object->property.last_colorB = data->colorB;
+            object->property.last_colorA = data->colorA;
+            object->property.last_frameIndex = data->frameIndex;
+            object->property.last_width = data->width;
+            object->property.last_height = data->height;
+            object->property.last_positionX = data->positionX-object->positionOffsetX;
+            object->property.last_positionY = data->positionY-object->positionOffsetY;
+            object->property.last_positionZ = data->positionZ-object->positionOffsetZ;
+            
+            object->objectTemplate = stage->objectTemplateMap[object->objectTemplate->name];
+        }
     }
+    
     if (stage)
     {
         stage->enterStage();
@@ -309,9 +327,13 @@ void LKParticleEffectSystem::setupObjects()
 {
     for (GLuint i=0; i<config.maxObjectCount; i++)
     {
-        LKParticleEffectObject *object = &spriteObjects[i];
-        object->index = i;
-        unusedObjects.insert(object);
+        LKParticleEffectObject *point = &pointObject[i];
+        point->index = i;
+        unusedObject["point"].insert(point);
+        
+        LKParticleEffectObject *line = &lineObject[i];
+        line->index = i;
+        unusedObject["line"].insert(line);
     }
 }
 
@@ -320,11 +342,8 @@ bool compare(LKParticleEffectObject* a,LKParticleEffectObject* b)
     return a->distance<b->distance;
 }
 
-void LKParticleEffectSystem::update(double timeDelta)
+void LKParticleEffectSystem::updateGloble(double timeDelta)
 {
-    globalProperty.totalTime+=timeDelta;
-    globalProperty.stageTime+=timeDelta;
-    mapData();
     //stage change
     if (nextStage)
     {
@@ -336,86 +355,101 @@ void LKParticleEffectSystem::update(double timeDelta)
     currentStage->checkEvent();
     
     camera->update();
-    
-    auto objects = usedObjects;
-    for (auto it=objects.begin(); it!=objects.end(); it++)
+}
+
+void LKParticleEffectSystem::updateObjects(double timeDelta)
+{
+    for (auto objsetIt = usedObjects.begin();objsetIt!=usedObjects.end();objsetIt++)
     {
-        auto object = *it;
-        auto temp = object->objectTemplate;
-        auto data = &objectDatas[object->index];
-        data->index = object->index;
-        object->property.t+= timeDelta;
-        object->property.total_t+= timeDelta;
-        memcpy(&objectProperty, &object->property, sizeof(LKParticleEffectObjectProperty));
-        object->life -= timeDelta;
-        if (object->life<=0)
+        auto objset = objsetIt->second;
+        for (auto it=objset.begin(); it!=objset.end(); it++)
         {
-            removeObject(object);
-            continue;
-        }
-        if (!temp)
-        {
-            continue;
-        }
-        data->positionX = temp->positionX->value()+object->positionOffsetX;
-        data->positionY = temp->positionY->value()+object->positionOffsetY;
-        data->positionZ = temp->positionZ->value()+object->positionOffsetZ;
-        data->rotation = temp->rotation->value()+object->rotationOffset;
-        if (temp->sprite)
-        {
-            auto sprite = temp->sprite;
-            data->colorR = sprite->colorR->value();
-            data->colorG = sprite->colorG->value();
-            data->colorB = sprite->colorB->value();
-            data->colorA = sprite->colorA->value();
-            data->width = sprite->width->value();
-            data->height = sprite->height->value();
-            data->textureIndex = sprite->texture->index;
-            data->frameIndex = sprite->frameIndex->value();
-            pair<int, int> pos = sprite->texture->getPosition(data->frameIndex);
-            data->textureU = pos.first;
-            data->textureV = pos.second;
-        }
-        if (temp->emitter)
-        {
-            auto emitter = temp->emitter;
-            double emitRate = emitter->emitRate->value();
-            int emitNum = 0;
-            if (emitRate>0)
+            auto object = *it;
+            auto temp = object->objectTemplate;
+            auto data = &pointObjectDatas[object->index];
+            data->index = object->index;
+            object->property.t+= timeDelta;
+            object->property.total_t+= timeDelta;
+            memcpy(&objectProperty, &object->property, sizeof(LKParticleEffectObjectProperty));
+            object->life -= timeDelta;
+            if (object->life<=0)
             {
-                double emissionDuration = 1/emitRate;
-                emitNum = (timeDelta+object->emitRestTime)/emissionDuration;
-                object->emitRestTime = (timeDelta+object->emitRestTime)-emitNum*emissionDuration;
+                removeObject(object);
+                continue;
             }
-            int emitRestCount = 0;
-            if (temp->emitter->emitCount)
+            if (!temp)
             {
-                emitRestCount = temp->emitter->emitCount->value()-object->emitCount;
+                continue;
             }
-            if (emitRestCount<0)
+            data->positionX = temp->positionX->value()+object->positionOffsetX;
+            data->positionY = temp->positionY->value()+object->positionOffsetY;
+            data->positionZ = temp->positionZ->value()+object->positionOffsetZ;
+            data->rotation = temp->rotation->value()+object->rotationOffset;
+            if (temp->sprite)
             {
-                emitRestCount = 0;
+                auto sprite = temp->sprite;
+                data->colorR = sprite->colorR->value();
+                data->colorG = sprite->colorG->value();
+                data->colorB = sprite->colorB->value();
+                data->colorA = sprite->colorA->value();
+                data->width = sprite->width->value();
+                data->height = sprite->height->value();
+                data->textureIndex = sprite->texture->index;
+                data->frameIndex = sprite->frameIndex->value();
+                pair<int, int> pos = sprite->texture->getPosition(data->frameIndex);
+                data->textureU = pos.first;
+                data->textureV = pos.second;
             }
-            if (emitNum>emitRestCount)
+            if (temp->emitter)
             {
-                emitNum = emitRestCount;
-            }
-            object->emitCount+=emitNum;
-            for (int i=0; i<emitNum; i++)
-            {
-                int tempIndex = rand()%emitter->emitObjects.size();
-                string newTempName = emitter->emitObjects[tempIndex];
-                LKParticleEffectObject *newObject = getUnusedObject(newTempName,object);
-                if (!newObject)
+                auto emitter = temp->emitter;
+                double emitRate = emitter->emitRate->value();
+                int emitNum = 0;
+                if (emitRate>0)
                 {
-                    break;
+                    double emissionDuration = 1/emitRate;
+                    emitNum = (timeDelta+object->emitRestTime)/emissionDuration;
+                    object->emitRestTime = (timeDelta+object->emitRestTime)-emitNum*emissionDuration;
+                }
+                int emitRestCount = 0;
+                if (temp->emitter->emitCount)
+                {
+                    emitRestCount = temp->emitter->emitCount->value()-object->emitCount;
+                }
+                if (emitRestCount<0)
+                {
+                    emitRestCount = 0;
+                }
+                if (emitNum>emitRestCount)
+                {
+                    emitNum = emitRestCount;
+                }
+                object->emitCount+=emitNum;
+                for (int i=0; i<emitNum; i++)
+                {
+                    int tempIndex = rand()%emitter->emitObjects.size();
+                    string newTempName = emitter->emitObjects[tempIndex];
+                    LKParticleEffectObject *newObject = getUnusedObject(newTempName,object);
+                    if (!newObject)
+                    {
+                        break;
+                    }
                 }
             }
         }
     }
+}
+
+void LKParticleEffectSystem::updateLines(double timeDelta)
+{
     
+}
+
+void LKParticleEffectSystem::updatePoints(double timeDelta)
+{
     vector<LKParticleEffectObject*> objectsList;
-    for (auto it=usedObjects.begin(); it!=usedObjects.end(); it++)
+    auto pointUsedObjects = usedObjects["point"];
+    for (auto it=pointUsedObjects.begin(); it!=pointUsedObjects.end(); it++)
     {
         auto object = *it;
         auto temp = object->objectTemplate;
@@ -429,24 +463,37 @@ void LKParticleEffectSystem::update(double timeDelta)
     {
         effectIndexes[i] = objectsList[i]->index;
     }
-    
+}
+
+void LKParticleEffectSystem::update(double timeDelta)
+{
+    globalProperty.totalTime+=timeDelta;
+    globalProperty.stageTime+=timeDelta;
+    mapData();
+    updateGloble(timeDelta);
+    updateObjects(timeDelta);
+    updateLines(timeDelta);
+    updatePoints(timeDelta);
     unmapData();
 }
 
 LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateName,LKParticleEffectObject *parent)
 {
-    if (unusedObjects.size()>0)
+    auto temp = currentStage->objectTemplateMap[templateName];
+    auto &unusedObjectSet = unusedObject[temp->type];
+    auto &usedObjectSet = usedObjects[temp->type];
+    if (unusedObjectSet.size()>0)
     {
-        LKParticleEffectObject *object = *unusedObjects.begin();
-        unusedObjects.erase(object);
-        usedObjects.insert(object);
-        object->objectTemplate = currentStage->objectTemplateMap[templateName];
+        LKParticleEffectObject *object = *unusedObjectSet.begin();
+        unusedObjectSet.erase(object);
+        usedObjectSet.insert(object);
+        object->objectTemplate = temp;
         object->property.reset();
         object->life = object->objectTemplate->life->value();
 
         if (parent)
         {
-            LKParticleEffectObjectData *data = &objectDatas[parent->index];
+            LKParticleEffectObjectData *data = &pointObjectDatas[parent->index];
             object->positionOffsetX = data->positionX;
             object->positionOffsetY = data->positionY;
             object->positionOffsetZ = data->positionZ;
@@ -468,13 +515,26 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateN
 }
 void LKParticleEffectSystem::removeObject(LKParticleEffectObject *object)
 {
-    usedObjects.erase(object);
-    unusedObjects.insert(object);
+    string type = object->objectTemplate->type;
+    usedObjects[type].erase(object);
+    unusedObject[type].insert(object);
 }
 
 void LKParticleEffectSystem::render()
 {
-    glUseProgram(program);
+    renderLines();
+    renderPoints();
+}
+
+void LKParticleEffectSystem::renderLines()
+{
+    
+}
+
+void LKParticleEffectSystem::renderPoints()
+{
+    auto &pointUsedObjects = usedObjects["point"];
+    glUseProgram(pointProgram);
     glDisable(GL_DEPTH_TEST);
     int i=0;
     GLint textures[8] = {0,1,2,3,4,5,6,7};
@@ -500,7 +560,7 @@ void LKParticleEffectSystem::render()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindVertexArray(vao);
-    glDrawElements(GL_POINTS, (GLsizei)usedObjects.size(), GL_UNSIGNED_SHORT, nullptr);
+    glDrawElements(GL_POINTS, (GLsizei)pointUsedObjects.size(), GL_UNSIGNED_SHORT, nullptr);
     glBindVertexArray(0);
     glDisable(GL_BLEND);
 }
@@ -518,21 +578,11 @@ LKParticleEffectSystem::~LKParticleEffectSystem()
     vars.clear();
     objectTemplateMap.clear();
     textureMap.clear();
-    spriteObjects.clear();
-    if (program)
+    pointObject.clear();
+    if (pointProgram)
     {
-        glDeleteProgram(program);
-        program = 0;
-    }
-    if (vertexShader)
-    {
-        glDeleteShader(vertexShader);
-        vertexShader = 0;
-    }
-    if (fragmentShader)
-    {
-        glDeleteShader(fragmentShader);
-        fragmentShader = 0;
+        glDeleteProgram(pointProgram);
+        pointProgram = 0;
     }
     if (vao)
     {

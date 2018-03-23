@@ -50,6 +50,11 @@ namespace LKKit
         LKParticleEffectGlobalProperty globalProperty;
         LKParticleEffectObjectProperty objectProperty;
         vector<RVar*> vars;
+        
+        map<string,set<LKParticleEffectObject*>> usedObjects;
+        map<string,set<LKParticleEffectObject*>> unusedObject;
+        
+        vector<vector<GLuint>> lines;
 
         map<string,shared_ptr<LKParticleEffectObjectTemplate>> objectTemplateMap;
 
@@ -62,7 +67,6 @@ namespace LKKit
         LKParticleEffectObject *getUnusedObject(string templateName,LKParticleEffectObject *parent=nullptr);
         void removeObject(LKParticleEffectObject *object);
         ~LKParticleEffectSystem();
-        set<LKParticleEffectObject*> usedObjects;
         void changeToStage(shared_ptr<LKParticleEffectStage> stage);
         void setNextStage(string stageName);
     protected:
@@ -70,23 +74,29 @@ namespace LKKit
         GLuint vbo;
         GLuint vao;
         GLuint ebo;
-        GLuint vertexShader;
-        GLuint fragmentShader;
-        GLuint program;
+        GLuint pointProgram;
         Document document;
         map<string,shared_ptr<LKParticleEffectTexture>> textureMap;
         shared_ptr<LKParticleEffectStage> currentStage;
         shared_ptr<LKParticleEffectStage> nextStage;
         map<string, shared_ptr<LKParticleEffectStage>> stageMap;
         
-        set<LKParticleEffectObject*> unusedObjects;
+        vector<LKParticleEffectObject> pointObject;
+        LKParticleEffectObjectData *pointObjectDatas;
         
-        vector<LKParticleEffectObject> spriteObjects;
-        LKParticleEffectObjectData *objectDatas;
+        vector<LKParticleEffectObject> lineObject;
+        LKParticleEffectObjectData *lineObjectDatas;
+        
         GLshort *effectIndexes;
         void setupObjects();
         void updateElementBuffer();
         void setupVars();
+        void updateGloble(double timeDelta);
+        void updateObjects(double timeDelta);
+        void updateLines(double timeDelta);
+        void updatePoints(double timeDelta);
+        void renderLines();
+        void renderPoints();
         
         void mapData();
         void unmapData();

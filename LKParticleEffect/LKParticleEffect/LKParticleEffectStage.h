@@ -38,7 +38,6 @@ namespace LKKit {
         void enterStage();
         void leaveStage();
     protected:
-        void createEvent(const Value &value);
         void parseStageOperations(vector<shared_ptr<LKParticleEffectStageOperation>> &ops,const Value &objs);
     };
 }

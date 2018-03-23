@@ -35,7 +35,6 @@ void LKParticleEffectStageEventChangeStageAction::trigger()
 
 LKParticleEffectStageEvent::LKParticleEffectStageEvent(LKParticleEffectStage *stage,const Value &value):autoCheck(false),stage(stage)
 {
-    name = value["name"].GetString();
     if (value.HasMember("action"))
     {
         const Value &v = value["action"];

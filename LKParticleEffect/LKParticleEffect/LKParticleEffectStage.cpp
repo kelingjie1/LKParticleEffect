@@ -14,10 +14,23 @@ LKParticleEffectStage::LKParticleEffectStage(LKParticleEffectSystem *system, con
     objectTemplateMap = system->objectTemplateMap;
     name = stage["name"].GetString();
 
-    if (stage.HasMember("events")) {
+    if (stage.HasMember("events"))
+    {
         const Value &events = stage["events"];
-        for (SizeType i = 0; i < events.Size(); ++i) {
-            createEvent(events[i]);
+        for (auto &ev:events.GetObject())
+        {
+            string name = ev.name.GetString();
+            shared_ptr<LKParticleEffectStageEvent> event;
+            if (name == "delay")
+            {
+                event = shared_ptr<LKParticleEffectStageEvent>(new LKParticleEffectStageDelayEvent(this,ev.value));
+            }
+            else
+            {
+                event = shared_ptr<LKParticleEffectStageEvent>(new LKParticleEffectStageEvent(this,ev.value));
+            }
+            event->name = name;
+            eventMap[name] = event;
         }
     }
 
@@ -71,9 +84,9 @@ void LKParticleEffectStage::parseStageOperations(vector<shared_ptr<LKParticleEff
         ops.push_back(op);
     }
     
-    if (objs.HasMember("resetAllObjects"))
+    if (objs.HasMember("resetObjects"))
     {
-        auto op = shared_ptr<LKParticleEffectStageOperation>(new LKParticleEffectStageResetAllObjectsOperation(this,objs["resetAllObjects"]));
+        auto op = shared_ptr<LKParticleEffectStageOperation>(new LKParticleEffectStageResetObjectsOperation(this,objs["resetObjects"]));
         ops.push_back(op);
     }
 }
@@ -81,25 +94,6 @@ void LKParticleEffectStage::parseStageOperations(vector<shared_ptr<LKParticleEff
 LKParticleEffectStage::LKParticleEffectStage()
 {
     
-}
-
-void LKParticleEffectStage::createEvent(const Value &ev)
-{
-    if (!ev.HasMember("name"))
-    {
-        return;
-    }
-    string name = ev["name"].GetString();
-    shared_ptr<LKParticleEffectStageEvent> event;
-    if (name == "delay")
-    {
-        event = shared_ptr<LKParticleEffectStageEvent>(new LKParticleEffectStageDelayEvent(this,ev));
-    }
-    else
-    {
-        event = shared_ptr<LKParticleEffectStageEvent>(new LKParticleEffectStageEvent(this,ev));
-    }
-    eventMap[name] = event;
 }
 
 void LKParticleEffectStage::triggerEvent(string name,map<string,string> params)

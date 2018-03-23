@@ -62,32 +62,41 @@ LKParticleEffectStageRemoveOperation::LKParticleEffectStageRemoveOperation(LKPar
 void LKParticleEffectStageRemoveOperation::process()
 {
     LKParticleEffectSystem *system = stage->system;
-    auto objs = system->usedObjects;
-    for (auto it=objs.begin(); it!=objs.end(); it++)
+    for (auto objsetIt = system->usedObjects.begin();objsetIt!=system->usedObjects.end();objsetIt++)
     {
-        auto obj = *it;
-        for (int i=0; i<objectList.size(); i++)
+        auto &objset = objsetIt->second;
+        auto objsetcopy = objsetIt->second;
+        for (auto it=objsetcopy.begin(); it!=objsetcopy.end(); it++)
         {
-            if (obj->group == objectList[i].group&&
-                obj->objectTemplate->name==objectList[i].object)
+            auto obj = *it;
+            for (int i=0; i<objectList.size(); i++)
             {
-                system->usedObjects.erase(obj);
+                if (obj->group == objectList[i].group&&
+                    obj->objectTemplate->name==objectList[i].object)
+                {
+                    objset.erase(obj);
+                }
             }
+            
         }
-        
     }
+    
 
 }
 
-LKParticleEffectStageResetAllObjectsOperation::LKParticleEffectStageResetAllObjectsOperation(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageOperation(stage,value)
+LKParticleEffectStageResetObjectsOperation::LKParticleEffectStageResetObjectsOperation(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageOperation(stage,value)
 {
     
 }
-void LKParticleEffectStageResetAllObjectsOperation::process()
+void LKParticleEffectStageResetObjectsOperation::process()
 {
     LKParticleEffectSystem *system = stage->system;
-    for (auto &it:system->usedObjects)
+    for (auto objsetIt = system->usedObjects.begin();objsetIt!=system->usedObjects.end();objsetIt++)
     {
-        it->reset();
+        auto &objset = objsetIt->second;
+        for (auto &it:objset)
+        {
+            it->reset();
+        }
     }
 }
