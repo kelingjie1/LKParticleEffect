@@ -400,6 +400,15 @@ void LKParticleEffectSystem::updateObjects(double timeDelta)
                 data->textureU = pos.first;
                 data->textureV = pos.second;
             }
+            else if (temp->line)
+            {
+                auto line = temp->line;
+                data->colorR = line->colorR->value();
+                data->colorG = line->colorG->value();
+                data->colorB = line->colorB->value();
+                data->colorA = line->colorA->value();
+                data->textureIndex = 100;
+            }
             else
             {
                 data->colorR = 1;
@@ -580,7 +589,19 @@ void LKParticleEffectSystem::renderLines()
     GLuint index = 0;
     for (int i=0; i<lines.size(); i++)
     {
-        glLineWidth(10);
+        if (lines[i].size()<=0)
+        {
+            continue;
+        }
+        auto &obj = pointObject[lines[i].front()];
+        if (obj.objectTemplate->line)
+        {
+            glLineWidth(obj.objectTemplate->line->width->value());
+        }
+        else
+        {
+            glLineWidth(10);
+        }
         glDrawElements(GL_LINE_STRIP, (GLsizei)lines[i].size(), GL_UNSIGNED_SHORT, (const GLvoid *)index);
         index+=lines[i].size()*sizeof(GLushort);
     }

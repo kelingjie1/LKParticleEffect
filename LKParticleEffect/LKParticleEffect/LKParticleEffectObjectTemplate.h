@@ -20,6 +20,17 @@ namespace LKKit
 {
     class LKParticleEffectSystem;
     using namespace std;
+    class LKParticleEffectLineProperty
+    {
+    public:
+        shared_ptr<LKParticleEffectValue> colorR;
+        shared_ptr<LKParticleEffectValue> colorG;
+        shared_ptr<LKParticleEffectValue> colorB;
+        shared_ptr<LKParticleEffectValue> colorA;
+        shared_ptr<LKParticleEffectValue> width;
+        LKParticleEffectLineProperty();
+        LKParticleEffectLineProperty(LKParticleEffectLineProperty &obj);
+    };
     class LKParticleEffectSpriteProperty
     {
     public:
@@ -49,7 +60,7 @@ namespace LKKit
     public:
         string name;
         string type;
-        
+        shared_ptr<LKParticleEffectLineProperty> line;
         shared_ptr<LKParticleEffectSpriteProperty> sprite;
         shared_ptr<LKParticleEffectEmitterProperty> emitter;
         shared_ptr<LKParticleEffectValue> life;

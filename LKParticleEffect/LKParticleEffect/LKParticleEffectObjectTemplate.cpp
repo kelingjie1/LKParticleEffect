@@ -14,6 +14,19 @@
 using namespace LKKit;
 
 #define TAG "LKParticleEffectObjectTemplate"
+LKParticleEffectLineProperty::LKParticleEffectLineProperty()
+{
+    
+}
+
+LKParticleEffectLineProperty::LKParticleEffectLineProperty(LKParticleEffectLineProperty &obj)
+{
+    colorR = obj.colorR;
+    colorG = obj.colorG;
+    colorB = obj.colorB;
+    colorA = obj.colorA;
+    width = obj.width;
+}
 
 LKParticleEffectSpriteProperty::LKParticleEffectSpriteProperty()
 {
@@ -90,6 +103,58 @@ LKParticleEffectObjectTemplate::LKParticleEffectObjectTemplate(LKParticleEffectS
     positionX = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionX"], vars));
     positionY = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionY"], vars));
     positionZ = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["positionZ"], vars));
+    if (value.HasMember("line"))
+    {
+        const Value &vline = value["line"];
+        if (vline.IsObject())
+        {
+            line = shared_ptr<LKParticleEffectLineProperty>(new LKParticleEffectLineProperty());
+            if (vline.HasMember("colorR"))
+            {
+                line->colorR = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vline["colorR"], vars));
+            }
+            else
+            {
+                line->colorR = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(1));
+            }
+            
+            if (vline.HasMember("colorG"))
+            {
+                line->colorG = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vline["colorG"], vars));
+            }
+            else
+            {
+                line->colorG = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(1));
+            }
+            
+            if (vline.HasMember("colorB"))
+            {
+                line->colorB = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vline["colorB"], vars));
+            }
+            else
+            {
+                line->colorB = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(1));
+            }
+            
+            if (vline.HasMember("colorA"))
+            {
+                line->colorA = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vline["colorA"], vars));
+            }
+            else
+            {
+                line->colorA = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(1));
+            }
+            if (vline.HasMember("width"))
+            {
+                line->width = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(vline["width"], vars));
+
+            }
+            else
+            {
+                line->width = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(10));
+            }
+        }
+    }
     if (value.HasMember("sprite"))
     {
         const Value &vsprite = value["sprite"];

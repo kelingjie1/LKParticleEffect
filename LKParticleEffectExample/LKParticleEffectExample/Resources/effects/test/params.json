@@ -41,6 +41,14 @@
         {
             "point":
             {
+                "line":
+                {
+                    "width":20,
+                    "colorR":0,
+                    "colorG":0,
+                    "colorB":1,
+                    "colorA":1
+                },
                 "rotation":0,
                 "positionX":0,
                 "positionY":0,
