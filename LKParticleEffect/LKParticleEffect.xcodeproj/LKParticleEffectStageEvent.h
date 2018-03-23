@@ -25,14 +25,29 @@ namespace LKKit
         LKParticleEffectStageEventAction(LKParticleEffectStage *stage,const Value &value);
         virtual void trigger();
     };
-    
-    class LKParticleEffectStageEventChangeStageAction:public LKParticleEffectStageEventAction
+    class LKParticleEffectStageCommandAction:public LKParticleEffectStageEventAction
     {
     public:
-        LKParticleEffectStageEventChangeStageAction(LKParticleEffectStage *stage,const Value &value);
+        LKParticleEffectStageCommandAction(LKParticleEffectStage *stage,const Value &value);
+        virtual void trigger();
+        string command;
+    };
+    
+    class LKParticleEffectStageChangeStageAction:public LKParticleEffectStageEventAction
+    {
+    public:
+        LKParticleEffectStageChangeStageAction(LKParticleEffectStage *stage,const Value &value);
         virtual void trigger();
         
         string target;
+    };
+    
+    class LKParticleEffectStageDrawLineAction:public LKParticleEffectStageEventAction
+    {
+    public:
+        LKParticleEffectStageDrawLineAction(LKParticleEffectStage *stage,const Value &value);
+        virtual void trigger();
+        string object;
     };
     
     class LKParticleEffectStageEvent

@@ -105,7 +105,6 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
     
     
     pointObject.resize(config.maxObjectCount);
-    lineObject.resize(config.maxObjectCount);
     
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -154,8 +153,13 @@ LKParticleEffectSystem::LKParticleEffectSystem(LKParticleEffectConfig config)
 
 void LKParticleEffectSystem::setupVars()
 {
+    memset(&inputProperty, 0, sizeof(LKParticleEffectInputProperty));
     memset(&globalProperty, 0, sizeof(LKParticleEffectGlobalProperty));
     memset(&objectProperty, 0, sizeof(LKParticleEffectObjectProperty));
+    
+    vars.push_back(new RVar("touch2DX",&inputProperty.touch2DX));
+    vars.push_back(new RVar("touch2DY",&inputProperty.touch2DY));
+    
     vars.push_back(new RVar("totalTime",&globalProperty.totalTime));
     vars.push_back(new RVar("stageTime",&globalProperty.stageTime));
     vars.push_back(new RVar("cameraX",&globalProperty.cameraX));
@@ -193,7 +197,7 @@ void LKParticleEffectSystem::mapData()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBindVertexArray(vao);
     pointObjectDatas = (LKParticleEffectObjectData*)glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(LKParticleEffectObjectData)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
-    effectIndexes = (GLshort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLshort)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
+    effectIndexes = (GLushort*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(GLushort)*config.maxObjectCount, GL_MAP_WRITE_BIT|GL_MAP_READ_BIT);
     
 }
 void LKParticleEffectSystem::unmapData()
@@ -330,10 +334,6 @@ void LKParticleEffectSystem::setupObjects()
         LKParticleEffectObject *point = &pointObject[i];
         point->index = i;
         unusedObject["point"].insert(point);
-        
-        LKParticleEffectObject *line = &lineObject[i];
-        line->index = i;
-        unusedObject["line"].insert(line);
     }
 }
 
@@ -400,6 +400,14 @@ void LKParticleEffectSystem::updateObjects(double timeDelta)
                 data->textureU = pos.first;
                 data->textureV = pos.second;
             }
+            else
+            {
+                data->colorR = 1;
+                data->colorG = 1;
+                data->colorB = 1;
+                data->colorA = 1;
+                data->textureIndex = 100;
+            }
             if (temp->emitter)
             {
                 auto emitter = temp->emitter;
@@ -442,7 +450,16 @@ void LKParticleEffectSystem::updateObjects(double timeDelta)
 
 void LKParticleEffectSystem::updateLines(double timeDelta)
 {
-    
+    for (int i=0; i<lines.size(); i++)
+    {
+        auto &line = lines[i];
+        for (int j=0; j<line.size(); j++)
+        {
+            effectIndexes[eboIndex] = line[j];
+            eboIndex++;
+        }
+    }
+    lineVertexCount = eboIndex;
 }
 
 void LKParticleEffectSystem::updatePoints(double timeDelta)
@@ -461,8 +478,10 @@ void LKParticleEffectSystem::updatePoints(double timeDelta)
     sort(objectsList.begin(), objectsList.end(), compare);
     for (int i=0; i<objectsList.size(); i++)
     {
-        effectIndexes[i] = objectsList[i]->index;
+        effectIndexes[i+eboIndex] = objectsList[i]->index;
     }
+    pointVertexCount = (GLsizei)objectsList.size();
+    eboIndex+=objectsList.size();
 }
 
 void LKParticleEffectSystem::update(double timeDelta)
@@ -470,6 +489,7 @@ void LKParticleEffectSystem::update(double timeDelta)
     globalProperty.totalTime+=timeDelta;
     globalProperty.stageTime+=timeDelta;
     mapData();
+    eboIndex = 0;
     updateGloble(timeDelta);
     updateObjects(timeDelta);
     updateLines(timeDelta);
@@ -528,14 +548,52 @@ void LKParticleEffectSystem::render()
 
 void LKParticleEffectSystem::renderLines()
 {
+    auto &pointUsedObjects = usedObjects["point"];
+    glUseProgram(pointProgram);
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(true);
+    int i=0;
+    GLint textures[8] = {0,1,2,3,4,5,6,7};
+    glUniform1iv(texturesLocation, 8, textures);
     
+    GLfloat frameSizes[16];
+    for (auto it = textureMap.begin(); it!=textureMap.end(); it++)
+    {
+        glActiveTexture(GL_TEXTURE0+i);
+        glBindTexture(GL_TEXTURE_2D, it->second->texture);
+        frameSizes[i*2] = it->second->frameWidth/(GLfloat)it->second->width;
+        frameSizes[i*2+1] = it->second->frameHeight/(GLfloat)it->second->height;
+        i++;
+    }
+    glUniform2fv(frameSizesLocation, 8, frameSizes);
+    
+    //vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera->m, projectMatrix);
+    auto m = camera->getVPMatrix();
+    Matrix<float, 4, 4, RowMajor> vpMatrix = m;
+    glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMatrix.data());
+    glUniform2f(screenSizeLocation, config.viewWidth, config.viewHeight);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBindVertexArray(vao);
+    glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+    
+    GLuint index = 0;
+    for (int i=0; i<lines.size(); i++)
+    {
+        glLineWidth(10);
+        glDrawElements(GL_LINE_STRIP, (GLsizei)lines[i].size(), GL_UNSIGNED_SHORT, (const GLvoid *)index);
+        index+=lines[i].size()*sizeof(GLushort);
+    }
+    glBindVertexArray(0);
+    glDisable(GL_BLEND);
 }
 
 void LKParticleEffectSystem::renderPoints()
 {
     auto &pointUsedObjects = usedObjects["point"];
     glUseProgram(pointProgram);
-    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(false);
     int i=0;
     GLint textures[8] = {0,1,2,3,4,5,6,7};
     glUniform1iv(texturesLocation, 8, textures);
@@ -560,7 +618,8 @@ void LKParticleEffectSystem::renderPoints()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindVertexArray(vao);
-    glDrawElements(GL_POINTS, (GLsizei)pointUsedObjects.size(), GL_UNSIGNED_SHORT, nullptr);
+    GLuint index = lineVertexCount*sizeof(GLushort);
+    glDrawElements(GL_POINTS, pointVertexCount, GL_UNSIGNED_SHORT, (const GLvoid *)index);
     glBindVertexArray(0);
     glDisable(GL_BLEND);
 }

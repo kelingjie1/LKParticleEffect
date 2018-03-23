@@ -9,6 +9,7 @@
 #include "LKParticleEffectStageEvent.h"
 #include "LKParticleEffectStage.h"
 #include "LKParticleEffectSystem.h"
+#include <iostream>
 
 using namespace LKKit;
 LKParticleEffectStageEventAction::LKParticleEffectStageEventAction(LKParticleEffectStage *stage,const Value &value):stage(stage)
@@ -21,15 +22,47 @@ void LKParticleEffectStageEventAction::trigger()
     
 }
 
-LKParticleEffectStageEventChangeStageAction::LKParticleEffectStageEventChangeStageAction(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageEventAction(stage,value)
+LKParticleEffectStageCommandAction::LKParticleEffectStageCommandAction(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageEventAction(stage,value)
+{
+    command = value["command"].GetString();
+}
+
+void LKParticleEffectStageCommandAction::trigger()
+{
+    auto system = stage->system;
+    if (command == "lineIndex++")
+    {
+        system->lines.push_back(vector<GLuint>());
+    }
+}
+
+LKParticleEffectStageChangeStageAction::LKParticleEffectStageChangeStageAction(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageEventAction(stage,value)
 {
     target = value["target"].GetString();
 }
 
-void LKParticleEffectStageEventChangeStageAction::trigger()
+void LKParticleEffectStageChangeStageAction::trigger()
 {
     auto system = stage->system;
     system->setNextStage(target);
+}
+
+LKParticleEffectStageDrawLineAction::LKParticleEffectStageDrawLineAction(LKParticleEffectStage *stage,const Value &value):LKParticleEffectStageEventAction(stage,value)
+{
+    object = value["object"].GetString();
+}
+
+void LKParticleEffectStageDrawLineAction::trigger()
+{
+    auto system = stage->system;
+    auto obj = system->getUnusedObject(object);
+    auto camera = dynamic_cast<LKParticleEffect3DCamera*>(system->camera.get());
+    auto vec = camera->rayCast(system->inputProperty.touch2DX, system->inputProperty.touch2DY);
+    obj->positionOffsetX = vec.x()*100;
+    obj->positionOffsetY = -vec.y()*100;
+    obj->positionOffsetZ = vec.z()*100;
+    cout<<vec*100<<endl<<endl;
+    system->lines[system->lines.size()-1].push_back(obj->index);
 }
 
 
@@ -41,8 +74,17 @@ LKParticleEffectStageEvent::LKParticleEffectStageEvent(LKParticleEffectStage *st
         string type = v["type"].GetString();
         if (type == "change_stage")
         {
-            action = shared_ptr<LKParticleEffectStageEventAction>(new LKParticleEffectStageEventChangeStageAction(stage,v));
+            action = shared_ptr<LKParticleEffectStageEventAction>(new LKParticleEffectStageChangeStageAction(stage,v));
         }
+        else if (type == "drawLine")
+        {
+            action = shared_ptr<LKParticleEffectStageEventAction>(new LKParticleEffectStageDrawLineAction(stage,v));
+        }
+        else if (type == "command")
+        {
+            action = shared_ptr<LKParticleEffectStageEventAction>(new LKParticleEffectStageCommandAction(stage,v));
+        }
+            
     }
     
 }

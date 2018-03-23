@@ -58,6 +58,9 @@ namespace LKKit
         shared_ptr<LKParticleEffectValue> upX;
         shared_ptr<LKParticleEffectValue> upY;
         shared_ptr<LKParticleEffectValue> upZ;
+        float zNear;
+        float zFar;
+        Vector3f rayCast(GLfloat touch2DX,GLfloat touch2DY);
     };
     class LKParticleEffect3DPerspectiveCamera:public LKParticleEffect3DCamera
     {

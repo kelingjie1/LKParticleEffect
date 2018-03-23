@@ -29,7 +29,6 @@
         {
             "point":
             {
-                "type":"line",
                 "rotation":0,
                 "positionX":0,
                 "positionY":0,
@@ -42,18 +41,25 @@
         {
             "name":"stage1",
             "events":
-            [
+            {
+                "panChange":
                 {
-                    "name":"panBegin",
                     "action":
                     {
-                        "type":"add",
-                        "object":"point",
-                        "group":"default"
-                    },
+                        "type":"drawLine",
+                        "object":"point"
+                    }
                 },
+                "panBegin":
+                {
+                    "action":
+                    {
+                        "type":"command",
+                        "command":"lineIndex++"
+                    }
+                }
 
-            ]
+            }
         }
     ]
     

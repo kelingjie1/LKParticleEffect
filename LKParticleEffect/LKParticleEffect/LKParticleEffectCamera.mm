@@ -64,6 +64,34 @@ Matrix4f LKParticleEffect3DCamera::getVPMatrix()
     return motionMatrix*viewMatrix*projectionMatrix;
 }
 
+Vector3f LKParticleEffect3DCamera::rayCast(GLfloat touch2DX,GLfloat touch2DY)
+{
+    Vector4f ray_nds;
+    float x = touch2DX*2-1;
+    float y = touch2DY*2-1;
+    x/=zNear*2;
+    y/=zNear*2;
+    float z = -1;
+    ray_nds<<x,y,z,1.0;//归一化设备坐标系
+    
+    Vector4f ray_eye = projectionMatrix.inverse()*ray_nds;
+    Vector4f ray_world = viewMatrix.inverse()*ray_eye;
+    if (ray_world.w()!=0)
+    {
+        ray_world.x()/=ray_world.w();
+        ray_world.y()/=ray_world.w();
+        ray_world.z()/=ray_world.w();
+    }
+    Vector3f ray_dir;
+    ray_dir<<ray_world.x(),ray_world.y(),ray_world.z();
+    auto &property = system->globalProperty;
+    ray_dir.x()-=property.cameraX;
+    ray_dir.y()-=property.cameraY;
+    ray_dir.z()-=property.cameraZ;
+    ray_dir.normalize();
+    return ray_dir;
+}
+
 
 LKParticleEffect3DPerspectiveCamera::LKParticleEffect3DPerspectiveCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system):LKParticleEffect3DCamera(value,config,system)
 {
@@ -77,14 +105,14 @@ LKParticleEffect3DPerspectiveCamera::LKParticleEffect3DPerspectiveCamera(const V
     upX = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["upX"],vars));
     upY = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["upY"],vars));
     upZ = shared_ptr<LKParticleEffectValue>(new LKParticleEffectValue(value["upZ"],vars));
-    
+    zNear = value["near"].GetDouble();
+    zFar = value["far"].GetDouble();
     
     float aspect = config.viewWidth/(float)config.viewHeight;
     float angle = 3.1415926/4;
     float xScale = cos(angle/2)/sin(angle/2)/aspect;
     float yScale = cos(angle/2)/sin(angle/2);
-    float zNear = value["near"].GetDouble();
-    float zFar = value["far"].GetDouble();
+    
     projectionMatrix<<
     xScale,0,0,0,
     0,yScale,0,0,
@@ -110,7 +138,6 @@ void LKParticleEffect3DPerspectiveCamera::update()
                                    property.cameraDirX,property.cameraDirY,property.cameraDirZ,
                                    upX->value(),upY->value(),upZ->value());
 }
-
 
 LKParticleEffect3DOrthogonalCamera::LKParticleEffect3DOrthogonalCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system):LKParticleEffect3DCamera(value,config,system)
 {

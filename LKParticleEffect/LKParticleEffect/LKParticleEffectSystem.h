@@ -47,6 +47,7 @@ namespace LKKit
         GLuint vpMatrixLocation;
         GLuint screenSizeLocation;
         
+        LKParticleEffectInputProperty inputProperty;
         LKParticleEffectGlobalProperty globalProperty;
         LKParticleEffectObjectProperty objectProperty;
         vector<RVar*> vars;
@@ -74,6 +75,9 @@ namespace LKKit
         GLuint vbo;
         GLuint vao;
         GLuint ebo;
+        int eboIndex;
+        GLuint lineVertexCount;
+        GLuint pointVertexCount;
         GLuint pointProgram;
         Document document;
         map<string,shared_ptr<LKParticleEffectTexture>> textureMap;
@@ -84,10 +88,7 @@ namespace LKKit
         vector<LKParticleEffectObject> pointObject;
         LKParticleEffectObjectData *pointObjectDatas;
         
-        vector<LKParticleEffectObject> lineObject;
-        LKParticleEffectObjectData *lineObjectDatas;
-        
-        GLshort *effectIndexes;
+        GLushort *effectIndexes;
         void setupObjects();
         void updateElementBuffer();
         void setupVars();

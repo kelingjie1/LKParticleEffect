@@ -39,6 +39,13 @@
         },
         "objects":
         {
+            "point":
+            {
+                "rotation":0,
+                "positionX":0,
+                "positionY":0,
+                "positionZ":0
+            },
             "snow1":
             {
                 "sprite":
@@ -99,6 +106,22 @@
                     {
                         "type":"change_stage",
                         "target":"stage2"
+                    }
+                },
+                "panChange":
+                {
+                    "action":
+                    {
+                        "type":"drawLine",
+                        "object":"point"
+                    }
+                },
+                "panBegin":
+                {
+                    "action":
+                    {
+                        "type":"command",
+                        "command":"lineIndex++"
                     }
                 }
 

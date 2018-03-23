@@ -84,7 +84,7 @@ LKParticleEffectShader::LKParticleEffectShader()
          }
          int index = int(v_texCoord.z+0.5);
          vec2 frameSize = frameSizes[index];
-         vec4 texColor;
+         vec4 texColor = vec4(1.0,1.0,1.0,1.0);
          if (index==0)
          {
              texColor = texture(textures[0], vec2((v_texCoord.x+pos.x)*frameSize.x,
@@ -130,10 +130,10 @@ LKParticleEffectShader::LKParticleEffectShader()
 //         {
 //             texColor.rgb = texColor.rgb * texColor.a;
 //         }
-//         texColor = vec4(texColor.r * v_colorFactor.r * v_colorFactor.a,
-//                         texColor.g * v_colorFactor.g * v_colorFactor.a,
-//                         texColor.b * v_colorFactor.b * v_colorFactor.a,
-//                         texColor.a * v_colorFactor.a);
+         texColor = vec4(texColor.r * v_colorFactor.r * v_colorFactor.a,
+                         texColor.g * v_colorFactor.g * v_colorFactor.a,
+                         texColor.b * v_colorFactor.b * v_colorFactor.a,
+                         texColor.a * v_colorFactor.a);
          color = texColor;
      }
      );

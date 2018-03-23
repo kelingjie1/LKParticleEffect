@@ -11,6 +11,12 @@
 
 namespace LKKit
 {
+    class LKParticleEffectInputProperty
+    {
+    public:
+        double touch2DX;//0~1
+        double touch2DY;//0~1
+    };
     class LKParticleEffectGlobalProperty
     {
     public:
