@@ -9,7 +9,6 @@
 #include "LKParticleEffectCamera.h"
 #include "LKParticleEffectUtil.h"
 #include "LKParticleEffectSystem.h"
-#include <GLKit/GLKit.h>
 
 using namespace LKKit;
 

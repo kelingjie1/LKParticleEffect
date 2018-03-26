@@ -32,7 +32,7 @@
 		07E0F5DB2043AE5600D97980 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E0F5DA2043AE5600D97980 /* CoreFoundation.framework */; };
 		07E0F5DD2043AE8100D97980 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E0F5DC2043AE8100D97980 /* CoreImage.framework */; };
 		07E0F5E12043AEA800D97980 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E0F5E02043AEA800D97980 /* CoreGraphics.framework */; };
-		07E0F5E42043F86800D97980 /* LKParticleEffectCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5E22043F86800D97980 /* LKParticleEffectCamera.mm */; };
+		07E0F5E42043F86800D97980 /* LKParticleEffectCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5E22043F86800D97980 /* LKParticleEffectCamera.cpp */; };
 		07E0F5E52043F86800D97980 /* LKParticleEffectCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E728203291E00035D240 /* LKParticleEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E726203291E00035D240 /* LKParticleEffect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7855E734203292030035D240 /* LKParticleEffectSystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,7 +79,7 @@
 		07E0F5DC2043AE8100D97980 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		07E0F5DE2043AE8D00D97980 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		07E0F5E02043AEA800D97980 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		07E0F5E22043F86800D97980 /* LKParticleEffectCamera.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectCamera.mm; sourceTree = "<group>"; };
+		07E0F5E22043F86800D97980 /* LKParticleEffectCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectCamera.cpp; sourceTree = "<group>"; };
 		07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectCamera.h; sourceTree = "<group>"; };
 		7855E723203291E00035D240 /* LKParticleEffect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LKParticleEffect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7855E726203291E00035D240 /* LKParticleEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffect.h; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 				07E0F5BE20416D7800D97980 /* LKParticleEffectTexture.h */,
 				07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */,
 				07E0F5E32043F86800D97980 /* LKParticleEffectCamera.h */,
-				07E0F5E22043F86800D97980 /* LKParticleEffectCamera.mm */,
+				07E0F5E22043F86800D97980 /* LKParticleEffectCamera.cpp */,
 				78809F0B2033100700982F23 /* LKParticleEffectUtil.h */,
 				78809F0C2033100700982F23 /* LKParticleEffectUtil.cpp */,
 				07E0F5B420415DAB00D97980 /* iOS */,
@@ -306,7 +306,7 @@
 				073E170820513536007B1BAF /* LKParticleEffectStage.cpp in Sources */,
 				78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */,
 				07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */,
-				07E0F5E42043F86800D97980 /* LKParticleEffectCamera.mm in Sources */,
+				07E0F5E42043F86800D97980 /* LKParticleEffectCamera.cpp in Sources */,
 				073E16FF20512F24007B1BAF /* LKParticleEffectObjectTemplate.cpp in Sources */,
 				07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */,
 				78FE1D11203F08BF00D9C7FD /* LKParticleEffectLogger.cpp in Sources */,
