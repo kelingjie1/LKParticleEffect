@@ -31,10 +31,9 @@ public:
 @property (nonatomic) LKParticleEffectVarExt varExt;
 @property (nonatomic) CGPoint oldPoint;
 @property (nonatomic) ARSession *session;
-@property (nonatomic) ARFrame *arframe;
 @property (nonatomic) CMMotionManager *motionManager;
-@property (nonatomic) GLKMatrix4 matrix;
-@property (nonatomic) CMDeviceMotion *motion;
+@property (nonatomic) LKParticleEffectSystemManager *systemManager;
+
 
 @end
 
@@ -74,6 +73,7 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     config.vars.push_back(new RVar("panX",&_varExt.panX));
     config.vars.push_back(new RVar("panY",&_varExt.panY));
     self.system = new LKParticleEffectSystem(config);
+    self.systemManager = [[LKParticleEffectSystemManager alloc] initWithSystem:self.system];
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
     self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
     
@@ -91,19 +91,13 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     self.motionManager = [[CMMotionManager alloc] init];
     [self.motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXArbitraryZVertical toQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
         
-        CMRotationMatrix a = motion.attitude.rotationMatrix;
-        self.matrix=GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
-                                   a.m12, a.m22, a.m32, 0.0f,
-                                   a.m13, a.m23, a.m33, 0.0f,
-                                   0.0f , 0.0f , 0.0f , 1.0f);
-        self.matrix = GLKMatrix4Rotate(self.matrix, M_PI_2, 1, 0, 0);
-        self.motion = motion;
+        [self.systemManager updateWithDeviceMotion:motion];
     }];
 }
 
 - (void)session:(ARSession *)session didUpdateFrame:(ARFrame *)frame
 {
-    self.arframe = frame;
+    [self.systemManager updateWithARFrame:frame];
 }
 
 - (void)tapGR:(UITapGestureRecognizer*)gr
@@ -142,32 +136,10 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     auto camera = dynamic_cast<LKParticleEffect3DCamera*>(self.system->camera.get());
-    if (camera&&self.motion)
-    {
-        GLKMatrix4 r = self.matrix;
-        Matrix4f m;
-        m<<
-        r.m00,r.m10,r.m20,r.m30,
-        r.m01,r.m11,r.m21,r.m31,
-        r.m02,r.m12,r.m22,r.m32,
-        r.m03,r.m13,r.m23,r.m33;
-        camera->motionMatrix = m;
-        if (self.arframe)
-        {
-            float mutiple = 500;
-            float x = -self.arframe.camera.transform.columns[3][0]*mutiple;
-            float y = self.arframe.camera.transform.columns[3][1]*mutiple;
-            float z = self.arframe.camera.transform.columns[3][2]*mutiple;
-            camera->positionOffsetX = x;
-            camera->positionOffsetY = y;
-            camera->positionOffsetZ = z;
-        }
-    }
-    
-    self.system->update(self.timeSinceLastDraw);
+    [self.systemManager updateSystem:self.timeSinceLastDraw];
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    self.system->render();
+    [self.systemManager render];;
 }
 
 
