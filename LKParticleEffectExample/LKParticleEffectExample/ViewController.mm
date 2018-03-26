@@ -104,7 +104,10 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 {
     if (gr.state == UIGestureRecognizerStateEnded)
     {
-        self.system->triggerEvent("tap");
+        [self.systemManager updateSystemData:^{
+            self.system->triggerEvent("tap");
+        }];
+        
     }
 }
 
@@ -112,18 +115,27 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 {
     if (gr.state == UIGestureRecognizerStateBegan)
     {
-        self.system->triggerEvent("panBegin");
+        [self.systemManager updateSystemData:^{
+            self.system->triggerEvent("panBegin");
+        }];
+        
     }
     else if (gr.state == UIGestureRecognizerStateChanged)
     {
         CGPoint point = [gr locationInView:gr.view];
-        self.system->inputProperty.touch2DX = point.x/self.view.bounds.size.width;
-        self.system->inputProperty.touch2DY = point.y/self.view.bounds.size.height;
-        self.system->triggerEvent("panChange");
+        [self.systemManager updateSystemData:^{
+            self.system->inputProperty.touch2DX = point.x/self.view.bounds.size.width;
+            self.system->inputProperty.touch2DY = point.y/self.view.bounds.size.height;
+            self.system->triggerEvent("panChange");
+        }];
+        
     }
     else if (gr.state == UIGestureRecognizerStateEnded||gr.state == UIGestureRecognizerStateCancelled)
     {
-        self.system->triggerEvent("panEnd");
+        [self.systemManager updateSystemData:^{
+            self.system->triggerEvent("panEnd");
+        }];
+        
     }
 }
 

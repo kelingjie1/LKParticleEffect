@@ -20,8 +20,6 @@ namespace LKKit
 @property (nonatomic,strong) NSOperationQueue *queue;
 @property (nonatomic,assign) LKKit::LKParticleEffectSystem *system;
 @property (nonatomic,assign) float moveMultiple;
-@property (nonatomic,strong) ARFrame *arframe;
-@property (nonatomic,strong) CMDeviceMotion *deviceMotion;
 @property (nonatomic,assign) GLKMatrix4 motionMatrix;
 @property (nonatomic,assign) float x;
 @property (nonatomic,assign) float y;

@@ -19,13 +19,13 @@ using namespace LKKit;
         self.system = system;
         self.moveMultiple = 500;
         self.queue = [NSOperationQueue new];
+        self.motionMatrix = GLKMatrix4Identity;
     }
     return self;
 }
 
 - (void)updateWithDeviceMotion:(CMDeviceMotion *)deviceMotion
 {
-    self.deviceMotion = deviceMotion;
     CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
     GLKMatrix4 matrix = GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
                                a.m12, a.m22, a.m32, 0.0f,
@@ -36,10 +36,9 @@ using namespace LKKit;
 
 - (void)updateWithARFrame:(ARFrame *)arframe
 {
-    self.arframe = arframe;
-    self.x = -self.arframe.camera.transform.columns[3][0]*self.moveMultiple;
-    self.y = self.arframe.camera.transform.columns[3][1]*self.moveMultiple;
-    self.z = self.arframe.camera.transform.columns[3][2]*self.moveMultiple;
+    self.x = -arframe.camera.transform.columns[3][0]*self.moveMultiple;
+    self.y = arframe.camera.transform.columns[3][1]*self.moveMultiple;
+    self.z = arframe.camera.transform.columns[3][2]*self.moveMultiple;
 }
 
 - (void)updateSystemData:(dispatch_block_t)block
@@ -54,7 +53,7 @@ using namespace LKKit;
     [self.queue waitUntilAllOperationsAreFinished];
     [self.queue setSuspended:YES];
     auto camera = dynamic_cast<LKParticleEffect3DCamera*>(self.system->camera.get());
-    if (camera&&self.deviceMotion)
+    if (camera)
     {
         GLKMatrix4 r = self.motionMatrix;
         Matrix4f m;
@@ -64,16 +63,9 @@ using namespace LKKit;
         r.m02,r.m12,r.m22,r.m32,
         r.m03,r.m13,r.m23,r.m33;
         camera->motionMatrix = m;
-        if (self.arframe)
-        {
-            float mutiple = 500;
-            float x = -self.arframe.camera.transform.columns[3][0]*mutiple;
-            float y = self.arframe.camera.transform.columns[3][1]*mutiple;
-            float z = self.arframe.camera.transform.columns[3][2]*mutiple;
-            camera->positionOffsetX = x;
-            camera->positionOffsetY = y;
-            camera->positionOffsetZ = z;
-        }
+        camera->positionOffsetX = self.x;
+        camera->positionOffsetY = self.y;
+        camera->positionOffsetZ = self.z;
     }
     self.system->update(timeDelta);
     [self.queue setSuspended:NO];

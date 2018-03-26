@@ -64,13 +64,12 @@ void LKParticleEffectStageDrawLineAction::trigger()
     system->x = vec.x()/2;
     system->y = vec.y()/2;
     system->z = vec.z()/2;
-    
-    cout<<"x,y,z:\n"<<vec<<endl<<endl;
     if (system->lines.size()==0)
     {
         system->lines.push_back(vector<GLuint>());
     }
-    system->lines[system->lines.size()-1].push_back(obj->index);
+    auto &line = system->lines.back();
+    line.push_back(obj->index);
 }
 
 
