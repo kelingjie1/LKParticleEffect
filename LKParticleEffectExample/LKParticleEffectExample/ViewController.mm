@@ -11,6 +11,8 @@
 #import <OpenGLES/ES3/gl.h>
 #import <OpenGLES/ES3/glext.h>
 #import <LKParticleEffect/LKParticleEffect.h>
+#import <ARKit/ARKit.h>
+#import <CoreMotion/CoreMotion.h>
 
 using namespace LKKit;
 
@@ -21,13 +23,18 @@ public:
     double panY;
 };
 
-@interface ViewController ()
+@interface ViewController ()<ARSessionDelegate>
 
 @property (nonatomic) EAGLContext *context;
 @property (nonatomic) GLKView *glview;
 @property (nonatomic) LKParticleEffectSystem *system;
 @property (nonatomic) LKParticleEffectVarExt varExt;
 @property (nonatomic) CGPoint oldPoint;
+@property (nonatomic) ARSession *session;
+@property (nonatomic) ARFrame *arframe;
+@property (nonatomic) CMMotionManager *motionManager;
+@property (nonatomic) GLKMatrix4 matrix;
+@property (nonatomic) CMDeviceMotion *motion;
 
 @end
 
@@ -40,17 +47,8 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)startRecord
 {
-//    NSError *error;
-//    self.videoQueue = dispatch_queue_create("videoQueue", nil);
-//    self.session = [[AVCaptureSession alloc] init];
-//    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] error:&error];
-//    [self.session addInput:self.videoInput];
-//    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
-//    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoQueue];
-//    [[self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
-//    AVCaptureConnection *videoConnection = [self.videoDataOutput connectionWithMediaType:AVMediaTypeVideo];
-//    [self.session addOutput:self.videoDataOutput];
-//    [self.session startRunning];
+
+    
 }
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
@@ -83,6 +81,31 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGR:)]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.session = [[ARSession alloc] init];
+    self.session.delegate = self;
+    self.session.delegateQueue = dispatch_queue_create("ARKit", nil);
+    [self.session runWithConfiguration:[[ARWorldTrackingConfiguration alloc] init]];
+    self.motionManager = [[CMMotionManager alloc] init];
+    [self.motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXArbitraryZVertical toQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
+        
+        CMRotationMatrix a = motion.attitude.rotationMatrix;
+        self.matrix=GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
+                                   a.m12, a.m22, a.m32, 0.0f,
+                                   a.m13, a.m23, a.m33, 0.0f,
+                                   0.0f , 0.0f , 0.0f , 1.0f);
+        self.matrix = GLKMatrix4Rotate(self.matrix, M_PI_2, 1, 0, 0);
+        self.motion = motion;
+    }];
+}
+
+- (void)session:(ARSession *)session didUpdateFrame:(ARFrame *)frame
+{
+    self.arframe = frame;
+}
+
 - (void)tapGR:(UITapGestureRecognizer*)gr
 {
     if (gr.state == UIGestureRecognizerStateEnded)
@@ -112,17 +135,39 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
 
 - (void)dealloc
 {
+    [self.session pause];
     delete self.system;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glBindVertexArray(1);
+    auto camera = dynamic_cast<LKParticleEffect3DCamera*>(self.system->camera.get());
+    if (camera&&self.motion)
+    {
+        GLKMatrix4 r = self.matrix;
+        Matrix4f m;
+        m<<
+        r.m00,r.m10,r.m20,r.m30,
+        r.m01,r.m11,r.m21,r.m31,
+        r.m02,r.m12,r.m22,r.m32,
+        r.m03,r.m13,r.m23,r.m33;
+        camera->motionMatrix = m;
+        if (self.arframe)
+        {
+            float mutiple = 500;
+            float x = -self.arframe.camera.transform.columns[3][0]*mutiple;
+            float y = self.arframe.camera.transform.columns[3][1]*mutiple;
+            float z = self.arframe.camera.transform.columns[3][2]*mutiple;
+            camera->positionOffsetX = x;
+            camera->positionOffsetY = y;
+            camera->positionOffsetZ = z;
+        }
+    }
+    
     self.system->update(self.timeSinceLastDraw);
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     self.system->render();
-    glBindVertexArray(0);
 }
 
 

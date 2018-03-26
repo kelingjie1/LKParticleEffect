@@ -60,7 +60,17 @@ namespace LKKit
         shared_ptr<LKParticleEffectValue> upZ;
         float zNear;
         float zFar;
+        float positionOffsetX;
+        float positionOffsetY;
+        float positionOffsetZ;
+        float angle_yaw;
+        float angle_pitch;
+        float angle_roll;
         Vector3f rayCast(GLfloat touch2DX,GLfloat touch2DY);
+        void yaw(float angle);
+        void pitch(float angle);
+        void roll(float angle);
+        
     };
     class LKParticleEffect3DPerspectiveCamera:public LKParticleEffect3DCamera
     {

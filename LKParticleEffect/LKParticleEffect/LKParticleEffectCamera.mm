@@ -14,21 +14,22 @@
 using namespace LKKit;
 
 Matrix4f Matrix4MakeLookAt(float eyeX, float eyeY, float eyeZ,
-                           float centerX, float centerY, float centerZ,
+                           float targetX, float targetY, float targetZ,
                            float upX, float upY, float upZ)
 {
-    Vector3f ev = { eyeX, eyeY, eyeZ };
-    Vector3f cv = { centerX, centerY, centerZ };
-    Vector3f uv = { upX, upY, upZ };
-    Vector3f n = (ev-cv).normalized();
-    Vector3f u = (uv.cross(n)).normalized();
-    Vector3f v = n.cross(u);
+    Vector3f eye = { eyeX, eyeY, eyeZ };
+    Vector3f target = { targetX, targetY, targetZ };
+    Vector3f up = { upX, upY, upZ };
+    Vector3f z = (eye-target).normalized();
+    Vector3f x = (z.cross(up)).normalized();
+    Vector3f y = x.cross(z);
     
     Matrix4f m;
-    m<< u[0], v[0], n[0], 0.0f,
-    u[1], v[1], n[1], 0.0f,
-    u[2], v[2], n[2], 0.0f,
-    (-u).dot(ev),(-v).dot(ev),(-n).dot(ev),1.0f;
+    m<<
+    x[0], y[0], z[0], -x.dot(eye),
+    x[1], y[1], z[1], -y.dot(eye),
+    x[2], y[2], z[2], -z.dot(eye),
+    0,0,0,1.0f;
     return m;
 }
 
@@ -61,18 +62,15 @@ LKParticleEffect3DCamera::LKParticleEffect3DCamera(const Value &value,LKParticle
 
 Matrix4f LKParticleEffect3DCamera::getVPMatrix()
 {
-    return motionMatrix*viewMatrix*projectionMatrix;
+    return projectionMatrix*viewMatrix;
 }
 
 Vector3f LKParticleEffect3DCamera::rayCast(GLfloat touch2DX,GLfloat touch2DY)
 {
     Vector4f ray_nds;
     float x = touch2DX*2-1;
-    float y = touch2DY*2-1;
-    x/=zNear*2;
-    y/=zNear*2;
-    float z = -1;
-    ray_nds<<x,y,z,1.0;//归一化设备坐标系
+    float y = (1-touch2DY)*2-1;
+    ray_nds<<x,y,1.0,1.0;//归一化设备坐标系
     
     Vector4f ray_eye = projectionMatrix.inverse()*ray_nds;
     Vector4f ray_world = viewMatrix.inverse()*ray_eye;
@@ -90,6 +88,39 @@ Vector3f LKParticleEffect3DCamera::rayCast(GLfloat touch2DX,GLfloat touch2DY)
     ray_dir.z()-=property.cameraZ;
     ray_dir.normalize();
     return ray_dir;
+}
+
+void LKParticleEffect3DCamera::yaw(float angle)
+{
+    Matrix4f m;
+    m<<
+    cos(angle),0,-sin(angle),0,
+    0,1,0,0,
+    sin(angle),0,cos(angle),0,
+    0,0,0,1;
+    viewMatrix = viewMatrix*m;
+}
+
+void LKParticleEffect3DCamera::pitch(float angle)
+{
+    Matrix4f m;
+    m<<
+    1,0,0,0,
+    0,cos(angle),sin(angle),0,
+    0,-sin(angle),cos(angle),0,
+    0,0,0,1;
+    viewMatrix = viewMatrix*m;
+}
+
+void LKParticleEffect3DCamera::roll(float angle)
+{
+    Matrix4f m;
+    m<<
+    cos(angle),sin(angle),0,0,
+    -sin(angle),cos(angle),0,0,
+    0,0,1,0,
+    0,0,0,1;
+    viewMatrix = viewMatrix*m;
 }
 
 
@@ -113,29 +144,33 @@ LKParticleEffect3DPerspectiveCamera::LKParticleEffect3DPerspectiveCamera(const V
     float xScale = cos(angle/2)/sin(angle/2)/aspect;
     float yScale = cos(angle/2)/sin(angle/2);
     
-    projectionMatrix<<
+    Matrix4f m;
+    m<<
     xScale,0,0,0,
     0,yScale,0,0,
-    0,0,-(zFar+zNear)/(zFar-zNear),-1,
-    0,0,-2*zNear*zFar/(zFar-zNear),0;
-    
+    0,0,-(zFar+zNear)/(zFar-zNear),-2*zFar*zNear/(zFar-zNear),
+    0,0,-1,0;
+    projectionMatrix = m;
     viewMatrix = Matrix4MakeLookAt(0,0,0,0,0,-1,0,1,0);
 }
 
 void LKParticleEffect3DPerspectiveCamera::update()
 {
     auto &property = system->globalProperty;
-    property.cameraX = positionX->value();
-    property.cameraY = positionY->value();
-    property.cameraZ = positionZ->value();
-    Vector3f look;
-    look<<lookX->value(),lookY->value(),lookZ->value();
-    look.normalize();
+    property.cameraX = positionX->value()+positionOffsetX;
+    property.cameraY = positionY->value()+positionOffsetY;
+    property.cameraZ = positionZ->value()+positionOffsetZ;
+    Vector4f look;
+
+    look<<lookX->value(),lookY->value(),lookZ->value(),1.0;
+    look = motionMatrix*look;
     property.cameraDirX = look.x();
     property.cameraDirY = look.y();
     property.cameraDirZ = look.z();
+    
+    
     viewMatrix = Matrix4MakeLookAt(property.cameraX,property.cameraY,property.cameraZ,
-                                   property.cameraDirX,property.cameraDirY,property.cameraDirZ,
+                                   property.cameraDirX+positionOffsetX,property.cameraDirY+positionOffsetY,property.cameraDirZ+positionOffsetZ,
                                    upX->value(),upY->value(),upZ->value());
 }
 

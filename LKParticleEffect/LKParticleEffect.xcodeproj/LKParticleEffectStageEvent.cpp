@@ -58,10 +58,18 @@ void LKParticleEffectStageDrawLineAction::trigger()
     auto obj = system->getUnusedObject(object);
     auto camera = dynamic_cast<LKParticleEffect3DCamera*>(system->camera.get());
     auto vec = camera->rayCast(system->inputProperty.touch2DX, system->inputProperty.touch2DY);
-    obj->positionOffsetX = vec.x()*100;
-    obj->positionOffsetY = -vec.y()*100;
-    obj->positionOffsetZ = vec.z()*100;
-    cout<<vec*100<<endl<<endl;
+    obj->positionOffsetX = vec.x()*100+system->globalProperty.cameraX;
+    obj->positionOffsetY = vec.y()*100+system->globalProperty.cameraY;
+    obj->positionOffsetZ = vec.z()*100+system->globalProperty.cameraZ;
+    system->x = vec.x()/2;
+    system->y = vec.y()/2;
+    system->z = vec.z()/2;
+    
+    cout<<"x,y,z:\n"<<vec<<endl<<endl;
+    if (system->lines.size()==0)
+    {
+        system->lines.push_back(vector<GLuint>());
+    }
     system->lines[system->lines.size()-1].push_back(obj->index);
 }
 

@@ -39,6 +39,21 @@
         },
         "objects":
         {
+            "point":
+            {
+                "line":
+                {
+                    "width":100,
+                    "colorR":1,
+                    "colorG":1,
+                    "colorB":1,
+                    "colorA":1
+                },
+                "rotation":0,
+                "positionX":0,
+                "positionY":0,
+                "positionZ":0
+            },
             "snow1":
             {
                 "sprite":
@@ -92,17 +107,33 @@
         {
             "name":"stage1",
             "events":
-            [
+            {
+                "tap":
                 {
-                    "name":"tap",
                     "action":
                     {
                         "type":"change_stage",
                         "target":"stage2"
                     }
+                },
+                "panChange":
+                {
+                    "action":
+                    {
+                        "type":"drawLine",
+                        "object":"point"
+                    }
+                },
+                "panBegin":
+                {
+                    "action":
+                    {
+                        "type":"command",
+                        "command":"lineIndex++"
+                    }
                 }
 
-            ],
+            },
             "enter_stage":
             {
                 "add":
@@ -138,9 +169,9 @@
                 }
             },
             "events":
-            [
+            {
+                "tap":
                 {
-                    "name":"tap",
                     "action":
                     {
                         "type":"change_stage",
@@ -148,7 +179,7 @@
                     }
                 }
 
-            ]
+            }
         },
         {
             "name":"stage3",
@@ -175,9 +206,9 @@
                 }
             },
             "events":
-            [
+            {
+                "delay":
                 {
-                    "name":"delay",
                     "time":1,
                     "action":
                     { 
@@ -185,7 +216,7 @@
                         "target":"stage4"
                     }
                 }
-            ]
+            }
         },
         {
             "name":"stage4",
@@ -209,16 +240,16 @@
                 }
             },
             "events":
-            [
+            {
+                "tap":
                 {
-                    "name":"tap",
                     "action":
                     {
                         "type":"change_stage",
                         "target":"stage1"
                     }
                 }
-            ],
+            },
             "leave_stage":
             {
                 "resetObjects":

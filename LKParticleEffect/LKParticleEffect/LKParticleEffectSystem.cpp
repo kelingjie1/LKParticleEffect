@@ -28,7 +28,7 @@ using namespace rapidjson;
 
 LKParticleEffectConfig::LKParticleEffectConfig()
 {
-    maxObjectCount = 10000;
+    maxObjectCount = 100000;
 }
 
 const char* LKParticleEffectSystem::TAG = "LKParticleSystem";
@@ -393,12 +393,16 @@ void LKParticleEffectSystem::updateObjects(double timeDelta)
                 data->colorB = sprite->colorB->value();
                 data->colorA = sprite->colorA->value();
                 data->width = sprite->width->value();
-                data->height = sprite->height->value();
+                data->height = sprite->width->value();
                 data->textureIndex = sprite->texture->index;
                 data->frameIndex = sprite->frameIndex->value();
                 pair<int, int> pos = sprite->texture->getPosition(data->frameIndex);
                 data->textureU = pos.first;
                 data->textureV = pos.second;
+                
+//                data->positionX = x;
+//                data->positionY = y;
+//                data->positionZ = z;
             }
             else if (temp->line)
             {
@@ -578,7 +582,7 @@ void LKParticleEffectSystem::renderLines()
     
     //vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera->m, projectMatrix);
     auto m = camera->getVPMatrix();
-    Matrix<float, 4, 4, RowMajor> vpMatrix = m;
+    Matrix4f vpMatrix = m;
     glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMatrix.data());
     glUniform2f(screenSizeLocation, config.viewWidth, config.viewHeight);
     glEnable(GL_BLEND);
@@ -631,9 +635,7 @@ void LKParticleEffectSystem::renderPoints()
     glUniform2fv(frameSizesLocation, 8, frameSizes);
     
     //vector<float> vpMartix = LKParticleEffectUtil::mat4DotMat4(camera->m, projectMatrix);
-    auto m = camera->getVPMatrix();
-    Matrix<float, 4, 4, RowMajor> vpMatrix = m;
-    auto da = vpMatrix.data();
+    auto vpMatrix = camera->getVPMatrix();
     glUniformMatrix4fv(vpMatrixLocation, 1, 0, vpMatrix.data());
     glUniform2f(screenSizeLocation, config.viewWidth, config.viewHeight);
     glEnable(GL_BLEND);

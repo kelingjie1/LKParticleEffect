@@ -70,6 +70,10 @@ namespace LKKit
         ~LKParticleEffectSystem();
         void changeToStage(shared_ptr<LKParticleEffectStage> stage);
         void setNextStage(string stageName);
+        
+        float x;
+        float y;
+        float z;
     protected:
         LKParticleEffectConfig config;
         GLuint vbo;

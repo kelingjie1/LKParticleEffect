@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0747F6C620578F3800525610 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0747F6C520578F3800525610 /* AVFoundation.framework */; };
 		0747F6C720578FAA00525610 /* LKParticleEffect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7855E733203291ED0035D240 /* LKParticleEffect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07983B3720679BD400679FBB /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07983B3620679BD400679FBB /* ARKit.framework */; };
+		07983B3920679E7100679FBB /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07983B3820679E7100679FBB /* CoreMotion.framework */; };
 		07E0F5AF204150EC00D97980 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 07E0F5AE204150EC00D97980 /* effects */; };
 		7855E6FC20328D720035D240 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FB20328D720035D240 /* AppDelegate.m */; };
 		7855E6FF20328D720035D240 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7855E6FE20328D720035D240 /* ViewController.mm */; };
@@ -70,6 +72,8 @@
 
 /* Begin PBXFileReference section */
 		0747F6C520578F3800525610 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		07983B3620679BD400679FBB /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
+		07983B3820679E7100679FBB /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		07E0F5AE204150EC00D97980 /* effects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = effects; sourceTree = "<group>"; };
 		7855E6F720328D720035D240 /* LKParticleEffectExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LKParticleEffectExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7855E6FA20328D720035D240 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07983B3920679E7100679FBB /* CoreMotion.framework in Frameworks */,
+				07983B3720679BD400679FBB /* ARKit.framework in Frameworks */,
 				0747F6C620578F3800525610 /* AVFoundation.framework in Frameworks */,
 				78FE1D17203F143100D9C7FD /* GLKit.framework in Frameworks */,
 				78809F1D2033141A00982F23 /* LKParticleEffect.framework in Frameworks */,
@@ -153,6 +159,8 @@
 		7855E742203294A20035D240 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07983B3820679E7100679FBB /* CoreMotion.framework */,
+				07983B3620679BD400679FBB /* ARKit.framework */,
 				0747F6C520578F3800525610 /* AVFoundation.framework */,
 				78FE1D16203F143000D9C7FD /* GLKit.framework */,
 			);
