@@ -21,8 +21,8 @@
 		0747F6C42057814F00525610 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0747F6C32057814F00525610 /* GLKit.framework */; };
 		07AABA202068DFD40010B436 /* LKParticleEffectSystemManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AABA1E2068DFD40010B436 /* LKParticleEffectSystemManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07AABA212068DFD40010B436 /* LKParticleEffectSystemManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07AABA1F2068DFD40010B436 /* LKParticleEffectSystemManager.mm */; };
-		07AABA4120691C490010B436 /* LKParticleEffectStageEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AABA3F20691C490010B436 /* LKParticleEffectStageEvent.h */; };
-		07AABA4220691C490010B436 /* LKParticleEffectStageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AABA4020691C490010B436 /* LKParticleEffectStageEvent.cpp */; };
+		07AABA4520691D4C0010B436 /* LKParticleEffectStageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AABA4320691D4C0010B436 /* LKParticleEffectStageEvent.cpp */; };
+		07AABA4620691D4C0010B436 /* LKParticleEffectStageEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AABA4420691D4C0010B436 /* LKParticleEffectStageEvent.h */; };
 		07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */; };
 		07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */; };
@@ -67,8 +67,8 @@
 		0747F6C32057814F00525610 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		07AABA1E2068DFD40010B436 /* LKParticleEffectSystemManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectSystemManager.h; sourceTree = "<group>"; };
 		07AABA1F2068DFD40010B436 /* LKParticleEffectSystemManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectSystemManager.mm; sourceTree = "<group>"; };
-		07AABA3F20691C490010B436 /* LKParticleEffectStageEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectStageEvent.h; sourceTree = SOURCE_ROOT; };
-		07AABA4020691C490010B436 /* LKParticleEffectStageEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectStageEvent.cpp; sourceTree = SOURCE_ROOT; };
+		07AABA4320691D4C0010B436 /* LKParticleEffectStageEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectStageEvent.cpp; sourceTree = "<group>"; };
+		07AABA4420691D4C0010B436 /* LKParticleEffectStageEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectStageEvent.h; sourceTree = "<group>"; };
 		07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKParticleEffectIOSBridge.h; sourceTree = "<group>"; };
 		07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LKParticleEffectIOSBridge.mm; sourceTree = "<group>"; };
 		07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LKParticleEffectTexture.cpp; sourceTree = "<group>"; };
@@ -161,8 +161,8 @@
 				7855E735203292030035D240 /* LKParticleEffectSystem.cpp */,
 				0747F4272056A40600525610 /* LKParticleEffectStageOperation.h */,
 				0747F4262056A40600525610 /* LKParticleEffectStageOperation.cpp */,
-				07AABA4020691C490010B436 /* LKParticleEffectStageEvent.cpp */,
-				07AABA3F20691C490010B436 /* LKParticleEffectStageEvent.h */,
+				07AABA4320691D4C0010B436 /* LKParticleEffectStageEvent.cpp */,
+				07AABA4420691D4C0010B436 /* LKParticleEffectStageEvent.h */,
 				073E170520513536007B1BAF /* LKParticleEffectStage.h */,
 				073E170620513536007B1BAF /* LKParticleEffectStage.cpp */,
 				073E16FE20512F24007B1BAF /* LKParticleEffectObjectTemplate.h */,
@@ -225,7 +225,7 @@
 				073E170420513227007B1BAF /* LKParticleEffectProperty.h in Headers */,
 				0747F41B20562DA700525610 /* Printable.h in Headers */,
 				7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */,
-				07AABA4120691C490010B436 /* LKParticleEffectStageEvent.h in Headers */,
+				07AABA4620691D4C0010B436 /* LKParticleEffectStageEvent.h in Headers */,
 				0747F4292056A40600525610 /* LKParticleEffectStageOperation.h in Headers */,
 				07AABA202068DFD40010B436 /* LKParticleEffectSystemManager.h in Headers */,
 				073E166A20481606007B1BAF /* glcontext.h in Headers */,
@@ -306,7 +306,7 @@
 				073E170820513536007B1BAF /* LKParticleEffectStage.cpp in Sources */,
 				78FE1D0D203EFE5E00D9C7FD /* LKParticleEffectShader.cpp in Sources */,
 				07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */,
-				07AABA4220691C490010B436 /* LKParticleEffectStageEvent.cpp in Sources */,
+				07AABA4520691D4C0010B436 /* LKParticleEffectStageEvent.cpp in Sources */,
 				07E0F5E42043F86800D97980 /* LKParticleEffectCamera.cpp in Sources */,
 				073E16FF20512F24007B1BAF /* LKParticleEffectObjectTemplate.cpp in Sources */,
 				07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */,
