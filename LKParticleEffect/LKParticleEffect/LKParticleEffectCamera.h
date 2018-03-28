@@ -46,7 +46,6 @@ namespace LKKit
     {
     public:
         LKParticleEffect3DCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system);
-        virtual Matrix4f getVPMatrix();
         
         Matrix4f motionMatrix;
         shared_ptr<LKParticleEffectValue> positionX;
@@ -66,6 +65,7 @@ namespace LKKit
         float angle_yaw;
         float angle_pitch;
         float angle_roll;
+        Vector3f touchPosition3D(GLfloat touch2DX,GLfloat touch2DY,float distance);
         Vector3f rayCast(GLfloat touch2DX,GLfloat touch2DY);
         void yaw(float angle);
         void pitch(float angle);

@@ -19,6 +19,7 @@ namespace LKKit
 
 @property (nonatomic,strong) NSOperationQueue *queue;
 @property (nonatomic,assign) LKKit::LKParticleEffectSystem *system;
+@property (nonatomic,strong) EAGLContext *context;
 @property (nonatomic,assign) float moveMultiple;
 @property (nonatomic,assign) GLKMatrix4 motionMatrix;
 @property (nonatomic,assign) float x;

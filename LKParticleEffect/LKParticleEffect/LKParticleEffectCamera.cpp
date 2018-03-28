@@ -41,7 +41,7 @@ LKParticleEffectCamera::LKParticleEffectCamera(const Value &value,LKParticleEffe
 
 Matrix4f LKParticleEffectCamera::getVPMatrix()
 {
-    return viewMatrix*projectionMatrix;
+    return projectionMatrix*viewMatrix;
 }
 
 void LKParticleEffectCamera::update()
@@ -59,17 +59,13 @@ LKParticleEffect3DCamera::LKParticleEffect3DCamera(const Value &value,LKParticle
     motionMatrix = Matrix4f::Identity();
 }
 
-Matrix4f LKParticleEffect3DCamera::getVPMatrix()
-{
-    return projectionMatrix*viewMatrix;
-}
-
-Vector3f LKParticleEffect3DCamera::rayCast(GLfloat touch2DX,GLfloat touch2DY)
+Vector3f LKParticleEffect3DCamera::touchPosition3D(GLfloat touch2DX,GLfloat touch2DY,float distance)
 {
     Vector4f ray_nds;
     float x = touch2DX*2-1;
     float y = (1-touch2DY)*2-1;
-    ray_nds<<x,y,1.0,1.0;//归一化设备坐标系
+    float z = 0.99;
+    ray_nds<<x,y,z,1.0;//归一化设备坐标系
     
     Vector4f ray_eye = projectionMatrix.inverse()*ray_nds;
     Vector4f ray_world = viewMatrix.inverse()*ray_eye;
@@ -81,10 +77,22 @@ Vector3f LKParticleEffect3DCamera::rayCast(GLfloat touch2DX,GLfloat touch2DY)
     }
     Vector3f ray_dir;
     ray_dir<<ray_world.x(),ray_world.y(),ray_world.z();
-    auto &property = system->globalProperty;
-    ray_dir.x()-=property.cameraX;
-    ray_dir.y()-=property.cameraY;
-    ray_dir.z()-=property.cameraZ;
+    return ray_dir;
+}
+
+Vector3f LKParticleEffect3DCamera::rayCast(GLfloat touch2DX,GLfloat touch2DY)
+{
+    Vector4f ray_nds;
+    float x = touch2DX*2-1;
+    float y = (1-touch2DY)*2-1;
+    ray_nds<<x,y,1.0,1.0;
+    
+    Vector4f ray_eye = projectionMatrix.inverse()*ray_nds;
+    ray_eye.z()=-1.0;
+    ray_eye.w()=0;
+    Vector4f ray_world = viewMatrix.inverse()*ray_eye;
+    Vector3f ray_dir;
+    ray_dir<<ray_world.x(),ray_world.y(),ray_world.z();
     ray_dir.normalize();
     return ray_dir;
 }
@@ -163,14 +171,15 @@ void LKParticleEffect3DPerspectiveCamera::update()
 
     look<<lookX->value(),lookY->value(),lookZ->value(),1.0;
     look = motionMatrix*look;
+
+    
+    viewMatrix = Matrix4MakeLookAt(property.cameraX,property.cameraY,property.cameraZ,
+                                   look.x()+positionOffsetX,look.y()+positionOffsetY,look.z()+positionOffsetZ,
+                                   upX->value(),upY->value(),upZ->value());
+    look.normalize();
     property.cameraDirX = look.x();
     property.cameraDirY = look.y();
     property.cameraDirZ = look.z();
-    
-    
-    viewMatrix = Matrix4MakeLookAt(property.cameraX,property.cameraY,property.cameraZ,
-                                   property.cameraDirX+positionOffsetX,property.cameraDirY+positionOffsetY,property.cameraDirZ+positionOffsetZ,
-                                   upX->value(),upY->value(),upZ->value());
 }
 
 LKParticleEffect3DOrthogonalCamera::LKParticleEffect3DOrthogonalCamera(const Value &value,LKParticleEffectConfig &config,LKParticleEffectSystem *system):LKParticleEffect3DCamera(value,config,system)

@@ -27,7 +27,7 @@
             "type":"perspective",
             "lookX":0,
             "lookY":0,
-            "lookZ":-100,
+            "lookZ":-1,
             "positionX":0,
             "positionY":0,
             "positionZ":0,

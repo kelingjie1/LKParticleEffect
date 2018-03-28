@@ -22,7 +22,7 @@
 		07AABA202068DFD40010B436 /* LKParticleEffectSystemManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AABA1E2068DFD40010B436 /* LKParticleEffectSystemManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07AABA212068DFD40010B436 /* LKParticleEffectSystemManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07AABA1F2068DFD40010B436 /* LKParticleEffectSystemManager.mm */; };
 		07AABA4520691D4C0010B436 /* LKParticleEffectStageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AABA4320691D4C0010B436 /* LKParticleEffectStageEvent.cpp */; };
-		07AABA4620691D4C0010B436 /* LKParticleEffectStageEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AABA4420691D4C0010B436 /* LKParticleEffectStageEvent.h */; };
+		07AABA4620691D4C0010B436 /* LKParticleEffectStageEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AABA4420691D4C0010B436 /* LKParticleEffectStageEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B720415DDF00D97980 /* LKParticleEffectIOSBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E0F5B520415DDF00D97980 /* LKParticleEffectIOSBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07E0F5B820415DDF00D97980 /* LKParticleEffectIOSBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5B620415DDF00D97980 /* LKParticleEffectIOSBridge.mm */; };
 		07E0F5BF20416D7800D97980 /* LKParticleEffectTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E0F5BD20416D7800D97980 /* LKParticleEffectTexture.cpp */; };
@@ -161,8 +161,8 @@
 				7855E735203292030035D240 /* LKParticleEffectSystem.cpp */,
 				0747F4272056A40600525610 /* LKParticleEffectStageOperation.h */,
 				0747F4262056A40600525610 /* LKParticleEffectStageOperation.cpp */,
-				07AABA4320691D4C0010B436 /* LKParticleEffectStageEvent.cpp */,
 				07AABA4420691D4C0010B436 /* LKParticleEffectStageEvent.h */,
+				07AABA4320691D4C0010B436 /* LKParticleEffectStageEvent.cpp */,
 				073E170520513536007B1BAF /* LKParticleEffectStage.h */,
 				073E170620513536007B1BAF /* LKParticleEffectStage.cpp */,
 				073E16FE20512F24007B1BAF /* LKParticleEffectObjectTemplate.h */,
@@ -225,9 +225,9 @@
 				073E170420513227007B1BAF /* LKParticleEffectProperty.h in Headers */,
 				0747F41B20562DA700525610 /* Printable.h in Headers */,
 				7855E736203292030035D240 /* LKParticleEffectSystem.h in Headers */,
-				07AABA4620691D4C0010B436 /* LKParticleEffectStageEvent.h in Headers */,
 				0747F4292056A40600525610 /* LKParticleEffectStageOperation.h in Headers */,
 				07AABA202068DFD40010B436 /* LKParticleEffectSystemManager.h in Headers */,
+				07AABA4620691D4C0010B436 /* LKParticleEffectStageEvent.h in Headers */,
 				073E166A20481606007B1BAF /* glcontext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,8 +17,9 @@ using namespace LKKit;
     if (self = [super init])
     {
         self.system = system;
-        self.moveMultiple = 500;
+        self.moveMultiple = 300;
         self.queue = [NSOperationQueue new];
+        self.queue.maxConcurrentOperationCount = 1;
         self.motionMatrix = GLKMatrix4Identity;
     }
     return self;
@@ -43,37 +44,42 @@ using namespace LKKit;
 
 - (void)updateSystemData:(dispatch_block_t)block
 {
-    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:block];
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
+        [EAGLContext setCurrentContext:self.context];
+        block();
+    }];
     [self.queue addOperation:op];
 }
 
 - (void)updateSystem:(float)timeDelta
 {
-    [self.queue setSuspended:NO];
-    [self.queue waitUntilAllOperationsAreFinished];
-    [self.queue setSuspended:YES];
-    auto camera = dynamic_cast<LKParticleEffect3DCamera*>(self.system->camera.get());
-    if (camera)
-    {
-        GLKMatrix4 r = self.motionMatrix;
-        Matrix4f m;
-        m<<
-        r.m00,r.m10,r.m20,r.m30,
-        r.m01,r.m11,r.m21,r.m31,
-        r.m02,r.m12,r.m22,r.m32,
-        r.m03,r.m13,r.m23,r.m33;
-        camera->motionMatrix = m;
-        camera->positionOffsetX = self.x;
-        camera->positionOffsetY = self.y;
-        camera->positionOffsetZ = self.z;
-    }
-    self.system->update(timeDelta);
+    [self updateSystemData:^{
+        auto camera = dynamic_cast<LKParticleEffect3DCamera*>(self.system->camera.get());
+        if (camera)
+        {
+            GLKMatrix4 r = self.motionMatrix;
+            Matrix4f m;
+            m<<
+            r.m00,r.m10,r.m20,r.m30,
+            r.m01,r.m11,r.m21,r.m31,
+            r.m02,r.m12,r.m22,r.m32,
+            r.m03,r.m13,r.m23,r.m33;
+            camera->motionMatrix = m;
+            camera->positionOffsetX = self.x;
+            camera->positionOffsetY = self.y;
+            camera->positionOffsetZ = self.z;
+        }
+        self.system->update(timeDelta);
+    }];
     [self.queue setSuspended:NO];
 }
 
 - (void)render
 {
+    [self.queue waitUntilAllOperationsAreFinished];
+    [self.queue setSuspended:YES];
     self.system->render();
+    [self.queue setSuspended:NO];
 }
 
 @end

@@ -544,6 +544,7 @@ LKParticleEffectObject *LKParticleEffectSystem::getUnusedObject(string templateN
         object->group = object->group;
         return object;
     }
+    cout<<"No unusedObject"<<endl;
     return nullptr;
 }
 void LKParticleEffectSystem::removeObject(LKParticleEffectObject *object)

@@ -74,6 +74,7 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     config.vars.push_back(new RVar("panY",&_varExt.panY));
     self.system = new LKParticleEffectSystem(config);
     self.systemManager = [[LKParticleEffectSystemManager alloc] initWithSystem:self.system];
+    self.systemManager.context = self.context;
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
     self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
     
