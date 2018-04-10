@@ -64,7 +64,7 @@ Vector3f LKParticleEffect3DCamera::touchPosition3D(GLfloat touch2DX,GLfloat touc
     Vector4f ray_nds;
     float x = touch2DX*2-1;
     float y = (1-touch2DY)*2-1;
-    float z = 0.99;
+    float z = 0.95;
     ray_nds<<x,y,z,1.0;//归一化设备坐标系
     
     Vector4f ray_eye = projectionMatrix.inverse()*ray_nds;

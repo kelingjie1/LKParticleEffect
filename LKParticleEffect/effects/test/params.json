@@ -32,7 +32,7 @@
             "positionY":0,
             "positionZ":0,
             "upX":0,
-            "upY":1,
+            "upY":-1,
             "upZ":0,
             "near":5,
             "far":10000
@@ -43,7 +43,7 @@
             {
                 "line":
                 {
-                    "width":100,
+                    "width":10,
                     "colorR":1,
                     "colorG":1,
                     "colorB":1,

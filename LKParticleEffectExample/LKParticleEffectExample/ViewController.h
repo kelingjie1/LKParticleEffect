@@ -12,7 +12,5 @@
 
 @interface ViewController : GLKViewController<AVCaptureVideoDataOutputSampleBufferDelegate>
 
-@property (nonatomic) dispatch_queue_t videoQueue;
-
 @end
 

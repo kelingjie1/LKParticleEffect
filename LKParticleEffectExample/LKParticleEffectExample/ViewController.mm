@@ -26,6 +26,7 @@ public:
 @interface ViewController ()<ARSessionDelegate>
 
 @property (nonatomic) EAGLContext *context;
+@property (nonatomic) EAGLSharegroup *sharegroup;
 @property (nonatomic) GLKView *glview;
 @property (nonatomic) LKParticleEffectSystem *system;
 @property (nonatomic) LKParticleEffectVarExt varExt;
@@ -64,6 +65,7 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     LKParticleEffectLogger::instance()->listener = loggerListener;
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+    self.sharegroup = self.context.sharegroup;
     self.glview = (GLKView*)self.view;
     self.glview.context = self.context;
     [EAGLContext setCurrentContext:self.context];
@@ -74,7 +76,7 @@ void loggerListener(LKParticleEffectLogLevel level,const char* str)
     config.vars.push_back(new RVar("panY",&_varExt.panY));
     self.system = new LKParticleEffectSystem(config);
     self.systemManager = [[LKParticleEffectSystemManager alloc] initWithSystem:self.system];
-    self.systemManager.context = self.context;
+    self.systemManager.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3 sharegroup:self.sharegroup];
     NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"effects/test"];
     self.system->load([path cStringUsingEncoding:NSUTF8StringEncoding]);
     

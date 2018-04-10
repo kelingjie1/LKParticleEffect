@@ -17,7 +17,7 @@ using namespace LKKit;
     if (self = [super init])
     {
         self.system = system;
-        self.moveMultiple = 300;
+        self.moveMultiple = 500;
         self.queue = [NSOperationQueue new];
         self.queue.maxConcurrentOperationCount = 1;
         self.motionMatrix = GLKMatrix4Identity;
@@ -27,17 +27,19 @@ using namespace LKKit;
 
 - (void)updateWithDeviceMotion:(CMDeviceMotion *)deviceMotion
 {
+    
     CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
-    GLKMatrix4 matrix = GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
-                               a.m12, a.m22, a.m32, 0.0f,
-                               a.m13, a.m23, a.m33, 0.0f,
-                               0.0f , 0.0f , 0.0f , 1.0f);
+    GLKMatrix4 matrix = GLKMatrix4Make(
+                                       a.m11, a.m21, a.m31, 0.0f,
+                                       a.m12, -a.m22, a.m32, 0.0f,
+                                       a.m13, a.m23, -a.m33, 0.0f,
+                                       0.0f , 0.0f , 0.0f , 1.0f);
     self.motionMatrix = GLKMatrix4Rotate(matrix, M_PI_2, 1, 0, 0);
 }
 
 - (void)updateWithARFrame:(ARFrame *)arframe
 {
-    self.x = -arframe.camera.transform.columns[3][0]*self.moveMultiple;
+    self.x = arframe.camera.transform.columns[3][0]*self.moveMultiple;
     self.y = arframe.camera.transform.columns[3][1]*self.moveMultiple;
     self.z = arframe.camera.transform.columns[3][2]*self.moveMultiple;
 }
@@ -64,7 +66,7 @@ using namespace LKKit;
             r.m01,r.m11,r.m21,r.m31,
             r.m02,r.m12,r.m22,r.m32,
             r.m03,r.m13,r.m23,r.m33;
-            camera->motionMatrix = m;
+            //camera->motionMatrix = m;
             camera->positionOffsetX = self.x;
             camera->positionOffsetY = self.y;
             camera->positionOffsetZ = self.z;
